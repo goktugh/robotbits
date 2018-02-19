@@ -1,0 +1,11 @@
+env = Environment(
+        CCFLAGS = '-O -g -Wall'
+    )
+
+SOURCES = [ 'imu_daemon.cpp', 'MPU6050.cpp', 'I2Cdev.cpp' ] 
+
+LIBS=[ 'rt' ]
+
+env.Program('imu_daemon', SOURCES,
+    LIBS=LIBS)
+
