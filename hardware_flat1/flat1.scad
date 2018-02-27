@@ -1,0 +1,95 @@
+// Set $fs (smallest arc fragment) to lower value than default 2.0
+$fs = 0.8; // millimetres
+
+include <defs.scad>;
+
+wheel_width = 9.0;
+wheelslot_w = wheel_width + 4.0;
+wheelslot_d = 35;
+
+body_w = 90;
+body_d = 100;
+
+bolthole_r = 1.25;
+
+body_w_half = body_w / 2;
+body_d_half = body_d / 2;
+
+module mirror_x()
+{
+    union() {
+        children();
+        mirror([1,0,0]) children();
+    }
+}
+
+// Rounded rectangle, centred.
+module rounded_rect(w,h,r)
+{
+    hull() {
+        translate([(-w / 2) + r, (-h / 2) + r])
+            circle(r);
+        translate([(w / 2) - r, (-h / 2) + r])
+            circle(r);
+        translate([(-w / 2) + r, (h / 2) - r])
+            circle(r);
+        translate([(w / 2) - r, (h / 2) - r])
+            circle(r);
+    }
+}
+
+module wheel_cutout() {
+    // Single wheel cutout, centred around the wheel itself.
+    rounded_rect(wheelslot_w, wheelslot_d, wheelslot_w / 2);
+    // Cutouts for the motor mount holes.
+    // Motor mount holes are 14mm apart in Y axis
+    // Motor holes should be some distance from the slot, because the
+    // gearbox is ~ 8mm wide
+    for (x = [-24, -18]) {
+        for (y = [-7.5, 7.5]) {
+            translate([x,y])
+                circle(r=bolthole_r);
+        }
+    }
+    
+}
+
+module wheel_cutouts() {
+    mirror_x() {
+        translate([wheel_x_rear,wheel_y_rear]) wheel_cutout();
+        // Cut out side completely on rear wheel
+        translate([wheel_x_rear + (wheelslot_w / 2),wheel_y_rear]) 
+            square([wheelslot_w, wheelslot_d], center=true);
+        translate([wheel_x_front,wheel_y_front]) wheel_cutout();
+    }
+}
+
+module front_corner_cutouts() {
+    mirror_x() {
+        translate([body_w/2, body_d / 2]) {
+            rotate([0,0,45]) 
+                square([10,10], center=true);
+        }
+    }
+}
+
+module other_holes() {
+    for (x=[-body_w_half + 4, 0, body_w_half - 4]) {
+        for (y= [-body_d_half + 4, 0, body_d_half - 10]) {
+            translate([x,y]) 
+                circle(r=bolthole_r);
+        }
+    }
+}
+
+
+module main() {
+    difference() {
+        rounded_rect(body_w, body_d, 2);
+        wheel_cutouts();
+        front_corner_cutouts();
+        other_holes();
+    }
+}
+
+main();
