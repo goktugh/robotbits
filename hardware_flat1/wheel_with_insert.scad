@@ -1,7 +1,7 @@
 // This document uses MILLIMETRES as a unit.
 
 // Set $fs (smallest arc fragment) to lower value than default 2.0
-$fs = 0.2; // millimetres
+$fs = 0.6; // millimetres
 
 // Gearbox is approx 15x10 mm, so needs about 18mm inside
 main_diameter = 30;
@@ -61,7 +61,7 @@ module wheel_with_insert()
             cylinder(h=axle_height, r=axle_radius + 2.5);
             
             // Outer part
-            rotate_extrude() {
+            rotate_extrude(convexity=3) {
                 difference() {
                     
                     union() {
@@ -86,7 +86,7 @@ module wheel_with_insert()
         {
             // Cutout for axle
             translate([0,0,-10]) {
-                linear_extrude(height=30.0) {
+                linear_extrude(height=30.0, convexity=3) {
                     union() {
                         circle(r=axle_radius + axle_radius_margin);
                         translate([0.8 + (axle_nut_h / 2),0])

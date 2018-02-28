@@ -28,7 +28,7 @@ shaft_length = 14.0; // between motors / gearboxes.
 
 flipper_width = 60;
 horiz_length = 40.0; // y axis
-thickness = 1.0;
+thickness = 0.75;
 bar_thickness = 2.0;
 diagonal_1_length = 25;
 diagonal_1_drop = 15;
@@ -37,22 +37,83 @@ diagonal_2_drop = 13;
 
 cutout_length = 24;
 cutout_drop = 15;
+ridge_radius = 1.0;
 
-module flipper_outline(chop=0)
-{
-   polyline([
+flipper_outline_points = [
             // Horizontal part of flipper
             [-shaft_radius, shaft_radius],
             [horiz_length, shaft_radius],
             // Diagonal part
             [horiz_length + diagonal_1_length, shaft_radius - diagonal_1_drop],
             [
-                horiz_length + diagonal_1_length + diagonal_2_length - chop, 
-                shaft_radius - diagonal_1_drop - diagonal_2_drop + chop
+                horiz_length + diagonal_1_length + diagonal_2_length, 
+                shaft_radius - diagonal_1_drop - diagonal_2_drop
             ]
-        ], 
-        thickness / 2); // radius
+        ];
 
+flipper_outline_points_1 = [
+    flipper_outline_points[0],
+    flipper_outline_points[1],
+    flipper_outline_points[2],
+    flipper_outline_points[3] + [-diagonal_2_length * 0.2, diagonal_2_drop * 0.2],
+    ];
+
+module flipper_outline(chop=0)
+{
+    $fn = 8;
+    polyline(flipper_outline_points,
+        thickness / 2); // radius
+}
+
+
+// An octahedron which is chopped at y=0, and only includes the negative
+// part of y axis.
+module octahedron_yminus(C0=1.0) {
+    intersection() {
+        octahedron(C0);
+        translate([0,-C0,0])
+            cube([C0 * 2, C0 * 2, C0 * 2], center=true);
+    }
+}
+
+module flipper_reinforcement()
+{
+    // For more strength: ridge 
+    translate([0, -(thickness / 2)])
+    {
+        // Centre line
+        polyline_hulls(flipper_outline_points_1) {
+                octahedron_yminus(ridge_radius);
+        }
+        
+        mirror_z() {
+            // edges
+            edge_offset = (flipper_width / 2) - ridge_radius;
+            translate([0,0,edge_offset])
+                polyline_hulls(flipper_outline_points_1) {
+                    octahedron_yminus(ridge_radius);
+                };
+            // Diagonals
+            d1 = [
+                flipper_outline_points_1[0],
+                [ flipper_outline_points_1[1].x, flipper_outline_points_1[1].y, edge_offset],
+                flipper_outline_points_1[2],
+                [ flipper_outline_points_1[3].x, flipper_outline_points_1[3].y, edge_offset],
+                ];
+            polyline_hulls(d1) {
+                octahedron_yminus(ridge_radius);
+            };        
+            d2 = [
+                [ flipper_outline_points_1[0].x, flipper_outline_points_1[0].y, edge_offset],
+                flipper_outline_points_1[1],
+                [ flipper_outline_points_1[2].x, flipper_outline_points_1[2].y, edge_offset],
+                flipper_outline_points_1[3],
+                ];
+            polyline_hulls(d2) {
+                octahedron_yminus(ridge_radius);
+            };        
+        }
+    }
 }
 
 module flipper_main()
@@ -79,24 +140,26 @@ module flipper_main()
                     linear_extrude(height=flipper_width, center=true, convexity=3) {
                         flipper_outline();
                     }
-
-                    // For more strength: ridge 
-                    minkowski() {
-                        linear_extrude(height=0.01, center=true, convexity=3) {
-                            flipper_outline(chop = 5);
-                        };
-                        translate([0,-1,0])
-                            octahedron(0.75);
-                    }
+                    flipper_reinforcement();
                 }
                 
                 // Cutout top pieces.
                 mirror_z() {
+                    cutout_z_len = ((flipper_width - shaft_length) / 2);
                     translate([-shaft_radius - 10, shaft_radius - cutout_drop, (-flipper_width / 2) - 10])
-                        cube(
-                            [cutout_length + 10, 
-                            cutout_drop + 10, 
-                            ((flipper_width - shaft_length) / 2) + 10]);
+                        hull()
+                        {
+                            translate([0,0,-cutout_z_len])
+                            cube(
+                                [cutout_length + 10, 
+                                cutout_drop + 10, 
+                                cutout_z_len + 10]);
+                            translate([-cutout_length + (2* shaft_radius) - ridge_radius, 0,0])
+                            cube(
+                                [cutout_length + 10, 
+                                cutout_drop + 10, 
+                                cutout_z_len + 10]);
+                        }
                 }
                 // Cut off end
                 translate([-shaft_radius - 10, 0,0])
