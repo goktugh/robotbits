@@ -27,4 +27,22 @@ module raspberry_pi_outline() {
     }
 }
 
-raspberry_pi_outline();
+module raspberry_pi() {
+    color("green")
+    linear_extrude(height=1.0) {
+            raspberry_pi_outline();
+    }
+    // Gubbins
+    color("gray") {
+        // SD card
+        translate([-pi_w_half - 1.5, -6, 1]) cube([12,10,1]);
+        // hdmi connector
+        translate([-pi_w_half + 12.4, -pi_h_half -0.5, 1]) cube([10,6,1]);
+        // 2x micro-usb
+        translate([-pi_w_half + 41.4, -pi_h_half -0.5, 1]) cube([6,4,1]);
+        translate([-pi_w_half + 54.0, -pi_h_half -0.5, 1]) cube([6,4,1]);
+    }
+    
+}
+
+raspberry_pi();

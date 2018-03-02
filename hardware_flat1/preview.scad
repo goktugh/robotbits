@@ -49,11 +49,9 @@ translate([0, wheel_y_rear, 12 + 1 + 4.5])
 }
 
 // Raspberry pi
-translate([0,4,11]) {
-    rotate([-90, 0, 0])
-        color("green")
+translate([0,4,9.5]) {
+    rotate([90, 0, 0])
         rotate([-60,0,0])
-        linear_extrude(height=1.0) {
-                raspberry_pi_outline();
-        }
+            rotate([0,0,180])
+                raspberry_pi();
 }

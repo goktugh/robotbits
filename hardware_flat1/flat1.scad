@@ -56,6 +56,18 @@ module other_holes() {
                 circle(r=bolthole_r);
         }
     }
+    // For the raspberry pi board - these will be used for cable
+    // ties or wrap, not bolts.
+    // we need a pair of holes on each side.
+    // Just forward of the rear wheels
+    pi_hole_radius = 1.375; // 2.5mm bolts; 2.75mm drilled
+    pi_hole_distance = 58; // x distance between holes, 
+    mirror_x() {
+        translate([pi_hole_distance / 2,-5,0])
+            circle(r=pi_hole_radius);
+        translate([pi_hole_distance / 2,-10,0])
+            circle(r=pi_hole_radius);
+    }
 }
 
 
