@@ -26,6 +26,10 @@ shaft_diameter = 12.0; //
 shaft_radius = shaft_diameter / 2;
 shaft_length = 14.0; // between motors / gearboxes.
 
+axle_nut_w = 5.0;
+axle_nut_h = 1.0;
+grub_screw_radius = 1.25;
+
 flipper_width = 60;
 horiz_length = 40.0; // y axis
 thickness = 0.75;
@@ -38,6 +42,7 @@ diagonal_2_drop = 13;
 cutout_length = 24;
 cutout_drop = 15;
 ridge_radius = 1.0;
+
 
 flipper_outline_points = [
             // Horizontal part of flipper
@@ -116,54 +121,88 @@ module flipper_reinforcement()
     }
 }
 
+module flipper_shaft_attachment()
+{
+   // This assumes that the shaft is in the z axis...
+   // Shaft attachment
+    linear_extrude(height=shaft_length, center=true, convexity=3) {
+        difference() {
+            union() {
+                circle(shaft_radius);
+                // square off the top side
+                translate([0, shaft_radius / 2])
+                    square([shaft_radius*2, shaft_radius], center=true);
+            }
+            // Axle hole
+            circle(axle_radius + axle_radius_margin);
+            // Rectangle insert for nuts
+            translate([0,1.25])
+                square([axle_nut_w, axle_nut_h], center=true);
+
+        }   
+    }
+
+}
+
+module flipper_flipper()
+{
+    // Main flipper piece
+    difference() {
+        union()
+        {
+            // Flipper main
+            linear_extrude(height=flipper_width, center=true, convexity=3) {
+                flipper_outline();
+            }
+            flipper_reinforcement();
+        }
+        
+        // Cutout top pieces.
+        mirror_z() {
+            cutout_z_len = ((flipper_width - shaft_length) / 2);
+            translate([-shaft_radius - 10, shaft_radius - cutout_drop, (-flipper_width / 2) - 10])
+                hull()
+                {
+                    translate([0,0,-cutout_z_len])
+                    cube(
+                        [cutout_length + 10, 
+                        cutout_drop + 10, 
+                        cutout_z_len + 10]);
+                    translate([-cutout_length + (2* shaft_radius) - ridge_radius, 0,0])
+                    cube(
+                        [cutout_length + 10, 
+                        cutout_drop + 10, 
+                        cutout_z_len + 10]);
+                }
+        }
+        // Cut off end
+        translate([-shaft_radius - 10, 0,0])
+            cube([20, shaft_radius * 3, flipper_width + 10], center=true);
+    }
+}
+
+module flipper_screw_holes()
+{
+    // Need holes in the y direction, going down to y=0
+    mirror_z() {
+        rotate([-90,0,0]) {
+            translate([0,4.0,0]) {
+                cylinder(r=grub_screw_radius, h=30); // height does not matter.
+            }
+        }
+    }
+}
+
 module flipper_main()
 {
     rotate([0,90,0]) {
         rotate([0,0,90]) {
-            // Shaft attachment
-            linear_extrude(height=shaft_length, center=true) {
-                difference() {
-                    union() {
-                        circle(shaft_radius);
-                        // square off the top side
-                        translate([0, shaft_radius / 2])
-                            square([shaft_radius*2, shaft_radius], center=true);
-                    }
-                    circle(axle_radius + axle_radius_margin);
-                }   
-            }
-            // Main flipper piece
             difference() {
-                union()
-                {
-                    // Flipper main
-                    linear_extrude(height=flipper_width, center=true, convexity=3) {
-                        flipper_outline();
-                    }
-                    flipper_reinforcement();
+                union() {
+                    flipper_shaft_attachment();
+                    flipper_flipper();
                 }
-                
-                // Cutout top pieces.
-                mirror_z() {
-                    cutout_z_len = ((flipper_width - shaft_length) / 2);
-                    translate([-shaft_radius - 10, shaft_radius - cutout_drop, (-flipper_width / 2) - 10])
-                        hull()
-                        {
-                            translate([0,0,-cutout_z_len])
-                            cube(
-                                [cutout_length + 10, 
-                                cutout_drop + 10, 
-                                cutout_z_len + 10]);
-                            translate([-cutout_length + (2* shaft_radius) - ridge_radius, 0,0])
-                            cube(
-                                [cutout_length + 10, 
-                                cutout_drop + 10, 
-                                cutout_z_len + 10]);
-                        }
-                }
-                // Cut off end
-                translate([-shaft_radius - 10, 0,0])
-                    cube([20, shaft_radius * 3, flipper_width + 10], center=true);
+                flipper_screw_holes();
             }
         }
     }
