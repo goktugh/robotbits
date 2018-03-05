@@ -16,7 +16,8 @@ bolthole_r = 1.25;
 body_w_half = body_w / 2;
 body_d_half = body_d / 2;
 
-module wheel_cutout() {
+module wheel_cutout(override_hole_r) {
+    hole_r = override_hole_r > 0  ? override_hole_r : bolthole_r;
     // Single wheel cutout, centred around the wheel itself.
     translate([10,0,0])
         rounded_rect(wheelslot_w + 20, wheelslot_d, wheelslot_w / 2);
@@ -27,16 +28,16 @@ module wheel_cutout() {
     for (x = [-24, -18, -12]) {
         for (y = [-7.5, 7.5]) {
             translate([x,y])
-                circle(r=bolthole_r);
+                circle(r=hole_r);
         }
     }
     
 }
 
-module wheel_cutouts() {
+module wheel_cutouts(override_hole_r) {
     mirror_x() {
-        translate([wheel_x_rear,wheel_y_rear]) wheel_cutout();
-        translate([wheel_x_front,wheel_y_front]) wheel_cutout();
+        translate([wheel_x_rear,wheel_y_rear]) wheel_cutout(override_hole_r);
+        translate([wheel_x_front,wheel_y_front]) wheel_cutout(override_hole_r);
     }
 }
 
@@ -49,18 +50,21 @@ module front_corner_cutouts() {
     }
 }
 
-module other_holes() {
+module other_holes(hole_r=0) {
+    body_hole_r = hole_r>0 ? hole_r : bolthole_r;
     for (x=[-body_w_half + 4, 0, body_w_half - 4]) {
         for (y= [-body_d_half + 4, 0, body_d_half - 10]) {
-            translate([x,y]) 
-                circle(r=bolthole_r);
+            if ((x != 0) || (y != 0)) {
+                translate([x,y]) 
+                    circle(r=body_hole_r);
+            }
         }
     }
     // For the raspberry pi board - these will be used for cable
     // ties or wrap, not bolts.
     // we need a pair of holes on each side.
     // Just forward of the rear wheels
-    pi_hole_radius = 1.375; // 2.5mm bolts; 2.75mm drilled
+    pi_hole_radius = hole_r > 0 ? hole_r : 1.375; // 2.5mm bolts; 2.75mm drilled
     pi_hole_distance = 58; // x distance between holes, 
     mirror_x() {
         translate([pi_hole_distance / 2,-5,0])
@@ -70,13 +74,14 @@ module other_holes() {
     }
 }
 
+override_hole_r = 0; // Set this with -D to override hole size.
 
 module main() {
     difference() {
         rounded_rect(body_w, body_d, 2);
-        wheel_cutouts();
+        wheel_cutouts(override_hole_r);
         front_corner_cutouts();
-        other_holes();
+        other_holes(override_hole_r);
     }
 }
 
