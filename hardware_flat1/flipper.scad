@@ -119,6 +119,15 @@ module flipper_reinforcement()
             };        
         }
     }
+    // Centre ridge piece
+    linear_extrude(height=1.0, center=true) {
+        hull() {
+            circle(r=shaft_radius - 0.5);
+            translate([horiz_length, shaft_radius - 1.0]) {
+                circle(r=1.0);
+            }
+        }
+    }
 }
 
 module flipper_shaft_attachment()

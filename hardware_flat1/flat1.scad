@@ -72,6 +72,12 @@ module other_holes(hole_r=0) {
         translate([pi_hole_distance / 2,-10,0])
             circle(r=pi_hole_radius);
     }
+    
+    // Holes to mount the IMU. 16mm spaced, rear left hand side.
+    translate([-8,0]) {
+        translate([0,-14]) circle(r=pi_hole_radius);
+        translate([0,-30]) circle(r=pi_hole_radius);
+    }
 }
 
 override_hole_r = 0; // Set this with -D to override hole size.
