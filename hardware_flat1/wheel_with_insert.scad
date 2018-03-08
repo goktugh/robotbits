@@ -19,7 +19,7 @@ tyre_radius = 1.5;
 tyre_offset = 2.5; // tyre distance from end
 
 // Cutout for grub screw nut for axle flat:
-axle_nut_h = 1.0;
+axle_nut_h = 1.25;
 axle_nut_w = 5.0;
 grub_screw_radius = 1.25;
 driver_radius = 2.0;
@@ -58,7 +58,7 @@ module wheel_with_insert()
         union()
         {
             // Axle mount
-            cylinder(h=axle_height, r=axle_radius + 3.0);
+            cylinder(h=axle_height, r=axle_radius + 3.5);
             
             // Outer part
             rotate_extrude(convexity=3) {
@@ -89,7 +89,7 @@ module wheel_with_insert()
                 linear_extrude(height=30.0, convexity=3) {
                     union() {
                         circle(r=axle_radius + axle_radius_margin);
-                        translate([0.8 + (axle_nut_h / 2),0])
+                        translate([1.0 + (axle_nut_h / 2),0])
                             square([axle_nut_h, axle_nut_w], center=true);
                     }
                 } // linear

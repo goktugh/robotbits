@@ -52,11 +52,13 @@ module front_corner_cutouts() {
 
 module other_holes(hole_r=0) {
     body_hole_r = hole_r>0 ? hole_r : bolthole_r;
-    for (x=[-body_w_half + 4, 0, body_w_half - 4]) {
-        for (y= [-body_d_half + 4, 0, body_d_half - 10]) {
-            if ((x != 0) || (y != 0)) {
-                translate([x,y]) 
-                    circle(r=body_hole_r);
+    mirror_x() {
+        for (x=[body_w / 6, body_w_half - 4]) {
+            for (y= [-body_d_half + 4, 0, body_d_half - 10]) {
+                if ((x > (body_w_half / 2)) || (y != 0)) {
+                    translate([x,y]) 
+                        circle(r=body_hole_r);
+                }
             }
         }
     }
@@ -73,10 +75,12 @@ module other_holes(hole_r=0) {
             circle(r=pi_hole_radius);
     }
     
-    // Holes to mount the IMU. 16mm spaced, rear left hand side.
-    translate([-8,0]) {
-        translate([0,-14]) circle(r=pi_hole_radius);
-        translate([0,-30]) circle(r=pi_hole_radius);
+    // Holes to mount the IMU. 15mm spaced, at rear. 
+    translate([0,-43]) {
+        spacing = 15.0; 
+        mirror_x() {
+            translate([spacing / 2, 0]) circle(r=pi_hole_radius);
+        }
     }
 }
 
