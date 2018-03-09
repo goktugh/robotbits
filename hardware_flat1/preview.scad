@@ -48,10 +48,30 @@ translate([0, wheel_y_rear, 12 + 1 + 4.5])
         flipper_main();
 }
 
+module battery_pack()
+{
+    color("grey") 
+        translate([0,0,6])
+            cube([46,17,12], center=true);
+}
+
 // Raspberry pi
+/*
 translate([0,4,9.5]) {
     rotate([90, 0, 0])
         rotate([-60,0,0])
             rotate([0,0,180])
                 raspberry_pi();
 }
+*/
+translate([0,4.5,1.5])
+    raspberry_pi();
+
+translate([0,7.5, 4.5])
+    battery_pack();
+
+// Max size cube
+translate([0,4,0])
+    rotate([45,0,0]) {
+         * cube([101, 101, 101], center=true);
+    }

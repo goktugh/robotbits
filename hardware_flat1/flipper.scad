@@ -20,7 +20,7 @@ printable that way.
 
 axle_diameter = 3.0;
 axle_radius = axle_diameter / 2;
-axle_radius_margin = 0.1; // Extra allowance for shrinkage etc
+axle_radius_margin = 0.15; // Extra allowance for shrinkage etc
 
 shaft_diameter = 12.0; // 
 shaft_radius = shaft_diameter / 2;
@@ -31,18 +31,19 @@ axle_nut_h = 1.0;
 grub_screw_radius = 1.25;
 
 flipper_width = 60;
-horiz_length = 40.0; // y axis
+horiz_length = 44.0; // y axis
 thickness = 0.75;
 bar_thickness = 2.0;
-diagonal_1_length = 25;
-diagonal_1_drop = 15;
-diagonal_2_length = 13;
-diagonal_2_drop = 13;
+diagonal_1_length = 26;
+diagonal_1_drop = 13;
+diagonal_2_length = 16;
+diagonal_2_drop = 16;
 
 cutout_length = 24;
 cutout_drop = 15;
 ridge_radius = 1.0;
 
+generate_flipper_main = true; // changed by -D
 
 flipper_outline_points = [
             // Horizontal part of flipper
@@ -119,13 +120,23 @@ module flipper_reinforcement()
             };        
         }
     }
-    // Centre ridge piece
+}
+
+module reinforcement_thing() {
+    // Piece which reinforces the flipper
+    // Centre piece
     linear_extrude(height=1.0, center=true) {
-        hull() {
-            circle(r=shaft_radius - 0.5);
-            translate([horiz_length, shaft_radius - 1.0]) {
-                circle(r=1.0);
+        intersection()
+        {
+            hull() {
+                circle(r=shaft_radius - 0.5);
+                translate([horiz_length, shaft_radius - 1.0]) {
+                    circle(r=1.0);
+                }
             }
+            // Ensure that it does not fill the shaft hole
+            translate([shaft_radius - 3, - shaft_radius])
+                square([horiz_length+ shaft_radius, shaft_radius*2 + 1.0]);
         }
     }
 }
@@ -141,11 +152,12 @@ module flipper_shaft_attachment()
                 // square off the top side
                 translate([0, shaft_radius / 2])
                     square([shaft_radius*2, shaft_radius], center=true);
+                // Centre ridge piece
             }
             // Axle hole
             circle(axle_radius + axle_radius_margin);
             // Rectangle insert for nuts
-            translate([0,1.25])
+            translate([0,1.0 + (axle_nut_h / 2)])
                 square([axle_nut_w, axle_nut_h], center=true);
 
         }   
@@ -209,7 +221,10 @@ module flipper_main()
             difference() {
                 union() {
                     flipper_shaft_attachment();
-                    flipper_flipper();
+                    if (generate_flipper_main) {
+                        flipper_flipper();
+                    }
+                    reinforcement_thing();
                 }
                 flipper_screw_holes();
             }

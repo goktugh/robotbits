@@ -9,7 +9,7 @@ wheelslot_w = wheel_width + 4.0;
 wheelslot_d = 35;
 
 body_w = 90;
-body_d = 100;
+body_d = 104;
 
 bolthole_r = 1.25;
 
@@ -76,7 +76,7 @@ module other_holes(hole_r=0) {
     }
     
     // Holes to mount the IMU. 15mm spaced, at rear. 
-    translate([0,-43]) {
+    translate([0,-45]) {
         spacing = 15.0; 
         mirror_x() {
             translate([spacing / 2, 0]) circle(r=pi_hole_radius);
