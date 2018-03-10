@@ -7,6 +7,8 @@ $fs = 0.8; // millimetres
 // This is designed to be printed sideways (y axis=up), so that the filament will be
 // in the best direction
 
+base_height_main = 0.0; // Set this with -D
+
 motor_width = 12;
 motor_height = 10;
 overall_height = motor_height + 1.0; // Needs to be bigger than the motor!
@@ -32,25 +34,25 @@ module outline() {
 }
 
 
-module mount_holes(cutout_depth)
+module mount_holes(cutout_depth, base_height)
 {
     // These holes should be along the z axis.
     translate([0,0, -1]) {
         for (x = [-0.5 * hole_distance_x, 0.5 * hole_distance_x] ) {
             for (y = [-0.5 * hole_distance_y, 0.5 * hole_distance_y]) {
                 translate([x,y,0])
-                    cylinder(r=1.25, h=overall_height + 3.0);
+                    cylinder(r=1.25, h=overall_height + 20.0);
                 echo("cutout_depth=", cutout_depth);
                 if (cutout_depth > 0.01) {
-                    translate([x,y,overall_height + 1.0 - cutout_depth])
-                        cylinder(r=cutout_r, h = overall_height);
+                    translate([x,y,overall_height + 1.0 + base_height - cutout_depth])
+                        cylinder(r=cutout_r, h = overall_height + 10);
                 }
             }
         }     
     }
 }
 
-module mount_outside()
+module mount_outside(base_height)
 {
     r1 = 4.0; // radius of corner
     border = 5.0;
@@ -58,7 +60,7 @@ module mount_outside()
     /* This is what we really want ... */
     mx = motor_length_half  - r1;
     my = motor_width_half + border - r1;
-    linear_extrude(height=overall_height) {
+    linear_extrude(height=overall_height + base_height) {
         hull() {
             translate([mx, my]) circle(r1);
             translate([-mx, my]) circle(r1);
@@ -69,27 +71,28 @@ module mount_outside()
 }
 
 
-module motor_cutout()
+module motor_cutout(base_height)
 {
     // Cut out for motor
-    rotate([0,-90,0])
-    translate([motor_height_half - 0.2, 0,0 ]) {
-        linear_extrude(height=motor_length + 12.0, center=true) {
-            outline();
-        }
-    }
+    translate([0,0,base_height]) 
+        rotate([0,-90,0])
+            translate([motor_height_half - 0.2, 0,0 ]) {
+                linear_extrude(height=motor_length + 12.0, center=true) {
+                    outline();
+                }
+            }
 }
 
-module motor_mount_main(cutout_depth = 0.0) {
+module motor_mount_main(cutout_depth = 0.0, base_height=0.0) {
     difference()
     {
-        mount_outside();
+        mount_outside(base_height);
         union()
         {
-            motor_cutout();
-            mount_holes(cutout_depth);
+            motor_cutout(base_height);
+            mount_holes(cutout_depth, base_height);
         }
     }
 }
 
-motor_mount_main();
+motor_mount_main(base_height = base_height_main);

@@ -5,6 +5,11 @@ use <flipper.scad>;
 use <raspberry_pi.scad>;
 include <defs.scad>;
 
+// Jack up the motors by this much?
+base_motors_height = 4.5;
+
+flipper_y_offset = -7.0; // move flipper back over rear wheels
+
 // Base
 linear_extrude(height=1.0) {
     main();
@@ -13,10 +18,10 @@ linear_extrude(height=1.0) {
 module motor_and_wheel() 
 {
     translate([0,0,1])
-        color("pink") render() motor_mount_main();
+        color("pink") render() motor_mount_main(base_height=base_motors_height);
     // Offset 21 to wheel centre
     // Offset 5 to axle centre.
-    translate([25.5,0,1 + 5])
+    translate([25.5,0,1 + 5 + base_motors_height])
         rotate([0,-90,0])
             render() wheel_with_insert();
 }
@@ -34,15 +39,16 @@ mirror_x() {
         motor_and_wheel();
     // Add another set of motor mounts for weapon
     // (flipper)
-    translate([wheel_x_rear - 21 + 6,wheel_y_rear,12 + 1])
+    // Move the flipper back half way over the rear wheels...
+    translate([wheel_x_rear - 21 + 6,wheel_y_rear + flipper_y_offset,12 + 1 + base_motors_height])
     {
-        color("lightgreen") motor_mount_main();
+        color("lightgreen") motor_mount_main(base_height=0);
         translate([-5.5,0,4.5]) non_printed_motor();
     }
 }
 
 //  Flipper
-translate([0, wheel_y_rear, 12 + 1 + 4.5])
+translate([0, wheel_y_rear + flipper_y_offset, 12 + 1 + 4.5 + base_motors_height])
 {
     rotate([$t * 90,0, 0])
         flipper_main();
@@ -73,5 +79,5 @@ translate([0,7.5, 4.5])
 // Max size cube
 translate([0,4,0])
     rotate([45,0,0]) {
-         * cube([101, 101, 101], center=true);
+         * %cube([101, 101, 101], center=true);
     }
