@@ -25,7 +25,7 @@ module wheel_cutout(override_hole_r) {
     // Motor mount holes are 14mm apart in Y axis
     // Motor holes should be some distance from the slot, because the
     // gearbox is ~ 8mm wide
-    for (x = [-24, -18, -12]) {
+    for (x = [-24, -18]) {
         for (y = [-7.5, 7.5]) {
             translate([x,y])
                 circle(r=hole_r);
@@ -54,8 +54,8 @@ module other_holes(hole_r=0) {
     body_hole_r = hole_r>0 ? hole_r : bolthole_r;
     mirror_x() {
         for (x=[body_w / 6, body_w_half - 4]) {
-            for (y= [-body_d_half + 4, 0, body_d_half - 10]) {
-                if ((x > (body_w_half / 2)) || (y != 0)) {
+            for (y= [-body_d_half + 4, 4]) {
+                if ((x > (body_w_half / 2)) || (abs(y)>5)) {
                     translate([x,y]) 
                         circle(r=body_hole_r);
                 }
@@ -67,12 +67,30 @@ module other_holes(hole_r=0) {
     // we need a pair of holes on each side.
     // Just forward of the rear wheels
     pi_hole_radius = hole_r > 0 ? hole_r : 1.375; // 2.5mm bolts; 2.75mm drilled
-    pi_hole_distance = 58; // x distance between holes, 
+    pi_hole_distance_x = 58; // x distance between holes, 
+    pi_hole_distance_y = 24; // y distance between holes, 
+    pi_y = -7.5;
     mirror_x() {
-        translate([pi_hole_distance / 2,-5,0])
+        translate([pi_hole_distance_x / 2,pi_y,0])
+        {
             circle(r=pi_hole_radius);
-        translate([pi_hole_distance / 2,-10,0])
+            translate([0,pi_hole_distance_y])
             circle(r=pi_hole_radius);
+        }
+    }
+    
+    // Holes for the raspberry pi gpio pins rear
+    translate([0,pi_y]) {
+        // Right hand side - cutouts for I2C and power pins
+        translate([20,0])
+            square([12,4], center=true);
+        // Center - gpio23,24 - for drive motors
+        translate([4,0])
+            square([12,4], center=true);
+        // LHS - for the flipper controller pins
+        translate([-21,0])
+            square([7,4], center=true);
+        
     }
     
     // Holes to mount the IMU. 15mm spaced, at rear. 
