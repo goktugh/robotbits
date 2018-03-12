@@ -9,7 +9,8 @@ $fs = 0.8; // millimetres
 
 base_height_main = 0.0; // Set this with -D
 
-motor_width = 12;
+motor_width_margin = 0.2;
+motor_width = 12 + motor_width_margin;
 motor_height = 10;
 overall_height = motor_height + 1.0; // Needs to be bigger than the motor!
 motor_length = 13;
