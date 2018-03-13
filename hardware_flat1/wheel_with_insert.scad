@@ -10,7 +10,7 @@ main_radius = main_diameter / 2;
 
 axle_diameter = 3.0;
 axle_radius = axle_diameter / 2;
-axle_radius_margin = 0.1; // Extra allowance for shrinkage etc
+axle_radius_margin = 0.2; // Extra allowance for shrinkage etc
 axle_height = 8.5; // It is nominally 9mm
 main_height = 8.5;
 base_height = main_height / 2;
@@ -103,6 +103,9 @@ module wheel_with_insert()
             // Not needed if we use a hex grub screw.
             //translate([0,0, axle_radius + 3.0])
             //    cylinder(h=100, r = driver_radius);
+            // Cutout for screw head
+            translate([0,0, axle_radius + 4.0])
+                cylinder(h=6.0, r=2.75);
         }
     } // diff
     
