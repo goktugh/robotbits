@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Start pigpiod at boot time; enable some gpios
+# GPIO 23 and 24
+mask=0x1800000
+/usr/bin/pigpiod -x $mask
+
+exit 0
