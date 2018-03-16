@@ -45,6 +45,7 @@ module mount_holes(cutout_depth, base_height)
                     cylinder(r=1.25, h=overall_height + 20.0);
                 echo("cutout_depth=", cutout_depth);
                 if (cutout_depth > 0.01) {
+                    $fn = 6; // Hex cutout
                     translate([x,y,overall_height + 1.0 + base_height - cutout_depth])
                         cylinder(r=cutout_r, h = overall_height + 10);
                 }
