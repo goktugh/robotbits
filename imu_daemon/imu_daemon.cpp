@@ -283,6 +283,8 @@ void loop() {
         #endif
         printf("loopcount=%d\n", loopcount);
         loopcount = 0;
+	// Got it , sleep for about 1/40 second
+	usleep(25 * 1000);
     } else {
         // FIFO not ready.
         mpuIntStatus = mpu.getIntStatus(); // Clear interrupt status.

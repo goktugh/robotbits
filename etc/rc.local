@@ -5,4 +5,9 @@
 mask=0x1800000
 /usr/bin/pigpiod -x $mask
 
+# Start the sixad game controller driver; we need to wait for bt
+# to be ready.
+(sleep 20; 
+hciconfig hci0 piscan
+sixad --start & ) 
 exit 0
