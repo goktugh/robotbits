@@ -24,6 +24,7 @@ tyre_offset = 2.5; // tyre distance from end
 axle_nut_h = 1.25;
 axle_nut_w = 5.0;
 grub_screw_radius = 1.25;
+// Bigger cutout for screwdriver shaft
 driver_radius = 2.0;
 
 /*
