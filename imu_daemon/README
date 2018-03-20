@@ -1,3 +1,7 @@
+Daemon which reads the IMU MPU6050 on the Raspberry Pi, with the
+INT line connected to GPIO4.
+
+
 Based on 
 
 Copyright (c) 2012 Jeff Rowberg, and copied from
