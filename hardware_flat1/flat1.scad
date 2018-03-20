@@ -1,8 +1,8 @@
 // Set $fs (smallest arc fragment) to lower value than default 2.0
 $fs = 0.8; // millimetres
 
-include <defs.scad>;
-include <utils.scad>;
+include <inc/defs.scad>;
+include <inc/utils.scad>;
 
 wheel_width = 9.0;
 wheelslot_w = wheel_width + 4.0;
@@ -80,6 +80,7 @@ module other_holes(hole_r=0) {
     }
     
     // Holes for the raspberry pi gpio pins rear
+    /*
     translate([0,pi_y]) {
         // Right hand side - cutouts for I2C and power pins
         translate([20,0])
@@ -92,6 +93,7 @@ module other_holes(hole_r=0) {
             square([7,4], center=true);
         
     }
+    */
     
     // Holes to mount the IMU. 15mm spaced, at rear. 
     translate([0,-45]) {

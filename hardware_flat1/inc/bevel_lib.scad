@@ -12,6 +12,16 @@ module roundedbox(size=[1.0, 1.0, 1.0, ], radius = 0.1) {
     }
 }
 
+module rounded_square_centered(size=[1,1], radius=0.1) {
+    hull() {
+        for (x = [- size[0] / 2 + radius, size[0] / 2 - radius]) {
+            for (y = [- size[1] / 2 + radius, size[1] / 2 - radius]) {
+                translate([x,y]) circle(radius);
+            }
+        }
+    }
+}
+
 // Bevelled in x and y axes.
 module bevelledbox(size=[1,1,1], radius=0.1) {
     linear_extrude(height=size[2]) {

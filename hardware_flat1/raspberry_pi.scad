@@ -1,4 +1,4 @@
-use <utils.scad>;
+use <inc/utils.scad>;
 
 $fs = 0.8;
 

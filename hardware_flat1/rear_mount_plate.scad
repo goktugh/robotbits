@@ -1,5 +1,5 @@
-include <defs.scad>;
-include <utils.scad>;
+include <inc/defs.scad>;
+include <inc/utils.scad>;
 
 $fs = 0.8;
 

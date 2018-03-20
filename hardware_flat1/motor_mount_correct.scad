@@ -1,5 +1,7 @@
 // This document uses MILLIMETRES as a unit.
 
+use <inc/bevel_lib.scad>;
+
 // Set $fs (smallest arc fragment) to lower value than default 2.0
 $fs = 0.8; // millimetres
 
@@ -45,11 +47,26 @@ module mount_holes(cutout_depth, base_height)
                     cylinder(r=1.25, h=overall_height + 20.0);
                 echo("cutout_depth=", cutout_depth);
                 if (cutout_depth > 0.01) {
+                    $fn = 6; // Hex cutout
+                    // Because it is a hex, we actually need to increase
+                    // r, otherwise it's too small.
+                    cutout_calculated_r = cutout_r * 1.3;
+                    // Hex cutouts - rotate 30 degrees to give a better
+                    // orientation.
                     translate([x,y,overall_height + 1.0 + base_height - cutout_depth])
-                        cylinder(r=cutout_r, h = overall_height + 10);
+                        rotate([0,0,30])
+                            cylinder(r=cutout_calculated_r, h = overall_height + 10);
                 }
             }
         }     
+    }
+    if (base_height > 2.0) {
+        wiring_w = 5.0;
+        wiring_h = 1.5;
+        // Cutout underneath for wiring... 
+        // in x direction
+        translate([-20, -(wiring_w / 2), - wiring_h])
+            bevelledbox_x([40, wiring_w, wiring_h*2], radius=wiring_h); 
     }
 }
 
