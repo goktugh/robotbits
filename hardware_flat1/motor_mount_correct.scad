@@ -1,6 +1,6 @@
 // This document uses MILLIMETRES as a unit.
 
-use <bevel_lib.scad>;
+use <inc/bevel_lib.scad>;
 
 // Set $fs (smallest arc fragment) to lower value than default 2.0
 $fs = 0.8; // millimetres

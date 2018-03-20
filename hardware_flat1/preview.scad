@@ -3,7 +3,7 @@ use <motor_mount_correct.scad>;
 use <wheel_with_insert.scad>;
 use <flipper.scad>;
 use <raspberry_pi.scad>;
-include <defs.scad>;
+include <inc/defs.scad>;
 
 // Jack up the motors by this much?
 base_motors_height = 4.5;

@@ -1,5 +1,5 @@
-include <defs.scad>;
-use <utils.scad>;
+include <inc/defs.scad>;
+use <inc/utils.scad>;
 
 // Set $fs (smallest arc fragment) to lower value than default 2.0
 $fs = 0.8; // millimetres
