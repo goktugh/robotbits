@@ -62,6 +62,7 @@ uint8_t fifoBuffer[64]; // FIFO storage buffer
 Quaternion q;           // [w, x, y, z]         quaternion container
 VectorInt16 aa;         // [x, y, z]            accel sensor measurements
 VectorInt16 aaReal;     // [x, y, z]            gravity-free accel sensor measurements
+VectorInt16 aaLast;     // [x, y, z]        last tick's aaReal
 VectorInt16 aaWorld;    // [x, y, z]            world-frame accel sensor measurements
 VectorFloat gravity;    // [x, y, z]            gravity vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
@@ -256,6 +257,16 @@ void loop() {
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
             printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
+	    // calculate jerk
+	    {
+		VectorInt16 diff;
+		diff.x = aaReal.x - aaLast.x;
+		diff.y = aaReal.y - aaLast.y;
+		diff.z = aaReal.z - aaLast.z;
+		float jerk = diff.getMagnitude();
+		printf("jerk %.0f ", jerk);
+		aaLast = aaReal;
+	    }
         #endif
 
         #ifdef OUTPUT_READABLE_WORLDACCEL
