@@ -26,3 +26,5 @@ openscad motor_mount_cutout.scad -o output/motor_mount_cutout.stl
 openscad motor_mount_correct.scad -o output/motor_mount45.stl -D base_height_main=4.5
 
 
+# 3d printed base piece instead of flat1.
+openscad base3.scad -o output/base3.stl

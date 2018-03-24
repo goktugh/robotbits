@@ -62,11 +62,11 @@ module battery_pack()
 }
 
 // Raspberry pi
-translate([0,4.5,1.5])
+translate([0,pi_y,1.5])
     rotate([0,0,180])
         raspberry_pi();
 
-translate([0,7.5, 4.5])
+translate([0,-4, 4.5])
     battery_pack();
 
 // Max size cube

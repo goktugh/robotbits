@@ -7,7 +7,7 @@ use <inc/bevel_lib.scad>;
 use <flat1.scad>;
 
 height_around_holes = 2.0;
-height_everywhere = 0.5;
+height_everywhere = 0.7;
 
 motor_w = 13;
 motor_d = 22 + 0.2;
@@ -41,10 +41,7 @@ module main_flat2()
     
     linear_extrude(height=height_everywhere, convexity=4)
     {
-        intersection() {
-            main();
-            triangle_pattern(14, 1.5, 12);
-        }
+        main();
     }
    
     // Motor mounts

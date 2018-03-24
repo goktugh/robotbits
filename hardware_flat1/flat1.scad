@@ -37,6 +37,10 @@ module wheel_cutout(override_hole_r) {
 module wheel_cutouts(override_hole_r) {
     mirror_x() {
         translate([wheel_x_rear,wheel_y_rear]) wheel_cutout(override_hole_r);
+        // Cut out the back
+        translate([wheel_x_rear + 10, wheel_y_rear - 5]) {
+            square([wheelslot_w + 20, wheelslot_d], center=true);
+        }
         translate([wheel_x_front,wheel_y_front]) wheel_cutout(override_hole_r);
     }
 }
@@ -45,7 +49,7 @@ module front_corner_cutouts() {
     mirror_x() {
         translate([body_w/2, body_d / 2]) {
             rotate([0,0,45]) 
-                square([10,10], center=true);
+                square([6,6], center=true);
         }
     }
 }
@@ -53,14 +57,19 @@ module front_corner_cutouts() {
 module other_holes(hole_r=0) {
     body_hole_r = hole_r>0 ? hole_r : bolthole_r;
     mirror_x() {
+        // Rear holes
         for (x=[body_w / 6, body_w_half - 4]) {
-            for (y= [-body_d_half + 4, 4]) {
-                if ((x > (body_w_half / 2)) || (abs(y)>5)) {
-                    translate([x,y]) 
-                        circle(r=body_hole_r);
-                }
-            }
+            y = -body_d_half + 4;
+            translate([x,y]) 
+            circle(r=body_hole_r);
         }
+        // Side holes
+        translate([body_w_half - 4, -14])
+            circle(r=body_hole_r);
+        translate([body_w_half - 4, 6])
+            circle(r=body_hole_r);
+        translate([body_w_half - 4, body_d_half -5])
+            circle(r=body_hole_r);
     }
     // For the raspberry pi board - these will be used for cable
     // ties or wrap, not bolts.
@@ -69,13 +78,13 @@ module other_holes(hole_r=0) {
     pi_hole_radius = hole_r > 0 ? hole_r : 1.375; // 2.5mm bolts; 2.75mm drilled
     pi_hole_distance_x = 58; // x distance between holes, 
     pi_hole_distance_y = 24; // y distance between holes, 
-    pi_y = -7.5;
     mirror_x() {
         translate([pi_hole_distance_x / 2,pi_y,0])
         {
-            circle(r=pi_hole_radius);
-            translate([0,pi_hole_distance_y])
-            circle(r=pi_hole_radius);
+            translate([0,-pi_hole_distance_y/2 ])
+                circle(r=pi_hole_radius);
+            translate([0,pi_hole_distance_y/2 ])
+                circle(r=pi_hole_radius);
         }
     }
     
