@@ -3,6 +3,7 @@
 # Start pigpiod at boot time; enable some gpios
 # GPIO 23 and 24
 mask=0x1800000
+# -s 10 = read at 10us  (lower than default 5us)
 /usr/bin/pigpiod -x $mask
 
 # Start the sixad game controller driver; we need to wait for bt

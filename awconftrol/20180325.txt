@@ -1,0 +1,11 @@
+
+Right hand motor - gpio23
+Runs forward slowly at 1505ms
+Runs backward slowly at 1405ms
+
+left hand motor - gpio24
+Runs forward slowly at 1415ms
+runs backward slowly at 1510ms
+
+The motors continue to run faster until about ~ 1000ms or 2000ms, which seem to be full throttle.
+
