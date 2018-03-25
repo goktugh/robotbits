@@ -26,6 +26,44 @@ module triangle_pattern(spacing, width, num)
     }
 }
 
+module reinforcement_walls()
+{
+    // (2d)
+    // These are short walls which reinforce the flimsy base
+    // adding a little strength.
+    // Y axis - walls between motor mounts
+    wall_thickness = 0.6;
+    mirror_x() {
+        linex = wheel_x_front - 21 - 4;
+        polyline([  
+            [linex, wheel_y_front],
+            [linex, wheel_y_rear],
+            // diagonal
+            [-linex, wheel_y_front]
+            ],
+            wall_thickness);
+        // Spurs to reinforce corners
+        // Front spurs
+        spur_x = linex + 8;
+        pi_width_half = 32.5;
+        polyline([
+            [spur_x + 1, wheel_y_front + 10],
+            [pi_width_half -2.5 , pi_y + 13]
+            ], wall_thickness);
+        polyline([
+            [spur_x, wheel_y_front + 10],
+            [body_w_half - 2, body_d_half]
+            ], wall_thickness);
+        // rear
+        polyline([
+            [spur_x, wheel_y_rear - 10],
+            [body_w_half - 12, -body_d_half]
+            ], wall_thickness);
+    }
+
+}
+
+
 module main_flat2()
 {
     // main();
@@ -37,12 +75,22 @@ module main_flat2()
             offset(r=-1.5) main();  
         }
     }
+    
+    // reinforcement
+    linear_extrude(height=2.0, convexity=4)
+    {
+        intersection() {
+            reinforcement_walls();
+            main();
+        }
+    }
     // Everywhere.
     
-    linear_extrude(height=height_everywhere, convexity=4)
-    {
-        main();
-    }
+    color("grey")
+        linear_extrude(height=height_everywhere, convexity=4)
+        {
+            main();
+        }
    
     // Motor mounts
     x_coord = wheel_x_front - 21;
@@ -51,10 +99,12 @@ module main_flat2()
     difference() {
         linear_extrude(height=motor_height, convexity=3) {
             intersection() {
-                mirror_x() {
-                    for (y=y_coords ) {
-                        translate([ x_coord, y]) {
-                            rounded_square_centered([motor_w, motor_d], 2.0);
+                union() {
+                    mirror_x() {
+                        for (y=y_coords ) {
+                            translate([ x_coord, y]) {
+                                rounded_square_centered([motor_w, motor_d], 4.0);
+                            }
                         }
                     }
                 }

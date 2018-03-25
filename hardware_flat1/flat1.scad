@@ -8,13 +8,7 @@ wheel_width = 9.0;
 wheelslot_w = wheel_width + 4.0;
 wheelslot_d = 35;
 
-body_w = 90;
-body_d = 104;
-
 bolthole_r = 1.25;
-
-body_w_half = body_w / 2;
-body_d_half = body_d / 2;
 
 module wheel_cutout(override_hole_r) {
     hole_r = override_hole_r > 0  ? override_hole_r : bolthole_r;
