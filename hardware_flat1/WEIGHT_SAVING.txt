@@ -1,0 +1,12 @@
+Cura settings for very light parts:
+
+* Disable top thickness and bottom thickness (=0)
+
+The infill now becomes structural, so we need to set it carefully
+
+* Infill density 40%
+* Infill pattern Tri-Hexagon
+
+Wall thickness 1.0
+
+
