@@ -31,7 +31,7 @@ axle_nut_h = 1.0;
 grub_screw_radius = 1.25;
 
 flipper_width = 60;
-horiz_length = 49.0; // y axis
+horiz_length = 57.0; // y axis
 thickness = 0.75;
 bar_thickness = 2.0;
 diagonal_1_length = 26;
