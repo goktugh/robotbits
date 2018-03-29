@@ -95,7 +95,10 @@ int open_gpio() {
     int exportfd = open("/sys/class/gpio/export", O_WRONLY);
     check_fd(exportfd, "export");
     sprintf(fnbuf,"%d\n", gpio_num);
-    assert(write(exportfd, fnbuf, strlen(fnbuf)) > 0);
+    int res = write(exportfd, fnbuf, strlen(fnbuf));
+    if (res <= 0) {
+    	printf("export failed (maybe already exported?)\n"); 
+    }
     close(exportfd); 
 
     
