@@ -6,6 +6,7 @@
 #include <math.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <assert.h>
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
@@ -94,7 +95,7 @@ int open_gpio() {
     int exportfd = open("/sys/class/gpio/export", O_WRONLY);
     check_fd(exportfd, "export");
     sprintf(fnbuf,"%d\n", gpio_num);
-    write(exportfd, fnbuf, strlen(fnbuf));
+    assert(write(exportfd, fnbuf, strlen(fnbuf)) > 0);
     close(exportfd); 
 
     
@@ -103,9 +104,16 @@ int open_gpio() {
     check_fd(fd, "gpio");
     // Set edge trigger rising.
     sprintf(fnbuf,"/sys/class/gpio/gpio%d/edge", gpio_num);
-    // TODO: Sometimes this gets permission denied, it seems to be a race condition
+    // Sometimes this gets permission denied, it seems to be a race condition
     // due to the gpio just being exported "just now."
-    int edgefd = open(fnbuf, O_WRONLY);
+    int edgefd;
+    for (int tries=5; tries >=0; tries --) {
+        edgefd = open(fnbuf, O_WRONLY);
+        if (edgefd != -1) {
+            break;
+        }
+        usleep(100 *1000);
+    }
     check_fd(edgefd, "gpio edge");
     const char * rising = "rising";
     int res1 = write(edgefd, rising, strlen(rising));
