@@ -103,6 +103,8 @@ int open_gpio() {
     check_fd(fd, "gpio");
     // Set edge trigger rising.
     sprintf(fnbuf,"/sys/class/gpio/gpio%d/edge", gpio_num);
+    // TODO: Sometimes this gets permission denied, it seems to be a race condition
+    // due to the gpio just being exported "just now."
     int edgefd = open(fnbuf, O_WRONLY);
     check_fd(edgefd, "gpio edge");
     const char * rising = "rising";
