@@ -7,6 +7,9 @@
 #include <fcntl.h>
 #include <poll.h>
 #include <assert.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/un.h>
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
@@ -74,7 +77,7 @@ uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\
 
 int gpio_fd = -1;
 int loopcount = 0;
-
+int ipc_socket = -1;
 
 // ================================================================
 // ===                      INITIAL SETUP                       ===
@@ -159,6 +162,12 @@ void poll_gpio(int gpio_fd) {
     }
 }
 
+static int init_socket() 
+{
+	int s = socket(AF_UNIX, SOCK_DGRAM,0);
+	return s;
+}
+
 void setup() {
     // initialize device
     printf("Resetting MPU\n");
@@ -217,6 +226,7 @@ void setup() {
         // (if it's going to break, usually the code will be 1)
         printf("DMP Initialization failed (code %d)\n", devStatus);
     }
+    ipc_socket = init_socket();
 }
 
 
