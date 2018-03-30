@@ -179,11 +179,12 @@ void send_json_packet()
     char buf[2048];
     const char * prefix = "{ ";
     const char * suffix = "}\n";
-    strncpy(buf, prefix, strlen(prefix));
+    strncpy(buf, prefix, sizeof(buf));
     // Write fields
     // Write suffix
-    char * buf_end = strncat(buf, suffix, sizeof(buf));
-    size_t packet_len = buf_end - buf;
+    strncat(buf, suffix, sizeof(buf));
+    size_t packet_len = strlen(buf);
+    assert(packet_len > 0);
     // Send the packet to some endpoints
     int successes = 0;
     for (int i=0; i<5; i++) {
