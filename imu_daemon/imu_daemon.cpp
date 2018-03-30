@@ -74,6 +74,7 @@ int gpio_fd = -1;
 int loopcount = 0; // Counts since last data
 int ipc_socket = -1;
 int sensor_values_count = 0; // Number of sensor readings since startup
+int time_last = 0; // ms last reading
 
 // ================================================================
 // ===                      INITIAL SETUP                       ===
@@ -105,7 +106,7 @@ int open_gpio() {
     sprintf(fnbuf,"%d\n", gpio_num);
     int res = write(exportfd, fnbuf, strlen(fnbuf));
     if (res <= 0) {
-    	printf("export failed (maybe already exported?)\n"); 
+        printf("export failed (maybe already exported?)\n"); 
     }
     close(exportfd); 
     
@@ -173,7 +174,21 @@ static int init_socket()
     return s;
 }
 
-void send_json_packet()
+static void write_json_field(char * buf, const char * fname, float val)
+{
+    char fbuf[1024];
+    if (strlen(buf) < 5) {
+        strcat(buf, ", ");
+    }
+    sprintf(fbuf, "\"%s\": %.2f", fname, val);
+    strcat(buf, fbuf);
+}
+
+static void send_json_packet(
+    float yaw, float pitch, float roll, 
+    float ax, float ay, float az, 
+    float jerk,
+    int time_now)
 {
     // build json packet, send via unix datagram
     char buf[2048];
@@ -181,6 +196,14 @@ void send_json_packet()
     const char * suffix = "}\n";
     strncpy(buf, prefix, sizeof(buf));
     // Write fields
+    write_json_field(buf, "yaw", yaw);
+    write_json_field(buf, "pitch", pitch);
+    write_json_field(buf, "roll", roll);
+    write_json_field(buf, "ax", ax);
+    write_json_field(buf, "ay", ay);
+    write_json_field(buf, "az", az);
+    write_json_field(buf, "jerk", jerk);
+    write_json_field(buf, "time", time_now);
     // Write suffix
     strncat(buf, suffix, sizeof(buf));
     size_t packet_len = strlen(buf);
@@ -289,6 +312,8 @@ void loop() {
         // read a packet from FIFO
         mpu.getFIFOBytes(fifoBuffer, packetSize);
         int time_now = get_time_ms();
+        int time_since_last = time_now - time_last;
+        float jerk = 0;
         
         #ifdef OUTPUT_READABLE_QUATERNION
             // display quaternion values in easy matrix form: w x y z
@@ -324,8 +349,9 @@ void loop() {
             diff.x = aaReal.x - aaLast.x;
             diff.y = aaReal.y - aaLast.y;
             diff.z = aaReal.z - aaLast.z;
-            float jerk = diff.getMagnitude();
-            printf("jerk %.0f ", jerk);
+            jerk = diff.getMagnitude() / (time_since_last);
+            // Jerk should be in accelerator per millisecond.
+            printf("jerk %.1f ", jerk);
             aaLast = aaReal;
         }
         #endif
@@ -342,10 +368,18 @@ void loop() {
     
         printf("t=%d\n", time_now);
         // Here call the function to write to the socket.
-        send_json_packet();
+        send_json_packet(
+            // Yaw, Pitch, Roll
+            ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI,
+            // Acceleration
+            aaReal.x, aaReal.y, aaReal.z,
+            // Jerk
+            jerk,
+            time_now);
         
         loopcount = 0;
         sensor_values_count += 1;
+        time_last = time_now;
         // Got it , sleep for about 1/40 second
         usleep(25 * 1000);
     } else {
