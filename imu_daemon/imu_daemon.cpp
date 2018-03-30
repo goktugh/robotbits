@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <stddef.h>
 #include <string.h>
 #include <math.h>
 #include <fcntl.h>
@@ -10,6 +11,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/un.h>
+#include <time.h>
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
@@ -50,10 +52,6 @@ MPU6050 mpu;
 // is present in this case). Could be quite handy in some cases.
 // #define OUTPUT_READABLE_WORLDACCEL
 
-// uncomment "OUTPUT_TEAPOT" if you want output that matches the
-// format used for the InvenSense teapot demo
-//#define OUTPUT_TEAPOT
-
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
 uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
@@ -72,16 +70,23 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
-// packet structure for InvenSense teapot demo
-uint8_t teapotPacket[14] = { '$', 0x02, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
-
 int gpio_fd = -1;
-int loopcount = 0;
+int loopcount = 0; // Counts since last data
 int ipc_socket = -1;
+int sensor_values_count = 0; // Number of sensor readings since startup
 
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
+
+// Give the time in milliseconds
+static int get_time_ms()
+{
+    struct timespec ts;
+    int res = clock_gettime(CLOCK_MONOTONIC, &ts);
+    assert(res == 0);
+    return (ts.tv_sec * 1000) + (ts.tv_nsec / 1000000);
+}
 
 void check_fd(int fd, const char *reason)
 {
@@ -103,7 +108,6 @@ int open_gpio() {
     	printf("export failed (maybe already exported?)\n"); 
     }
     close(exportfd); 
-
     
     sprintf(fnbuf,"/sys/class/gpio/gpio%d/value", gpio_num);
     int fd = open(fnbuf, O_RDONLY);
@@ -164,8 +168,41 @@ void poll_gpio(int gpio_fd) {
 
 static int init_socket() 
 {
-	int s = socket(AF_UNIX, SOCK_DGRAM,0);
-	return s;
+    int s = socket(AF_UNIX, SOCK_DGRAM,0);
+    check_fd(s, "socket");
+    return s;
+}
+
+void send_json_packet()
+{
+    // build json packet, send via unix datagram
+    char buf[2048];
+    const char * prefix = "{ ";
+    const char * suffix = "}\n";
+    strncpy(buf, prefix, strlen(prefix));
+    // Write fields
+    // Write suffix
+    char * buf_end = strncat(buf, suffix, sizeof(buf));
+    size_t packet_len = buf_end - buf;
+    // Send the packet to some endpoints
+    int successes = 0;
+    for (int i=0; i<5; i++) {
+        struct sockaddr_un dest;
+        memset(&dest, 0, sizeof(dest));
+        dest.sun_family = AF_UNIX;
+        // Write string to 2nd byte position of sun_path,
+        // so we have a zero in the 1st byte.
+        int pathlen = sprintf(dest.sun_path + 1, "robot.IMU%d", i);
+        // The remaining part of the path should be all zeros
+        // Calculate the exact length of the sun_addr which we want.
+        size_t addrlen = offsetof(struct sockaddr_un, sun_path) + pathlen + 1;
+        // Send it
+        int res = sendto(ipc_socket, buf, packet_len, 
+            0, // flags
+            (struct sockaddr *) &dest, addrlen);
+        // Do we care about res? only slightly.
+        if (res == 0) successes += 1;
+    }
 }
 
 void setup() {
@@ -185,7 +222,6 @@ void setup() {
     if (! ok) {
         abort();
     }
-
 
     // load and configure the DMP
     printf("Initializing DMP...\n");
@@ -251,6 +287,7 @@ void loop() {
     } else if (fifoCount >= 42) {
         // read a packet from FIFO
         mpu.getFIFOBytes(fifoBuffer, packetSize);
+        int time_now = get_time_ms();
         
         #ifdef OUTPUT_READABLE_QUATERNION
             // display quaternion values in easy matrix form: w x y z
@@ -280,16 +317,16 @@ void loop() {
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
             printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
-	    // calculate jerk
-	    {
-		VectorInt16 diff;
-		diff.x = aaReal.x - aaLast.x;
-		diff.y = aaReal.y - aaLast.y;
-		diff.z = aaReal.z - aaLast.z;
-		float jerk = diff.getMagnitude();
-		printf("jerk %.0f ", jerk);
-		aaLast = aaReal;
-	    }
+        // calculate jerk
+        {
+            VectorInt16 diff;
+            diff.x = aaReal.x - aaLast.x;
+            diff.y = aaReal.y - aaLast.y;
+            diff.z = aaReal.z - aaLast.z;
+            float jerk = diff.getMagnitude();
+            printf("jerk %.0f ", jerk);
+            aaLast = aaReal;
+        }
         #endif
 
         #ifdef OUTPUT_READABLE_WORLDACCEL
@@ -302,23 +339,14 @@ void loop() {
             printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
         #endif
     
-        #ifdef OUTPUT_TEAPOT
-            // display quaternion values in InvenSense Teapot demo format:
-            teapotPacket[2] = fifoBuffer[0];
-            teapotPacket[3] = fifoBuffer[1];
-            teapotPacket[4] = fifoBuffer[4];
-            teapotPacket[5] = fifoBuffer[5];
-            teapotPacket[6] = fifoBuffer[8];
-            teapotPacket[7] = fifoBuffer[9];
-            teapotPacket[8] = fifoBuffer[12];
-            teapotPacket[9] = fifoBuffer[13];
-            Serial.write(teapotPacket, 14);
-            teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
-        #endif
-        printf("loopcount=%d\n", loopcount);
+        printf("t=%d\n", time_now);
+        // Here call the function to write to the socket.
+        send_json_packet();
+        
         loopcount = 0;
-	// Got it , sleep for about 1/40 second
-	usleep(25 * 1000);
+        sensor_values_count += 1;
+        // Got it , sleep for about 1/40 second
+        usleep(25 * 1000);
     } else {
         // FIFO not ready.
         mpuIntStatus = mpu.getIntStatus(); // Clear interrupt status.
