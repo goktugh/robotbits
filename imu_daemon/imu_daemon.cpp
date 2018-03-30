@@ -177,7 +177,7 @@ static int init_socket()
 static void write_json_field(char * buf, const char * fname, float val)
 {
     char fbuf[1024];
-    if (strlen(buf) < 5) {
+    if (strlen(buf) > 5) {
         strcat(buf, ", ");
     }
     sprintf(fbuf, "\"%s\": %.2f", fname, val);
@@ -193,7 +193,7 @@ static void send_json_packet(
     // build json packet, send via unix datagram
     char buf[2048];
     const char * prefix = "{ ";
-    const char * suffix = "}\n";
+    const char * suffix = " }";
     strncpy(buf, prefix, sizeof(buf));
     // Write fields
     write_json_field(buf, "yaw", yaw);
@@ -227,6 +227,8 @@ static void send_json_packet(
         // Do we care about res? only slightly.
         if (res == 0) successes += 1;
     }
+    // Additionally write to stdout.
+    puts(buf);
 }
 
 void setup() {
@@ -333,7 +335,7 @@ void loop() {
             mpu.dmpGetQuaternion(&q, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
-            printf("ypr  %7.2f %7.2f %7.2f    ", ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI);
+            // printf("ypr  %7.2f %7.2f %7.2f    ", ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI);
         #endif
 
         #ifdef OUTPUT_READABLE_REALACCEL
@@ -342,7 +344,7 @@ void loop() {
             mpu.dmpGetAccel(&aa, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-            printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
+            // printf("areal %6d %6d %6d    ", aaReal.x, aaReal.y, aaReal.z);
         // calculate jerk
         {
             VectorInt16 diff;
@@ -351,7 +353,7 @@ void loop() {
             diff.z = aaReal.z - aaLast.z;
             jerk = diff.getMagnitude() / (time_since_last);
             // Jerk should be in accelerator per millisecond.
-            printf("jerk %.1f ", jerk);
+            // printf("jerk %.1f ", jerk);
             aaLast = aaReal;
         }
         #endif
@@ -363,10 +365,10 @@ void loop() {
             mpu.dmpGetAccel(&aa, fifoBuffer);
             mpu.dmpGetGravity(&gravity, &q);
             mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-            printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
+            // printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
         #endif
     
-        printf("t=%d\n", time_now);
+        // printf("t=%d\n", time_now);
         // Here call the function to write to the socket.
         send_json_packet(
             // Yaw, Pitch, Roll
