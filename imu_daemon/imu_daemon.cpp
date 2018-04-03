@@ -75,7 +75,11 @@ int loopcount = 0; // Counts since last data
 int ipc_socket = -1;
 int sensor_values_count = 0; // Number of sensor readings since startup
 int time_last = 0; // ms last reading
+int motion_last_time = 0; // time of last motion
+int motion_time_last = 0;
 
+const float JERK_THRESHOLD = 1.5;
+const int MOTION_TIME_THRESHOLD = 200; // millisecs
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
@@ -184,10 +188,22 @@ static void write_json_field(char * buf, const char * fname, float val)
     strcat(buf, fbuf);
 }
 
+// For boolean
+static void write_json_bool(char * buf, const char * fname, bool val)
+{
+    char fbuf[1024];
+    if (strlen(buf) > 5) {
+        strcat(buf, ", ");
+    }
+    sprintf(fbuf, "\"%s\": %s", fname, val ? "true" : "false");
+    strcat(buf, fbuf);
+}
+
+
 static void send_json_packet(
     float yaw, float pitch, float roll, 
     float ax, float ay, float az, 
-    float jerk,
+    float jerk, bool motion_flag,
     int time_now)
 {
     // build json packet, send via unix datagram
@@ -203,6 +219,7 @@ static void send_json_packet(
     write_json_field(buf, "ay", ay);
     write_json_field(buf, "az", az);
     write_json_field(buf, "jerk", jerk);
+    write_json_bool(buf, "motion", motion_flag);
     write_json_field(buf, "time", time_now);
     // Write suffix
     strncat(buf, suffix, sizeof(buf));
@@ -227,8 +244,8 @@ static void send_json_packet(
         // Do we care about res? only slightly.
         if (res == 0) successes += 1;
     }
-    // Additionally write to stdout.
-    puts(buf);
+    // Additionally write to stdout, only if there is motion.
+    if (motion_flag) puts(buf);
 }
 
 void setup() {
@@ -355,6 +372,12 @@ void loop() {
             // Jerk should be in accelerator per millisecond.
             // printf("jerk %.1f ", jerk);
             aaLast = aaReal;
+            // Calculate if there is motion;
+            // If jerk is low enough, no motion
+            bool motion_now = (jerk > JERK_THRESHOLD);
+            if (motion_now) {   
+                motion_last_time = time_now;
+            }
         }
         #endif
 
@@ -367,7 +390,8 @@ void loop() {
             mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
             // printf("aworld %6d %6d %6d    ", aaWorld.x, aaWorld.y, aaWorld.z);
         #endif
-    
+   
+        bool motion_flag  = (motion_last_time >= (time_now - MOTION_TIME_THRESHOLD));
         // printf("t=%d\n", time_now);
         // Here call the function to write to the socket.
         send_json_packet(
@@ -376,7 +400,7 @@ void loop() {
             // Acceleration
             aaReal.x, aaReal.y, aaReal.z,
             // Jerk
-            jerk,
+            jerk, motion_flag,
             time_now);
         
         loopcount = 0;
