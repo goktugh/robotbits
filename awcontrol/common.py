@@ -4,6 +4,7 @@ import json
 import time
 import os
 import json
+import select
 
 imu_socket = None
 pigpio_f = None
@@ -43,8 +44,9 @@ def read_last_imu_bin():
         except BlockingIOError:
             if last_packet:
                 return last_packet 
+            break
     # No last packet.
-    timeout = 5.0
+    timeout = 2.0
     select.select([ imu_socket], [], [], timeout)
     return imu_socket.recv(2048)
 
