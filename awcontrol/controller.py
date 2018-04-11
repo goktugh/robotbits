@@ -20,7 +20,7 @@ SPEED_ZERO_THRESH = 0.01
 PULSE_WIDTH_FULL = 400 # microseconds, offset from dead zone
 
 P_FACTOR = 0.005 # Movement amount, per degree error
-I_FACTOR = 0.01   # Movement amount, per degree-second integral error
+I_FACTOR = 0.005   # Movement amount, per degree-second integral error
 I_CLAMP = 10.0 # Maximum
 
 class Controller:
