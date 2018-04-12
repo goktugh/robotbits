@@ -18,16 +18,20 @@ from common import NEUTRAL_POS
 
 SPEED_ZERO_THRESH = 0.01
 PULSE_WIDTH_FULL = 400 # microseconds, offset from dead zone
+PULSE_WIDTH_SMALL = 5 # Offset from dead zone
 
-P_FACTOR = 0.005 # Movement amount, per degree error
-I_FACTOR = 0.005   # Movement amount, per degree-second integral error
+P_FACTOR = 0.01 # Movement amount, per degree error
+I_FACTOR = 0.0 # Movement amount, per degree-second integral error
+D_FACTOR = 0.00001 # per degree per second error
 I_CLAMP = 10.0 # Maximum
 
 class Controller:
     deadzones = [] # list of lists, 
     target_yaw = None
     time_last = 0
+    error_last = 0
     integral_error = 0
+    tick_count = 0
     
     def load_deadzones(self):
         # Load deadzone file
@@ -49,9 +53,9 @@ class Controller:
             if abs(speed) < SPEED_ZERO_THRESH:
                 return NEUTRAL_POS
             if speed > 0:
-                return deadzones[1] + (PULSE_WIDTH_FULL * speed)
+                return deadzones[1] - PULSE_WIDTH_SMALL + (PULSE_WIDTH_FULL * speed)
             else: # Less than zero: subtract from deadzones[0]
-                return deadzones[0] + (PULSE_WIDTH_FULL * speed)
+                return deadzones[0] + PULSE_WIDTH_SMALL + (PULSE_WIDTH_FULL * speed)
    
         # Invert left channel because it's wired that way. 
         pulse_l = get_pulse(- speed_l, self.deadzones[0])
@@ -71,23 +75,42 @@ class Controller:
         if self.time_last == 0:
             self.time_last = time_now
         time_delta = time_now - self.time_last
+        # Avoid division by zero, by making time_delta always something...
+        time_delta = max(time_delta, 0.001)
 
+        # Calculate angular error,
         ang_error = norm_angle(yaw - self.target_yaw)
+        # Integral error
         self.integral_error += ang_error * time_delta
         # Clamp integral error to maximum
         self.integral_error = min(self.integral_error, I_CLAMP)
         self.integral_error = max(self.integral_error, - I_CLAMP)
+        # Differential error
+        differential_error = (ang_error - self.error_last) / time_delta
 
         # Calculate P and I
         # P is the proportional (angdiff)
         # I is the integral
-        print("errors: P={:.2} I={:.2}".format(ang_error, self.integral_error))
+        print("errors: P={:.2} I={:.2} D={:.2}".format(ang_error, self.integral_error, differential_error))
         # Calculate rotation amount:
-        rot = ang_error * P_FACTOR + self.integral_error * I_FACTOR
+        rot = (
+            ang_error * P_FACTOR + 
+            self.integral_error * I_FACTOR + 
+            differential_error * D_FACTOR)
+        # Make a nice forward-backward pattern.
+        forward_speed = 0.0
+        # t = (self.tick_count // 40) % 4
+        # if t == 1:
+        #     forward_speed = 0.2
+        # if t == 3:
+        #    forward_speed = -0.2
+
         # Drive to rot + forward speed
-        self.set_speeds(-rot, rot) 
+        self.set_speeds(-rot + forward_speed, rot +forward_speed) 
         
+        self.error_last = ang_error
         self.time_last = time_now
+        self.tick_count += 1
     
 
 def norm_angle(a):
