@@ -99,11 +99,11 @@ class Controller:
             differential_error * D_FACTOR)
         # Make a nice forward-backward pattern.
         forward_speed = 0.0
-        # t = (self.tick_count // 40) % 4
+        t = (self.tick_count // 40) % 4
         # if t == 1:
         #     forward_speed = 0.2
         # if t == 3:
-        #    forward_speed = -0.2
+        #   forward_speed = -0.2
 
         # Drive to rot + forward speed
         self.set_speeds(-rot + forward_speed, rot +forward_speed) 
