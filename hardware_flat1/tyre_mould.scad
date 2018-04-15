@@ -43,13 +43,14 @@ module mould_outer()
     // This will be upside-down.
     overall_height = wheel_width + 1;
     hole_radius = button_radius + 0.2;
+    side_thickness = 2.0;
     rotate_extrude(convexity=3) {
         // Base
         translate([hole_radius,0])
             square([wheel_radius + tyre_thickness - hole_radius, 1]);
         // Side wall
         translate([wheel_radius + tyre_thickness, 0]) {
-              square([1, wheel_width+1]);
+              square([side_thickness, wheel_width+1]);
         }
     }
     knobble_size = 1.0;
@@ -69,7 +70,7 @@ module main()
 {
     union() {
         mould_inner();
-        translate([wheel_radius * 2 + tyre_thickness + 7,0,0]) {
+        translate([wheel_radius * 2 + tyre_thickness + 8,0,0]) {
             mould_outer();
         }
     }
