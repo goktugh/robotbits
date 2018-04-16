@@ -9,8 +9,8 @@ mkdir -p output
 openscad flat1.scad -D override_hole_r=0.5 -o output/flat1_tinyholes.dxf
 openscad flat1.scad -D override_hole_r=0.5 -o output/flat1_tinyholes.svg
 
-# Rear mount plate
-openscad rear_mount_plate.scad -o output/rear_mount_plate.dxf
+# mount plate
+openscad mount_plate.scad -o output/mount_plate.dxf
 
 # Wheel
 
