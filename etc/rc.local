@@ -1,8 +1,9 @@
 #!/bin/sh
 
 # Start pigpiod at boot time; enable some gpios
-# GPIO 23 and 24
-mask=0x1800000
+# GPIO 18, 23 and 24, 25,7 and 8
+# mask=0x1800000
+mask=0x3840180
 # -s 10 = read at 10us  (lower than default 5us)
 /usr/bin/pigpiod -x $mask
 
