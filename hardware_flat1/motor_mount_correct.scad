@@ -44,18 +44,18 @@ module mount_holes(cutout_depth, base_height)
         for (x = [-0.5 * hole_distance_x, 0.5 * hole_distance_x] ) {
             for (y = [-0.5 * hole_distance_y, 0.5 * hole_distance_y]) {
                 translate([x,y,0])
-                    cylinder(r=1.25, h=overall_height + 20.0);
+                    cylinder(r=1.25, h=overall_height + 1.0 + base_height + 0.1 - cutout_depth);
                 echo("cutout_depth=", cutout_depth);
                 if (cutout_depth > 0.01) {
                     $fn = 6; // Hex cutout
                     // Because it is a hex, we actually need to increase
                     // r, otherwise it's too small.
                     cutout_calculated_r = cutout_r * 1.3;
-                    // Hex cutouts - rotate 30 degrees to give a better
+                    // Hex cutouts - rotate 30 degrees? to give a better
                     // orientation.
                     translate([x,y,overall_height + 1.0 + base_height - cutout_depth])
-                        rotate([0,0,30])
-                            cylinder(r=cutout_calculated_r, h = overall_height + 10);
+                        rotate([0,0,0])
+                            cylinder(r=cutout_calculated_r, h = 3.0);
                 }
             }
         }     
