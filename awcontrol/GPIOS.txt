@@ -1,0 +1,24 @@
+GPIO18 - PWM LEFT
+GPIO23, 24 - Direction left
+
+GPIO 7 - PWM RIGHT
+GPIO 8,25 = Direction Right
+
+
+BOOT PARAMETER: put this in /boot/config.txt
+
+Otherwise the right-hand motor runs at boot
+
+# GPIO - turn off gpio7 on boot
+# Should drive gpio7 low on boot to stop the motor running.
+gpio=7=op,dl
+
+
+Pulse control:
+
+* SET direction pins low
+* Set pulse pin high
+* PWM the LEFT direction
+* or PWM the RIGHT direction
+
+PULSE=high, IN1=low, IN2=low = will deactivate the brake, let the motor run free
