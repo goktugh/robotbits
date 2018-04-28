@@ -2,8 +2,9 @@
 
 # Start pigpiod at boot time; enable some gpios
 # GPIO 18, 23 and 24, 25,7 and 8
-# mask=0x1800000
-mask=0x3840180
+# Flipper: GPIO 16,20,21
+# mask=0x3840180
+mask=0x3b50180
 # -s 10 = read at 10us  (lower than default 5us)
 /usr/bin/pigpiod -x $mask
 

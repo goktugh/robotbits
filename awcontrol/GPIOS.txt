@@ -22,3 +22,11 @@ Pulse control:
 * or PWM the RIGHT direction
 
 PULSE=high, IN1=low, IN2=low = will deactivate the brake, let the motor run free
+
+---------
+
+FLIPPER
+
+GPIO16 - Enable (active high)
+GPIO20 - High to run 
+GPIO21 - High to run opposite
