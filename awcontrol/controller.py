@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """
 
-This program finds the dead zone, the region where the motors
-do not run.
-
-This is a range of pulse lengths, and quite a large range.
-
 """
 import socket
 import json
@@ -14,16 +9,13 @@ import os
 import json
 
 from common import init_socket, init_pigpio, set_neutral, set_speeds, read_last_imu
-from common import NEUTRAL_POS
 
 SPEED_ZERO_THRESH = 0.01
-PULSE_WIDTH_FULL = 400 # microseconds, offset from dead zone
-PULSE_WIDTH_SMALL = 5 # Offset from dead zone
 
-P_FACTOR = 0.005 # Movement amount, per degree error
-I_FACTOR = 0.0001 # Movement amount, per degree-second integral error
+P_FACTOR = 0.010 # Movement amount, per degree error
+I_FACTOR = 0.010 # Movement amount, per degree-second integral error
 D_FACTOR = 0.00002 # per degree per second error
-I_CLAMP = 10.0 # Maximum
+I_CLAMP = 30.0 # Maximum
 
 class Controller:
     deadzones = [] # list of lists, 
@@ -33,35 +25,12 @@ class Controller:
     integral_error = 0
     tick_count = 0
     
-    def load_deadzones(self):
-        # Load deadzone file
-        with open('data/deadzone.txt', 'rt') as f:
-            self.deadzones = []
-            # Read left, then right
-            for n in range(2):
-                line = f.readline()
-                bits = line.split()[1:] # Ignore first element
-                self.deadzones.append(tuple(map(int, bits[:2])))
-
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
-
-        def get_pulse(speed, deadzones):
-            # clamp speed
-            speed = min(speed, 1.0)
-            speed = max(speed, -1.0)
-            if abs(speed) < SPEED_ZERO_THRESH:
-                return NEUTRAL_POS
-            if speed > 0:
-                return deadzones[1] - PULSE_WIDTH_SMALL + (PULSE_WIDTH_FULL * speed)
-            else: # Less than zero: subtract from deadzones[0]
-                return deadzones[0] + PULSE_WIDTH_SMALL + (PULSE_WIDTH_FULL * speed)
-   
-        # Invert left channel because it's wired that way. 
-        pulse_l = get_pulse(- speed_l, self.deadzones[0])
-        pulse_r = get_pulse(speed_r, self.deadzones[0])
-       
-        set_speeds(pulse_l, pulse_r) 
+        def clamp(v):
+            return min(max(v,-1.0), 1.0)
+        speed_l, speed_r = clamp(speed_l), clamp(speed_r)
+        set_speeds(int(speed_l * 255), int(speed_r * 255))
    
     def tick(self): 
         # Will wait for the next imu data, if one is not ready.
@@ -91,7 +60,7 @@ class Controller:
         # Calculate P and I
         # P is the proportional (angdiff)
         # I is the integral
-        print("errors: P={:.2} I={:.2} D={:.2}".format(ang_error, self.integral_error, differential_error))
+        print("errors: P={:.2f} I={:.2f} D={:.2f}".format(ang_error, self.integral_error, differential_error))
         # Calculate rotation amount:
         rot = (
             ang_error * P_FACTOR + 
@@ -125,19 +94,18 @@ def main():
         init_socket()
         init_pigpio()
         cont = Controller()
-        cont.load_deadzones()
         # Do a little dance
         i = read_last_imu()
         if i['motion']:
             raise Exception("Already moving")
-        cont.set_speeds(0.1, 0.1)
+        cont.set_speeds(0.5, 0.5)
         time.sleep(0.5)
         i = read_last_imu()
         if not i['motion']:
             raise Exception("Drive or IMU not working, cannot detect motion.")
         cont.set_speeds(0,0)
         time.sleep(1.0)
-        cont.set_speeds(-0.1, -0.1)
+        cont.set_speeds(-0.5, -0.5)
         time.sleep(0.5)
         cont.set_speeds(0,0)
         # Done

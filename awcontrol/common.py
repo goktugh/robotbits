@@ -9,22 +9,28 @@ import select
 imu_socket = None
 pigpio_f = None
 
-GPIO_RIGHT = 23
-GPIO_LEFT = 24
-
-NEUTRAL_POS = 1450 # milliseconds
+GPIO_LEFT = (18,23,24) # Enable, fwd, back
+GPIO_RIGHT = (7,25,8) # Enable, fwd, back
 
 def init_pigpio():
     global pigpio_f
     pigpio_f = open('/dev/pigpio', 'wt')
 
 def set_speeds(l, r):
-    pigpio_f.write("s {} {}\n".format(GPIO_LEFT, l))    
-    pigpio_f.write("s {} {}\n".format(GPIO_RIGHT, r))    
+    # Range from -255 to 255
+    def set_pulses(gpios, speed):
+        en, fwd, back = gpios
+        pulsef = max(speed,0)
+        pulseb = max(-speed,0)
+        pigpio_f.write("w {} 1 p {} {} p {} {}\n".format(en, fwd, pulsef, back, pulseb))
+
+    # Left channel:
+    set_pulses(GPIO_LEFT, l)
+    set_pulses(GPIO_RIGHT, r)
     pigpio_f.flush()
 
 def set_neutral():
-    set_speeds(NEUTRAL_POS, NEUTRAL_POS)
+    set_speeds(0,0)
     
 def init_socket():
     global imu_socket

@@ -101,76 +101,6 @@ void check_fd(int fd, const char *reason)
     }
 }
 
-int open_gpio() {
-    int gpio_num=4;
-    char fnbuf[200];
-    //  Export gpio... Write the gpio number into /sys/class/gpio/export
-    int exportfd = open("/sys/class/gpio/export", O_WRONLY);
-    check_fd(exportfd, "export");
-    sprintf(fnbuf,"%d\n", gpio_num);
-    int res = write(exportfd, fnbuf, strlen(fnbuf));
-    if (res <= 0) {
-        printf("export failed (maybe already exported?)\n"); 
-    }
-    close(exportfd); 
-    
-    sprintf(fnbuf,"/sys/class/gpio/gpio%d/value", gpio_num);
-    int fd = open(fnbuf, O_RDONLY);
-    check_fd(fd, "gpio");
-    // Set edge trigger rising.
-    sprintf(fnbuf,"/sys/class/gpio/gpio%d/edge", gpio_num);
-    // Sometimes this gets permission denied, it seems to be a race condition
-    // due to the gpio just being exported "just now."
-    int edgefd;
-    for (int tries=5; tries >=0; tries --) {
-        edgefd = open(fnbuf, O_WRONLY);
-        if (edgefd != -1) {
-            break;
-        }
-        usleep(100 *1000);
-    }
-    check_fd(edgefd, "gpio edge");
-    const char * rising = "rising";
-    int res1 = write(edgefd, rising, strlen(rising));
-    if (res1 == -1) {
-        perror("set edge");
-        abort();
-    }
-    close(edgefd);
-
-    return fd;
-}
-
-int read_gpio(int gpio_fd) {
-    char buf[10];
-    bzero(buf, sizeof(buf));
-    ssize_t len = pread(gpio_fd, buf, sizeof(buf), 0);
-    if (len == -1) {
-        perror("read_gpio pread");
-        abort();
-    }
-    return atoi(buf);
-}
-
-void poll_gpio(int gpio_fd) {
-    struct pollfd poller;
-    poller.fd = gpio_fd;
-    poller.events = POLLPRI |POLLERR;
-    int timeout = 1000;  // Milliseconds
-    int res = poll(&poller, 1, timeout); 
-    // If res==1, then everything is ok.
-    // If res==0, then we timed out.
-    // If res==-1 then sometihng is bad.
-    if (res == -1) {
-        perror("poll");
-        abort();
-    }
-    if (res == 0) {
-        printf("WARNING: Timeout while polling gpio\n");
-        printf("gpio=%d\n", read_gpio(gpio_fd));
-    }
-}
-
 static int init_socket() 
 {
     int s = socket(AF_UNIX, SOCK_DGRAM,0);
@@ -255,9 +185,6 @@ void setup() {
     printf("Initializing I2C devices...\n");
     mpu.initialize();
 
-    printf("Opening gpio...\n");
-    gpio_fd = open_gpio();
-
     // verify connection
     printf("Testing device connections...\n");
     bool ok = mpu.testConnection();
@@ -285,7 +212,6 @@ void setup() {
         mpu.setIntDMPEnabled(1);
         // mpu.setIntPLLReadyEnabled(1); // Some interrupt from the dmp?
         mpuIntStatus = mpu.getIntStatus(); // Clear existing status.
-        printf("gpio=%d\n", read_gpio(gpio_fd));
         // turn on the DMP, now that it's ready
         printf("Enabling DMP...\n");
         mpu.setDMPEnabled(true);
@@ -411,13 +337,6 @@ void loop() {
     } else {
         // FIFO not ready.
         mpuIntStatus = mpu.getIntStatus(); // Clear interrupt status.
-        poll_gpio(gpio_fd);
-        // What caused the interrupt?
-        // Not PLL. Not DMPint1.
-        // DMPint0 seems to be the "correct" source.
-        mpuIntStatus = mpu.getIntStatus(); // Clear interrupt status.
-        // bool dmpint2=mpu.getDMPInt2Status();
-        // printf("poll mpuIntStatus=%02x DMP2=%d\n", mpuIntStatus, dmpint2);
     }
 }
 
