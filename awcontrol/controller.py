@@ -14,8 +14,9 @@ SPEED_ZERO_THRESH = 0.01
 
 P_FACTOR = 0.010 # Movement amount, per degree error
 I_FACTOR = 0.010 # Movement amount, per degree-second integral error
-D_FACTOR = 0.00002 # per degree per second error
+D_FACTOR = 0.0004 # per degree per second error
 I_CLAMP = 30.0 # Maximum
+DEAD_ZONE = 0.1 # 
 
 class Controller:
     deadzones = [] # list of lists, 
@@ -30,7 +31,18 @@ class Controller:
         def clamp(v):
             return min(max(v,-1.0), 1.0)
         speed_l, speed_r = clamp(speed_l), clamp(speed_r)
-        set_speeds(int(speed_l * 255), int(speed_r * 255))
+        # Apply dead zone logic
+        def speed_to_pwm(speed):
+            if abs(speed) < SPEED_ZERO_THRESH:
+                speed = 0
+            else:
+                if speed > 0:
+                    speed = (speed * (1.0 - DEAD_ZONE)) + DEAD_ZONE
+                else:
+                    speed = (speed * (1.0 - DEAD_ZONE)) - DEAD_ZONE
+            return int(speed * 255)
+           
+        set_speeds(speed_to_pwm(speed_l), speed_to_pwm(speed_r))
    
     def tick(self): 
         # Will wait for the next imu data, if one is not ready.
