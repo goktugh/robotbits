@@ -7,6 +7,7 @@ import json
 import time
 import os
 import json
+import math
 
 from common import init_socket, init_pigpio, set_neutral, set_speeds, read_last_imu
 import input_reader
@@ -19,7 +20,6 @@ D_FACTOR = 0.0004 # per degree per second error
 I_CLAMP = 30.0 # Maximum
 DEAD_ZONE = 0.1 # 
 ROTATE_SPEED = 180 # Degrees per second, max
-DRIVE_SPEED = 0.8 # Fraction
 
 class Controller:
     deadzones = [] # list of lists, 
@@ -102,8 +102,10 @@ class Controller:
             ang_error * P_FACTOR + 
             self.integral_error * I_FACTOR + 
             differential_error * D_FACTOR)
-        # Make a nice forward-backward pattern.
-        forward_speed = self.input_drive * DRIVE_SPEED
+        # set forward speed depending on controller position and angle error.
+        # More angle error = less drive speed, based on cos
+        drive_speed = max(0.1, math.cos(math.radians(ang_error)))
+        forward_speed = self.input_drive * drive_speed
         # Drive to rot + forward speed
         self.set_speeds(-rot + forward_speed, rot +forward_speed) 
         
