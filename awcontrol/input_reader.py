@@ -18,15 +18,7 @@ EV_KEY=1
 EV_REL=2
 EV_ABS=3
 
-# Our axes defined in input-event-codes. These seem to be mostly wrong.
-ABS_X   =0x00
-ABS_Y   =0x01
-ABS_Z   =0x02
-ABS_RX  =0x03
-ABS_RY  =0x04
-ABS_RZ  =0x05
-
-AXES_X = (0,2)
+AXES_X = (2,) # Ignore left hand stick X axis.
 AXES_Y = (1,3)
 # Buttons for "flip" - X, and all the shoulder buttons.
 BUTTONS_FLIP =  (0x12e, 0x128, 0x129, 0x12a, 0x12b)
