@@ -5,8 +5,8 @@ import os
 pigpio_f = None
 
 GPIO_FLIP_ENABLE = 16
-GPIO_FLIP_0 = 20 # Enable to flip up
-GPIO_FLIP_1 = 21 # enable to flip down
+GPIO_FLIP_0 = 21 # Enable to flip up
+GPIO_FLIP_1 = 20 # enable to flip down
 
 def init_pigpio():
     global pigpio_f
@@ -33,7 +33,11 @@ if __name__ == '__main__':
     print("retracting...")
     # Retract slowly.
     set_flipper(-1,64)
-    time.sleep(5)
+    time.sleep(2)
+    print("holding...")
+    # Retract slowly.
+    set_flipper(-1,32)
+    time.sleep(10)
     print("end")
     set_flipper(0,0)
 
