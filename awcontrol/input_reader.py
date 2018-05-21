@@ -19,7 +19,7 @@ EV_REL=2
 EV_ABS=3
 
 AXES_X = (2,) # Ignore left hand stick X axis.
-AXES_Y = (1,3)
+AXES_Y = (1,) # Ignore the right stick Y axis
 # Buttons for "flip" - X, and all the shoulder buttons.
 BUTTONS_FLIP =  (0x12e, 0x128, 0x129, 0x12a, 0x12b)
 
