@@ -70,7 +70,7 @@ translate([0,-4, 4.5])
     battery_pack();
 
 // Max size cube
-translate([0,-10,0])
-    rotate([45,0,0]) {
-         * %cube([101, 101, 101], center=true);
+translate([0,0,6])
+    rotate([35,0,0]) {
+          * %cube([101, 101, 101], center=true);
     }
