@@ -61,7 +61,7 @@ class Controller:
         if not control_pos.signal:
             self.target_yaw = None # Do not spin when no signal.
             self.integral_error = 0
-        x = (control_pos.x / 127.0)
+        x = - (control_pos.x / 127.0) # x axis also reversed?
         y = - (control_pos.y / 127.0) # y axis seems reversed.
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
@@ -107,7 +107,7 @@ class Controller:
         drive_speed = max(0.1, math.cos(math.radians(ang_error)))
         forward_speed = self.input_drive * drive_speed
         # Drive to rot + forward speed
-        self.set_speeds(-rot + forward_speed, rot +forward_speed) 
+        self.set_speeds(rot + forward_speed, -rot +forward_speed) 
         
         self.error_last = ang_error
         self.time_last = time_now

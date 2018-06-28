@@ -9,8 +9,8 @@ import select
 imu_socket = None
 pigpio_f = None
 
-GPIO_LEFT = (18,23,24) # Enable, fwd, back
-GPIO_RIGHT = (25,7,8) # Enable, fwd, back
+GPIO_RIGHT = (18,23,24) # Enable, fwd, back
+GPIO_LEFT = (25,7,8) # Enable, fwd, back
 
 def init_pigpio():
     global pigpio_f
