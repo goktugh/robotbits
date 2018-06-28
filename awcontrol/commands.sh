@@ -7,9 +7,9 @@
 L_PWM=18
 L_0=24
 L_1=23
-R_PWM=7
+R_PWM=25
 R_0=8
-R_1=25
+R_1=7
 
 function off {
     pigs w $L_PWM 0 w $R_PWM 0
