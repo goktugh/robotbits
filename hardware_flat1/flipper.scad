@@ -31,17 +31,23 @@ axle_nut_h = 1.0;
 grub_screw_radius = 1.25;
 
 flipper_width = 60;
+flipper_scoop_width = 90; // Bottom part, scoop
 horiz_length = 57.0; // y axis
 thickness = 0.75;
 bar_thickness = 2.0;
 diagonal_1_length = 26;
 diagonal_1_drop = 13;
-diagonal_2_length = 16;
+diagonal_2_length = 14;
 diagonal_2_drop = 16;
+diagonal_3_length = 8;
+diagonal_3_drop = 2;
 
 cutout_length = 24;
 cutout_drop = 15;
 ridge_radius = 1.0;
+
+// Centre position of the mounting point.
+mount_x_pos = -2.0;
 
 generate_flipper_main = true; // changed by -D
 
@@ -54,6 +60,10 @@ flipper_outline_points = [
             [
                 horiz_length + diagonal_1_length + diagonal_2_length, 
                 shaft_radius - diagonal_1_drop - diagonal_2_drop
+            ],
+            [
+                horiz_length + diagonal_1_length + diagonal_2_length + diagonal_3_length, 
+                shaft_radius - diagonal_1_drop - diagonal_2_drop - diagonal_3_drop
             ]
         ];
 
@@ -125,6 +135,7 @@ module flipper_reinforcement()
 module reinforcement_thing() {
     // Piece which reinforces the flipper
     // Centre piece
+    translate([0,0,0])
     linear_extrude(height=1.0, center=true) {
         intersection()
         {
@@ -145,6 +156,7 @@ module flipper_shaft_attachment()
 {
    // This assumes that the shaft is in the z axis...
    // Shaft attachment
+   translate([0,0,mount_x_pos]) // Will be rotated
     linear_extrude(height=shaft_length, center=true, convexity=3) {
         difference() {
             union() {
@@ -172,19 +184,20 @@ module flipper_flipper()
         union()
         {
             // Flipper main
-            linear_extrude(height=flipper_width, center=true, convexity=3) {
+            linear_extrude(height=flipper_scoop_width, center=true, convexity=3) {
                 flipper_outline();
             }
             flipper_reinforcement();
         }
         
         // Cutout top pieces.
+        translate([0,0,mount_x_pos])
         mirror_z() {
             cutout_z_len = ((flipper_width - shaft_length) / 2);
             translate([-shaft_radius - 10, shaft_radius - cutout_drop, (-flipper_width / 2) - 10])
                 hull()
                 {
-                    translate([0,0,-cutout_z_len])
+                    translate([0,0,-cutout_z_len + mount_x_pos])
                     cube(
                         [cutout_length + 10, 
                         cutout_drop + 10, 
@@ -199,12 +212,28 @@ module flipper_flipper()
         // Cut off end
         translate([-shaft_radius - 10, 0,0])
             cube([20, shaft_radius * 3, flipper_width + 10], center=true);
+        // Cut off the main parts to leave scoop.
+        wide_part_start_x2 = flipper_outline_points[3][0];
+        wide_part_start_x1 = wide_part_start_x2 - 10;
+        mirror_z() {
+            hull() {
+                translate([0,-25, flipper_width / 2])
+                    cube(
+                        [wide_part_start_x1, 50, flipper_width]
+                        );
+                translate([0,-25, flipper_scoop_width / 2])
+                    cube(
+                        [wide_part_start_x2, 50, flipper_scoop_width]
+                        );
+            }
+        }
     }
 }
 
 module flipper_screw_holes()
 {
     // Need holes in the y direction, going down to y=0
+    translate([0,0,mount_x_pos])
     mirror_z() {
         rotate([-90,0,0]) {
             translate([0,4.0,0]) {

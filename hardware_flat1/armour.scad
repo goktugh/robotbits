@@ -12,7 +12,7 @@ side_holes_x_list = [body_d_half -14, body_d_half + 6, body_d - 5];
 
 thickness_margin = 0.5;
 
-armour_height = 20; 
+armour_height = 23; 
 side_armour_height = armour_height - 1;
 wedge_len = 45;
 wedge_height = 2.0;
@@ -22,14 +22,14 @@ module hole_tab() {
     difference() {
         intersection()
         {   
-            translate([0, -8 + 10]) 
+            translate([0, -9 + 10]) 
                 rounded_square_centered([8,20], 3.0);
             // Ensure it does not stick up too far
             translate([-10, -11]) {
                 square([20,12]);
             }
         }
-        translate([0,-4 - thickness_margin])
+        translate([0,-5 - thickness_margin])
             circle(bolt_hole_r);
     }
 }
