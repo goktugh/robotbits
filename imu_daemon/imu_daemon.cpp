@@ -320,9 +320,14 @@ void loop() {
         bool motion_flag  = (motion_last_time >= (time_now - MOTION_TIME_THRESHOLD));
         // printf("t=%d\n", time_now);
         // Here call the function to write to the socket.
+        float effective_yaw = ypr[0] * 180 / M_PI;
+        if (aaReal.z < 0) {
+            // If the IMU is installed upside down, invert yaw
+            effective_yaw = - effective_yaw;
+        }
         send_json_packet(
             // Yaw, Pitch, Roll
-            ypr[0] * 180/M_PI, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI,
+            effective_yaw, ypr[1] * 180/M_PI, ypr[2] * 180/M_PI,
             // Acceleration
             aaReal.x, aaReal.y, aaReal.z,
             // Jerk

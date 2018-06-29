@@ -61,7 +61,7 @@ class Controller:
         if not control_pos.signal:
             self.target_yaw = None # Do not spin when no signal.
             self.integral_error = 0
-        x = (control_pos.x / 127.0)
+        x = (control_pos.x / 127.0) 
         y = - (control_pos.y / 127.0) # y axis seems reversed.
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
