@@ -12,4 +12,8 @@ mask=0x38c21c0
 (sleep 20; 
 hciconfig hci0 piscan
 sixad --start & ) 
+
+# Start the imu daemon, in screen
+(cd /home/mark/robotbits/imu_daemon; screen -d -m ./imu_daemon )
+
 exit 0
