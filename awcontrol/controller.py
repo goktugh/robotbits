@@ -21,6 +21,15 @@ I_CLAMP = 30.0 # Maximum
 DEAD_ZONE = 0.1 # 
 ROTATE_SPEED = 180 # Degrees per second, max
 
+# Flip sate map: direction, duty, time to next state, next state
+FLIP_STATE_MAP = {
+    'idle': (0,0,0, 'idle'),
+    'flip': (1, 255, 0.15, 'hold'),
+    'hold': (0, 0, 0.15, 'retract'),
+    'retract': (-1, 80, 0.25, 'retract2'),
+    'retract2': (-1, 32, 0.15, 'idle'),
+}
+
 class Controller:
     deadzones = [] # list of lists, 
     target_yaw = None
@@ -33,6 +42,8 @@ class Controller:
     input_flip = False
     input_flip_up = False
     input_flip_down = False
+    flip_state = 'idle'
+    flip_timeout = 0 # Time left to next state
     
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
@@ -68,7 +79,6 @@ class Controller:
         if not control_pos.signal:
             self.target_yaw = None # Do not spin when no signal.
             self.integral_error = 0
-            return
         x = (control_pos.x / 127.0) 
         y = - (control_pos.y / 127.0) # y axis seems reversed.
         self.input_rotate = clamp(-1,1, x)
@@ -86,6 +96,7 @@ class Controller:
         if self.time_last == 0:
             self.time_last = time_now
         time_delta = time_now - self.time_last
+        self.time_delta = time_delta
         # Avoid division by zero, by making time_delta always something...
         time_delta = max(time_delta, 0.001)
         self.target_yaw += self.input_rotate * ROTATE_SPEED * time_delta
@@ -122,8 +133,21 @@ class Controller:
         self.tick_count += 1
 
     def process_flipper(self):
-        direction = 0
-        duty = 0
+        # Process flipper state machine
+        self.flip_timeout -= self.time_delta
+        # If flip was pressed, and we are idle, do a flip.
+        if self.input_flip and self.flip_state == 'idle':
+            self.flip_state = 'flip'
+            self.flip_timeout = FLIP_STATE_MAP[self.flip_state][2]
+        # Move to next state
+        if self.flip_timeout <=0:
+            # Move to next state
+            self.flip_state = FLIP_STATE_MAP[self.flip_state][3]
+            self.flip_timeout = FLIP_STATE_MAP[self.flip_state][2]
+        # set duty and direction
+        direction = FLIP_STATE_MAP[self.flip_state][0]
+        duty = FLIP_STATE_MAP[self.flip_state][1]
+        # manual overrides for flip_up and down buttons (triangle and circle)
         if self.input_flip_up:
             direction, duty = 1,30
         if self.input_flip_down:
