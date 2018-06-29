@@ -9,7 +9,7 @@ import os
 import json
 import math
 
-from common import init_socket, init_pigpio, set_neutral, set_speeds, read_last_imu
+from common import init_socket, init_pigpio, set_neutral, set_flipper, set_speeds, read_last_imu
 import input_reader
 
 SPEED_ZERO_THRESH = 0.01
@@ -30,6 +30,9 @@ class Controller:
     tick_count = 0
     input_rotate = 0 # From controller, range -1.0 to 1.0 
     input_drive = 0 # From controller -1 ..1 
+    input_flip = False
+    input_flip_up = False
+    input_flip_down = False
     
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
@@ -55,12 +58,17 @@ class Controller:
     def tick(self): 
         self.process_inputs()
         self.process_pid()
+        self.process_flipper()
 
     def process_inputs(self):
         control_pos = input_reader.read_controller()
+        self.input_flip = control_pos.flip
+        self.input_flip_up = control_pos.flip_up
+        self.input_flip_down = control_pos.flip_down
         if not control_pos.signal:
             self.target_yaw = None # Do not spin when no signal.
             self.integral_error = 0
+            return
         x = (control_pos.x / 127.0) 
         y = - (control_pos.y / 127.0) # y axis seems reversed.
         self.input_rotate = clamp(-1,1, x)
@@ -112,7 +120,16 @@ class Controller:
         self.error_last = ang_error
         self.time_last = time_now
         self.tick_count += 1
-    
+
+    def process_flipper(self):
+        direction = 0
+        duty = 0
+        if self.input_flip_up:
+            direction, duty = 1,30
+        if self.input_flip_down:
+            direction, duty = -1,30
+        set_flipper(direction, duty)
+            
 
 def norm_angle(a):
     if a > 180:        
@@ -128,20 +145,21 @@ def main():
     try:
         init_socket()
         init_pigpio()
+        set_flipper(0,0)
         cont = Controller()
         # Do a little dance
         i = read_last_imu()
         if i['motion']:
             raise Exception("Already moving")
         cont.set_speeds(0.5, 0.5)
-        time.sleep(0.25)
+        time.sleep(0.12)
         i = read_last_imu()
         if not i['motion']:
             raise Exception("Drive or IMU not working, cannot detect motion.")
         cont.set_speeds(0,0)
         time.sleep(1.0)
         cont.set_speeds(-0.5, -0.5)
-        time.sleep(0.25)
+        time.sleep(0.12)
         cont.set_speeds(0,0)
         time.sleep(1.0)
         # Done
@@ -150,6 +168,7 @@ def main():
     finally:
         try:
             set_neutral()
+            set_flipper(0,0)
         except Exception as e:
             pass # Ignore now
 
