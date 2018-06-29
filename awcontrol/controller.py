@@ -165,16 +165,22 @@ def norm_angle(a):
 def clamp(min_value, max_value, value):
     return min(max_value,max(min_value,value))
 
+def wait_for_stillness():
+    while True:
+        i = read_last_imu()
+        if i['motion']: 
+            print("Still moving, waiting for stillness.")
+        else:
+            break
+
 def main(): 
     try:
         init_socket()
         init_pigpio()
         set_flipper(0,0)
         cont = Controller()
+        wait_for_stillness()
         # Do a little dance
-        i = read_last_imu()
-        if i['motion']:
-            raise Exception("Already moving")
         cont.set_speeds(0.5, 0.5)
         time.sleep(0.12)
         i = read_last_imu()
