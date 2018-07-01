@@ -81,6 +81,11 @@ class Controller:
             self.integral_error = 0
         x = (control_pos.x / 127.0) 
         y = - (control_pos.y / 127.0) # y axis seems reversed.
+        # Apply dead zone
+        if abs(x ) < 0.2:
+            x = 0
+        if abs(y ) < 0.2:
+            y = 0
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
 
