@@ -5,9 +5,9 @@ import time
 import collections
 
 ControlPosition = collections.namedtuple('ControlPosition',
-    ['x', 'y', 'flip', 'signal']
+    ['x', 'y', 'flip', 'flip_up', 'flip_down', 'signal']
     )
-NO_SIGNAL = ControlPosition(0,0,False,False)
+NO_SIGNAL = ControlPosition(0,0,False, False, False,False)
 
 InputEvent = collections.namedtuple('InputEvent', ['tv_sec', 'tv_usec','type', 'code', 'value'])
 
@@ -22,6 +22,9 @@ AXES_X = (2,) # Ignore left hand stick X axis.
 AXES_Y = (1,) # Ignore the right stick Y axis
 # Buttons for "flip" - X, and all the shoulder buttons.
 BUTTONS_FLIP =  (0x12e, 0x128, 0x129, 0x12a, 0x12b)
+
+BUTTON_TRIANGLE = 300
+BUTTON_CIRCLE = 301
 
 input_dev = '/dev/input/event0'
 
@@ -40,10 +43,12 @@ input_dev_fd = None # Global
 input_state_flip = False
 # State of input axes:
 input_axes = collections.defaultdict(int)
+button_state = collections.defaultdict(bool)
   
 def read_controller():
     global input_dev_fd
     global input_state_flip
+    global button_state
     if input_dev_fd is None:
         try:
             fd = open(input_dev, 'rb')
@@ -64,6 +69,8 @@ def read_controller():
                 input_axes[e.code] = e.value
             if e.type == EV_KEY and e.code in BUTTONS_FLIP:
                 input_state_flip = bool(e.value)
+            if e.type == EV_KEY:
+                button_state[e.code] = bool(e.value)
         else:
             break
     # Find the sum of the x and y:
@@ -73,7 +80,11 @@ def read_controller():
     x = max(x,-128)
     y = min(y,128)
     y = max(y,-128)
-    return ControlPosition(x, y, input_state_flip, True)
+    return ControlPosition(x, y, 
+        input_state_flip,  # Flip trigger
+        button_state[BUTTON_TRIANGLE], # flip up
+        button_state[BUTTON_CIRCLE], # flip down
+        True)
         
  
 def main(): 

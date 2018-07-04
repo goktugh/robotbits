@@ -14,6 +14,8 @@ hciconfig hci0 piscan
 sixad --start & ) 
 
 # Start the imu daemon, in screen
-(cd /home/mark/robotbits/imu_daemon; screen -d -m ./imu_daemon )
+(cd /home/mark/robotbits/imu_daemon; screen -S imu -d -m ./imu_daemon )
+# Start the controller, in screen
+(cd /home/mark/robotbits/awcontrol; screen -S control -d -m ./controller.py )
 
 exit 0

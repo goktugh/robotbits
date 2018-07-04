@@ -9,7 +9,7 @@ import os
 import json
 import math
 
-from common import init_socket, init_pigpio, set_neutral, set_speeds, read_last_imu
+from common import init_socket, init_pigpio, set_neutral, set_flipper, set_speeds, read_last_imu
 import input_reader
 
 SPEED_ZERO_THRESH = 0.01
@@ -21,6 +21,15 @@ I_CLAMP = 30.0 # Maximum
 DEAD_ZONE = 0.1 # 
 ROTATE_SPEED = 180 # Degrees per second, max
 
+# Flip sate map: direction, duty, time to next state, next state
+FLIP_STATE_MAP = {
+    'idle': (0,0,0, 'idle'),
+    'flip': (1, 255, 0.15, 'hold'),
+    'hold': (0, 0, 0.15, 'retract'),
+    'retract': (-1, 80, 0.25, 'retract2'),
+    'retract2': (-1, 32, 0.15, 'idle'),
+}
+
 class Controller:
     deadzones = [] # list of lists, 
     target_yaw = None
@@ -30,6 +39,11 @@ class Controller:
     tick_count = 0
     input_rotate = 0 # From controller, range -1.0 to 1.0 
     input_drive = 0 # From controller -1 ..1 
+    input_flip = False
+    input_flip_up = False
+    input_flip_down = False
+    flip_state = 'idle'
+    flip_timeout = 0 # Time left to next state
     
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
@@ -55,14 +69,23 @@ class Controller:
     def tick(self): 
         self.process_inputs()
         self.process_pid()
+        self.process_flipper()
 
     def process_inputs(self):
         control_pos = input_reader.read_controller()
+        self.input_flip = control_pos.flip
+        self.input_flip_up = control_pos.flip_up
+        self.input_flip_down = control_pos.flip_down
         if not control_pos.signal:
             self.target_yaw = None # Do not spin when no signal.
             self.integral_error = 0
         x = (control_pos.x / 127.0) 
         y = - (control_pos.y / 127.0) # y axis seems reversed.
+        # Apply dead zone
+        if abs(x ) < 0.2:
+            x = 0
+        if abs(y ) < 0.2:
+            y = 0
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
 
@@ -78,6 +101,7 @@ class Controller:
         if self.time_last == 0:
             self.time_last = time_now
         time_delta = time_now - self.time_last
+        self.time_delta = time_delta
         # Avoid division by zero, by making time_delta always something...
         time_delta = max(time_delta, 0.001)
         self.target_yaw += self.input_rotate * ROTATE_SPEED * time_delta
@@ -112,7 +136,29 @@ class Controller:
         self.error_last = ang_error
         self.time_last = time_now
         self.tick_count += 1
-    
+
+    def process_flipper(self):
+        # Process flipper state machine
+        self.flip_timeout -= self.time_delta
+        # If flip was pressed, and we are idle, do a flip.
+        if self.input_flip and self.flip_state == 'idle':
+            self.flip_state = 'flip'
+            self.flip_timeout = FLIP_STATE_MAP[self.flip_state][2]
+        # Move to next state
+        if self.flip_timeout <=0:
+            # Move to next state
+            self.flip_state = FLIP_STATE_MAP[self.flip_state][3]
+            self.flip_timeout = FLIP_STATE_MAP[self.flip_state][2]
+        # set duty and direction
+        direction = FLIP_STATE_MAP[self.flip_state][0]
+        duty = FLIP_STATE_MAP[self.flip_state][1]
+        # manual overrides for flip_up and down buttons (triangle and circle)
+        if self.input_flip_up:
+            direction, duty = 1,30
+        if self.input_flip_down:
+            direction, duty = -1,30
+        set_flipper(direction, duty)
+            
 
 def norm_angle(a):
     if a > 180:        
@@ -124,24 +170,31 @@ def norm_angle(a):
 def clamp(min_value, max_value, value):
     return min(max_value,max(min_value,value))
 
+def wait_for_stillness():
+    while True:
+        i = read_last_imu()
+        if i['motion']: 
+            print("Still moving, waiting for stillness.")
+        else:
+            break
+
 def main(): 
     try:
         init_socket()
         init_pigpio()
+        set_flipper(0,0)
         cont = Controller()
+        wait_for_stillness()
         # Do a little dance
-        i = read_last_imu()
-        if i['motion']:
-            raise Exception("Already moving")
         cont.set_speeds(0.5, 0.5)
-        time.sleep(0.25)
+        time.sleep(0.12)
         i = read_last_imu()
         if not i['motion']:
             raise Exception("Drive or IMU not working, cannot detect motion.")
         cont.set_speeds(0,0)
         time.sleep(1.0)
         cont.set_speeds(-0.5, -0.5)
-        time.sleep(0.25)
+        time.sleep(0.12)
         cont.set_speeds(0,0)
         time.sleep(1.0)
         # Done
@@ -150,6 +203,7 @@ def main():
     finally:
         try:
             set_neutral()
+            set_flipper(0,0)
         except Exception as e:
             pass # Ignore now
 
