@@ -45,9 +45,7 @@ module wheel_vase()
                     
                     union() {
                         // Walls
-                            bevel_square([main_radius, main_height], r=1);
-                        // base
-                        // square([main_radius-1, base_height]);
+                            square([main_radius, main_height]);
                     };
                     // Tyre cutout
                     translate([main_radius - (tyre_radius / sqrt(2)),0])
@@ -67,7 +65,8 @@ module wheel_vase()
                 linear_extrude(height=30.0, convexity=3) {
                     intersection() {
                         circle(r=axle_radius + axle_radius_margin);
-                        translate([-0.5,0,0]) {
+                        flat_width = 0.7; // flat side width
+                        translate([- flat_width,0,0]) {
                             side = (axle_radius + axle_radius_margin) * 2;
                             square([side, side], center=true);
                         }
@@ -76,7 +75,7 @@ module wheel_vase()
             } // trans
             // Now we need to cut outs for spokes. These are special;
             // We only put a single spoke on each layer, and rotate around.
-            spoke_cut_width = 0.5;
+            spoke_cut_width = 0.7;
             for (i = [0,1,2,3,4,5]) {
                 rotate([0,0,i*120]) 
                     translate([0,-0.5 * spoke_cut_width,i * main_height / 6])
