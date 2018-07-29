@@ -89,7 +89,7 @@ module wheel_vase()
                     translate([0,-0.5 * spoke_cut_width,i * main_height / 6])
                         cube([spoke_full_len, spoke_cut_width, (main_height / 6) ]);
                     // Partial spoke which does not reach the outer circle
-                    spoke_len_partial = main_radius - tyre_radius - 0.25;
+                    spoke_len_partial = main_radius - tyre_radius - 0.75;
                     rotate([0,0,120]) 
                         translate([0,-0.5 * spoke_cut_width,i * main_height / 6])
                             cube([spoke_len_partial, spoke_cut_width, (main_height / 6) ]);
