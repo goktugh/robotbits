@@ -29,6 +29,13 @@ module mirror_x()
     }
 }
 
+module mirror_y()
+{
+    union() {
+        children();
+        mirror([0,1,0]) children();
+    }
+}
 
 module mirror_z()
 {

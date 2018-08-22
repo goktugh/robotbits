@@ -5,10 +5,10 @@ $fa = 0.8; // millimetres
 
 // This radius should be a little less than our wheels, to allow for
 // stretching.
-wheel_radius = 12.0;
+wheel_radius = 11.5;
 wheel_width = 6.0;
 
-tyre_thickness = 2.5; // Includes knobbles
+tyre_thickness = 3.0; // Includes knobbles
 
 button_radius = 2.5;
 
@@ -42,7 +42,7 @@ module mould_outer()
 {
     // This will be upside-down.
     overall_height = wheel_width + 1;
-    hole_radius = button_radius + 0.2;
+    hole_radius = button_radius + 0.4;
     side_thickness = 2.0;
     rotate_extrude(convexity=3) {
         // Base
