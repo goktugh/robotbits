@@ -4,12 +4,12 @@
 # GPIO 25 - PWM LEFT
 # GPIO 8,7 = Direction left
 
-L_PWM=25
-L_0=8
-L_1=7
-R_PWM=18
-R_0=24
-R_1=23
+R_PWM=25
+R_0=8
+R_1=7
+L_PWM=18
+L_0=23
+L_1=24
 
 function off {
     pigs w $L_PWM 0 w $R_PWM 0
