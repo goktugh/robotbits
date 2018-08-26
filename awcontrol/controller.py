@@ -15,8 +15,8 @@ import input_reader
 SPEED_ZERO_THRESH = 0.01
 
 P_FACTOR = 0.004 # Movement amount, per degree error
-I_FACTOR = 0.004 # Movement amount, per degree-second integral error
-D_FACTOR = 0.0004 # per degree per second error
+I_FACTOR = 0.002 # Movement amount, per degree-second integral error
+D_FACTOR = 0.0005 # per degree per second error
 I_CLAMP = 30.0 # Maximum
 DEAD_ZONE = 0.05 #  amount of pwm which does not have any effect
 ROTATE_SPEED = 180 # Degrees per second, max
