@@ -14,7 +14,7 @@ axle_diameter = 3.0;
 axle_radius = axle_diameter / 2;
 axle_radius_margin = 0.2; // Extra allowance for shrinkage etc
 main_height = 8.5;
-tyre_radius = 1.5;
+tyre_radius = 2.5;
 tyre_offset = 2.5; // tyre distance from end
 
 // Unit-diamond 
@@ -33,7 +33,7 @@ module bevel_square(size=[10,10], r=1.0)
     }
 }
 
-module wheel_vase() 
+module wheel_simple() 
 {
     difference()
     {
@@ -73,38 +73,9 @@ module wheel_vase()
                     }
                 } // linear
             } // trans
-            // Now we need to cut outs for spokes. These are special;
-            // Each layer has three spokes, but only one of them reaches
-            // the outer part.
-            // This is so that on each layer, we have a continuous loop
-            // with no jumps 
-            spoke_cut_width = 0.7;
-            for (i = [0,1,2,3,4,5]) {
-                // One spoke goes *all the way*
-                // One spoke nearly reaches the outside
-                // One spoke nearly reaches the inside.
-                rotate([0,0,i*120])  {
-                    // Full spoke
-                    spoke_full_len = main_radius + 10;
-                    translate([0,-0.5 * spoke_cut_width,i * main_height / 6])
-                        cube([spoke_full_len, spoke_cut_width, (main_height / 6) ]);
-                    // Partial spoke which does not reach the outer circle
-                    spoke_len_partial = main_radius - tyre_radius - 0.75;
-                    rotate([0,0,120]) 
-                        translate([0,-0.5 * spoke_cut_width,i * main_height / 6])
-                            cube([spoke_len_partial, spoke_cut_width, (main_height / 6) ]);
-                    // Partial spoke which does not reach the inner circle.
-                    spoke_inner_offset = axle_radius + axle_radius_margin + 1.0;
-                    rotate([0,0,240]) 
-                        translate([spoke_inner_offset,-0.5 * spoke_cut_width,i * main_height / 6])
-                            cube([spoke_full_len, spoke_cut_width, (main_height / 6) ]);
-                    
-                    
-                }                
-            }
         } // union
     } // difference
 }
 
-wheel_vase();
+wheel_simple();
 
