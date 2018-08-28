@@ -5,9 +5,15 @@ import time
 import collections
 
 ControlPosition = collections.namedtuple('ControlPosition',
-    ['x', 'y', 'flip', 'flip_up', 'flip_down', 'signal']
+
+    ['x', 'y', 
+    'flip',  # Flip signal
+    'flip_up', 'flip_down',  # Move flipper
+    'signal', # True = controller ok
+    'stop' # Button to tell it to stop or pause
+]
     )
-NO_SIGNAL = ControlPosition(0,0,False, False, False,False)
+NO_SIGNAL = ControlPosition(0,0,False, False, False,False, False)
 
 InputEvent = collections.namedtuple('InputEvent', ['tv_sec', 'tv_usec','type', 'code', 'value'])
 
@@ -25,6 +31,7 @@ BUTTONS_FLIP =  (0x12e, 0x128, 0x129, 0x12a, 0x12b)
 
 BUTTON_TRIANGLE = 300
 BUTTON_CIRCLE = 301
+BUTTON_P = 304 # PS3 button
 
 input_dev = '/dev/input/event0'
 
@@ -62,7 +69,9 @@ def read_controller():
             e = read_event(input_dev_fd)
         except OSError: # Signal lost?
             input_dev_fd.close()
-            input_dev_fd = None
+            input_dev_fd = None 
+            # Forget all button state on lost signal.
+            button_state.clear()
             return NO_SIGNAL
         if e:
             if e.type == EV_ABS:
@@ -71,6 +80,7 @@ def read_controller():
                 input_state_flip = bool(e.value)
             if e.type == EV_KEY:
                 button_state[e.code] = bool(e.value)
+                # print("Button {}".format(e.code))
         else:
             break
     # Find the sum of the x and y:
@@ -84,7 +94,7 @@ def read_controller():
         input_state_flip,  # Flip trigger
         button_state[BUTTON_TRIANGLE], # flip up
         button_state[BUTTON_CIRCLE], # flip down
-        True)
+        True, button_state[BUTTON_P])
         
  
 def main(): 
