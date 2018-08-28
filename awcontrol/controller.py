@@ -14,12 +14,14 @@ import input_reader
 
 SPEED_ZERO_THRESH = 0.01
 
-P_FACTOR = 0.010 # Movement amount, per degree error
-I_FACTOR = 0.010 # Movement amount, per degree-second integral error
-D_FACTOR = 0.0004 # per degree per second error
+P_FACTOR = 0.004 # Movement amount, per degree error
+I_FACTOR = 0.002 # Movement amount, per degree-second integral error
+D_FACTOR = 0.0005 # per degree per second error
 I_CLAMP = 30.0 # Maximum
-DEAD_ZONE = 0.1 # 
+DEAD_ZONE = 0.05 #  amount of pwm which does not have any effect
 ROTATE_SPEED = 180 # Degrees per second, max
+
+DRIVE_SCALE = 0.6 # scaling factor for forward/back drive
 
 # Flip sate map: direction, duty, time to next state, next state
 FLIP_STATE_MAP = {
@@ -57,7 +59,7 @@ class Controller:
             else:
                 # Apply the squaring rule,
                 # To try to make it more proportional?
-                speed *= abs(speed)
+                # speed *= abs(speed)
                 if speed > 0:
                     speed = (speed * (1.0 - DEAD_ZONE)) + DEAD_ZONE
                 else:
@@ -129,7 +131,7 @@ class Controller:
         # set forward speed depending on controller position and angle error.
         # More angle error = less drive speed, based on cos
         drive_speed = max(0.1, math.cos(math.radians(ang_error)))
-        forward_speed = self.input_drive * drive_speed
+        forward_speed = self.input_drive * drive_speed * DRIVE_SCALE
         # Drive to rot + forward speed
         self.set_speeds(-rot + forward_speed, rot +forward_speed) 
         
