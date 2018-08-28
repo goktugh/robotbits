@@ -75,6 +75,9 @@ module wheel_simple()
             } // trans
         } // union
     } // difference
+    // This piece mates with the shaft cutout.
+    translate([0.8,0,1])
+        cube([1,5,2], center=true);
 }
 
 wheel_simple();
