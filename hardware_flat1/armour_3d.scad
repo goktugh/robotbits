@@ -19,15 +19,17 @@ bolt_hole_r = 1.125;
 shell_thickness = 1.0;
 tab_thickness = 1.0;
 
+body_w_fudge = 0.4;
+
 module hole_tab() {
     difference() {
         intersection()
         {   
-            translate([0, -7 + 10]) 
-                rounded_square_centered([8,20], 3.0);
+            translate([0, -7 + 10 + body_w_fudge]) 
+                rounded_square_centered([6,20], 3.0);
             // Ensure it does not stick up too far
             translate([-10, -11]) {
-                square([20,11]);
+                square([20,11.5]);
             }
         }
         translate([0,-4])
@@ -45,7 +47,7 @@ module armour_3d_main()
     union() {
         // Rear armour:
         translate([0,0,armour_height / 2])
-            cube([body_w, shell_thickness,armour_height], center=true);
+            cube([body_w + (body_w_fudge * 2), shell_thickness,armour_height], center=true);
         mirror_x() {
             for(x = rear_holes_x_list) {
                 translate([x,0]) hole_tab_3d();
@@ -53,7 +55,7 @@ module armour_3d_main()
         }
         // side armour
         mirror_x() {
-            translate([body_w / 2,0,0])
+            translate([body_w / 2 + body_w_fudge,0,0])
             rotate([0,90,0]) {
                 rotate([0,0,90]) {
                     linear_extrude(shell_thickness) {
@@ -72,10 +74,10 @@ module armour_3d_main()
                     translate([y,-(body_w /2)]) hole_tab_3d();
                 }
             // Corner supports
-            translate([body_w/2, 0])
+            translate([body_w/2 + body_w_fudge, 0])
                 linear_extrude(armour_height)
                     intersection() {
-                        diamond(2.0);
+                        diamond(2.5);
                         translate([-2,-0.5]) square([3,3]);
                     }
         }
