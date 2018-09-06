@@ -46,6 +46,7 @@ class Controller:
     input_flip_down = False
     flip_state = 'idle'
     flip_timeout = 0 # Time left to next state
+    last_stop_time = 0 # Last time the stop button was pressed
     
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
@@ -78,11 +79,20 @@ class Controller:
         self.input_flip = control_pos.flip
         self.input_flip_up = control_pos.flip_up
         self.input_flip_down = control_pos.flip_down
-        if not control_pos.signal:
-            self.target_yaw = None # Do not spin when no signal.
-            self.integral_error = 0
+        if control_pos.stop:
+            self.last_stop_time = self.time_last
+        # Check if we should halt the robot?
+        halt = ((self.time_last - self.last_stop_time) < 1.5) or (not control_pos.signal)
+
         x = (control_pos.x / 127.0) 
         y = - (control_pos.y / 127.0) # y axis seems reversed.
+        if halt:
+            self.target_yaw = None # Do not spin when no signal.
+            self.integral_error = 0
+            x,y = 0,0
+            self.input_flip = False
+            self.input_flip_up = self.input_flip_down = False
+
         # Apply dead zone
         if abs(x ) < 0.2:
             x = 0
@@ -156,9 +166,9 @@ class Controller:
         duty = FLIP_STATE_MAP[self.flip_state][1]
         # manual overrides for flip_up and down buttons (triangle and circle)
         if self.input_flip_up:
-            direction, duty = 1,30
+            direction, duty = 1,40
         if self.input_flip_down:
-            direction, duty = -1,30
+            direction, duty = -1,40
         set_flipper(direction, duty)
             
 
@@ -188,14 +198,14 @@ def main():
         cont = Controller()
         wait_for_stillness()
         # Do a little dance
-        cont.set_speeds(0.5, 0.5)
+        cont.set_speeds(0.2, 0.2)
         time.sleep(0.12)
         i = read_last_imu()
         if not i['motion']:
             raise Exception("Drive or IMU not working, cannot detect motion.")
         cont.set_speeds(0,0)
         time.sleep(1.0)
-        cont.set_speeds(-0.5, -0.5)
+        cont.set_speeds(-0.2, -0.2)
         time.sleep(0.12)
         cont.set_speeds(0,0)
         time.sleep(1.0)
