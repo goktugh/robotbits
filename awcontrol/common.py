@@ -71,5 +71,10 @@ def read_last_imu_bin():
 
 def read_last_imu():
     bindata = read_last_imu_bin()
-    return json.loads(bindata.decode('ascii'))
+    try:
+        return json.loads(bindata.decode('ascii'))
+    except ValueError:
+        print("AARGH bad json from imu")
+        print(bindata.decode('ascii'))
+        raise
 
