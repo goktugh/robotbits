@@ -46,6 +46,7 @@ class Controller:
     input_flip_down = False
     flip_state = 'idle'
     flip_timeout = 0 # Time left to next state
+    retract_time = 0 # If >0, then retract
     last_stop_time = 0 # Last time the stop button was pressed
     
     def set_speeds(self, speed_l, speed_r):
@@ -92,12 +93,16 @@ class Controller:
             x,y = 0,0
             self.input_flip = False
             self.input_flip_up = self.input_flip_down = False
+            self.retract_time = 0 
 
         # Apply dead zone
         if abs(x ) < 0.2:
             x = 0
         if abs(y ) < 0.2:
             y = 0
+        else:
+            # Driving, enable retract
+            self.retract_time = 0.4
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
 
@@ -164,6 +169,10 @@ class Controller:
         # set duty and direction
         direction = FLIP_STATE_MAP[self.flip_state][0]
         duty = FLIP_STATE_MAP[self.flip_state][1]
+        # close flipper while driving
+        if self.flip_state == 'idle' and self.retract_time > 0:
+            direction, duty = -1,50
+            self.retract_time -= self.time_delta
         # manual overrides for flip_up and down buttons (triangle and circle)
         if self.input_flip_up:
             direction, duty = 1,40
