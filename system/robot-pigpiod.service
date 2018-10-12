@@ -1,0 +1,23 @@
+[Unit]
+Description=Pigpio daemon
+; Make it start earlier by disabling default dependencies.
+DefaultDependencies=False
+; but still need syslog
+After=syslog.target
+
+[Service]
+# mask=0x38c21c0
+# # -s 10 = read at 10us  (lower than default 5us)
+# /usr/bin/pigpiod -x $mask
+
+# -g = foreground
+ExecStart=/usr/bin/pigpiod -g -x 0x38c21c0
+; Use "realtime" scheduler:
+CPUSchedulingPolicy=fifo
+
+StandardError=syslog
+
+[Install]
+WantedBy=basic.target
+
+

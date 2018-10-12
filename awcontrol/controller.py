@@ -30,6 +30,8 @@ FLIP_STATE_MAP = {
     'hold': (0, 0, 0.15, 'retract'),
     'retract': (-1, 80, 0.25, 'retract2'),
     'retract2': (-1, 32, 0.15, 'idle'),
+    # Special state for quick retraction.
+    'retract3': [-1, 255, 0.15, 'idle'],
 }
 
 class Controller:
@@ -160,6 +162,9 @@ class Controller:
         # If flip was pressed, and we are idle, do a flip.
         if self.input_flip and self.flip_state == 'idle':
             self.flip_state = 'flip'
+            # Special retract
+            if self.input_flip_down:
+                self.flip_state = 'retract3'
             self.flip_timeout = FLIP_STATE_MAP[self.flip_state][2]
         # Move to next state
         if self.flip_timeout <=0:
@@ -174,10 +179,11 @@ class Controller:
             direction, duty = -1,50
             self.retract_time -= self.time_delta
         # manual overrides for flip_up and down buttons (triangle and circle)
-        if self.input_flip_up:
-            direction, duty = 1,40
-        if self.input_flip_down:
-            direction, duty = -1,40
+        if self.flip_state == 'idle':
+            if self.input_flip_up:
+                direction, duty = 1,40
+            if self.input_flip_down:
+                direction, duty = -1,40
         set_flipper(direction, duty)
             
 
