@@ -45,10 +45,10 @@ def set_flipper(direction, duty):
     pigpio_f.write("w {} {}\n".format(GPIO_FLIP_1, int(p1)))
     pigpio_f.flush()
 
-def init_socket():
+def init_socket(unit=0):
     global imu_socket
     s = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-    laddr = b'\0' + b'robot.IMU0'
+    laddr = ('\0' + 'robot.IMU{}'.format(unit)).encode('ascii')
     s.bind(laddr)
     s.setblocking(0) # Make socket non-block
     imu_socket = s
