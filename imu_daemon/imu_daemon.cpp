@@ -236,7 +236,7 @@ static void init_mpu() {
         printf("DMP Initialization failed (code %d)\n", devStatus);
         abort();
     }
-    if (ipc_socket != -1) {
+    if (ipc_socket == -1) {
         ipc_socket = init_socket();
     }
     need_init = false;
