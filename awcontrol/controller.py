@@ -14,14 +14,16 @@ import input_reader
 
 SPEED_ZERO_THRESH = 0.01
 
-P_FACTOR = 0.004 # Movement amount, per degree error
-I_FACTOR = 0 # Movement amount, per degree-second integral error
+P_FACTOR = 0.005 # Movement amount, per degree error
+I_FACTOR = 0.020 # Movement amount, per degree-second integral error
 D_FACTOR = 0.0005 # per degree per second error
 I_CLAMP = 30.0 # Maximum
 DEAD_ZONE = 0.05 #  amount of pwm which does not have any effect
 ROTATE_SPEED = 180 # Degrees per second, max
 
 DRIVE_SCALE = 0.3 # scaling factor for forward/back drive
+DRIVE_SCALE_FAST = 0.6 # when driving fast
+FAST_TIME = 0.1 # drive fast for this long after stop
 
 # Flip sate map: direction, duty, time to next state, next state
 FLIP_STATE_MAP = {
@@ -50,6 +52,7 @@ class Controller:
     flip_timeout = 0 # Time left to next state
     retract_time = 0 # If >0, then retract
     last_stop_time = 0 # Last time the stop button was pressed
+    last_nodrive_time = 0 # Last time when we were not driving fwd or back.
     
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
@@ -61,9 +64,6 @@ class Controller:
             if abs(speed) < SPEED_ZERO_THRESH:
                 speed = 0
             else:
-                # Apply the squaring rule,
-                # To try to make it more proportional?
-                # speed *= abs(speed)
                 if speed > 0:
                     speed = (speed * (1.0 - DEAD_ZONE)) + DEAD_ZONE
                 else:
@@ -107,6 +107,10 @@ class Controller:
             self.retract_time = 0.4
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
+        if y == 0:
+            last_nodrive_time = self.time_last
+
+
 
     def process_pid(self):
         # Will wait for the next imu data, if one is not ready.
@@ -148,7 +152,11 @@ class Controller:
         # set forward speed depending on controller position and angle error.
         # More angle error = less drive speed, based on cos
         drive_speed = max(0.1, math.cos(math.radians(ang_error)))
-        forward_speed = self.input_drive * drive_speed * DRIVE_SCALE
+        if (time_now - self.last_nodrive_time) < FAST_TIME:
+            drive_speed *= DRIVE_SCALE_FAST
+        else:
+            drive_speed *= DRIVE_SCALE
+        forward_speed = self.input_drive * drive_speed
         # Drive to rot + forward speed
         self.set_speeds(-rot + forward_speed, rot +forward_speed) 
         
