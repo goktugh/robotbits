@@ -11,6 +11,7 @@ import math
 
 from common import init_socket, init_pigpio, set_neutral, set_flipper, set_speeds, read_last_imu
 import input_reader
+import recorder
 
 SPEED_ZERO_THRESH = 0.01
 
@@ -158,7 +159,15 @@ class Controller:
             drive_speed *= DRIVE_SCALE
         forward_speed = self.input_drive * drive_speed
         # Drive to rot + forward speed
-        self.set_speeds(-rot + forward_speed, rot +forward_speed) 
+        speeds = (-rot + forward_speed, rot +forward_speed) 
+        self.set_speeds(*speeds)
+        # write data record
+        recorder.recorder_write(
+            {'input_x': self.input_rotate, 'input_y':self.input_drive,
+            'target_yaw': self.target_yaw,
+            'yaw': yaw,
+            'speed_l': speeds[0], 'speed_r': speeds[1]
+            })
         
         self.error_last = ang_error
         self.time_last = time_now
@@ -217,6 +226,7 @@ def main():
     try:
         init_socket()
         init_pigpio()
+        recorder.recorder_init()
         set_flipper(0,0)
         cont = Controller()
         wait_for_stillness()
