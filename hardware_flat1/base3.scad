@@ -75,6 +75,18 @@ module main_flat2()
             offset(r=-1.5) main();  
         }
     }
+    // Higher fence around the outside
+    linear_extrude(height=3.0, convexity=4)
+    {
+        difference() 
+        {
+            main(false);
+            offset(r=-1.5) main(false);  
+            // Exclude bits of perimeter which are close
+            // to the holes.
+            other_holes(hole_r=3.0);
+        }
+    }
     
     // reinforcement
     linear_extrude(height=2.0, convexity=4)
