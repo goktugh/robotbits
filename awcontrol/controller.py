@@ -11,17 +11,20 @@ import math
 
 from common import init_socket, init_pigpio, set_neutral, set_flipper, set_speeds, read_last_imu
 import input_reader
+import recorder
 
 SPEED_ZERO_THRESH = 0.01
 
-P_FACTOR = 0.004 # Movement amount, per degree error
-I_FACTOR = 0.002 # Movement amount, per degree-second integral error
+P_FACTOR = 0.005 # Movement amount, per degree error
+I_FACTOR = 0.020 # Movement amount, per degree-second integral error
 D_FACTOR = 0.0005 # per degree per second error
 I_CLAMP = 30.0 # Maximum
 DEAD_ZONE = 0.05 #  amount of pwm which does not have any effect
 ROTATE_SPEED = 180 # Degrees per second, max
 
-DRIVE_SCALE = 0.6 # scaling factor for forward/back drive
+DRIVE_SCALE = 0.3 # scaling factor for forward/back drive
+DRIVE_SCALE_FAST = 0.6 # when driving fast
+FAST_TIME = 0.1 # drive fast for this long after stop
 
 # Flip sate map: direction, duty, time to next state, next state
 FLIP_STATE_MAP = {
@@ -30,6 +33,8 @@ FLIP_STATE_MAP = {
     'hold': (0, 0, 0.15, 'retract'),
     'retract': (-1, 80, 0.25, 'retract2'),
     'retract2': (-1, 32, 0.15, 'idle'),
+    # Special state for quick retraction.
+    'retract3': [-1, 255, 0.15, 'idle'],
 }
 
 class Controller:
@@ -46,7 +51,9 @@ class Controller:
     input_flip_down = False
     flip_state = 'idle'
     flip_timeout = 0 # Time left to next state
+    retract_time = 0 # If >0, then retract
     last_stop_time = 0 # Last time the stop button was pressed
+    last_nodrive_time = 0 # Last time when we were not driving fwd or back.
     
     def set_speeds(self, speed_l, speed_r):
         # set speeds, with speed_l and speed_r between -1.0 and 1.0 
@@ -58,9 +65,6 @@ class Controller:
             if abs(speed) < SPEED_ZERO_THRESH:
                 speed = 0
             else:
-                # Apply the squaring rule,
-                # To try to make it more proportional?
-                # speed *= abs(speed)
                 if speed > 0:
                     speed = (speed * (1.0 - DEAD_ZONE)) + DEAD_ZONE
                 else:
@@ -92,14 +96,22 @@ class Controller:
             x,y = 0,0
             self.input_flip = False
             self.input_flip_up = self.input_flip_down = False
+            self.retract_time = 0 
 
         # Apply dead zone
         if abs(x ) < 0.2:
             x = 0
         if abs(y ) < 0.2:
             y = 0
+        else:
+            # Driving, enable retract
+            self.retract_time = 0.4
         self.input_rotate = clamp(-1,1, x)
         self.input_drive = clamp(-1,1, y)
+        if y == 0:
+            last_nodrive_time = self.time_last
+
+
 
     def process_pid(self):
         # Will wait for the next imu data, if one is not ready.
@@ -141,9 +153,21 @@ class Controller:
         # set forward speed depending on controller position and angle error.
         # More angle error = less drive speed, based on cos
         drive_speed = max(0.1, math.cos(math.radians(ang_error)))
-        forward_speed = self.input_drive * drive_speed * DRIVE_SCALE
+        if (time_now - self.last_nodrive_time) < FAST_TIME:
+            drive_speed *= DRIVE_SCALE_FAST
+        else:
+            drive_speed *= DRIVE_SCALE
+        forward_speed = self.input_drive * drive_speed
         # Drive to rot + forward speed
-        self.set_speeds(-rot + forward_speed, rot +forward_speed) 
+        speeds = (-rot + forward_speed, rot +forward_speed) 
+        self.set_speeds(*speeds)
+        # write data record
+        recorder.recorder_write(
+            {'input_x': self.input_rotate, 'input_y':self.input_drive,
+            'target_yaw': self.target_yaw,
+            'yaw': yaw,
+            'speed_l': speeds[0], 'speed_r': speeds[1]
+            })
         
         self.error_last = ang_error
         self.time_last = time_now
@@ -155,6 +179,9 @@ class Controller:
         # If flip was pressed, and we are idle, do a flip.
         if self.input_flip and self.flip_state == 'idle':
             self.flip_state = 'flip'
+            # Special retract
+            if self.input_flip_down:
+                self.flip_state = 'retract3'
             self.flip_timeout = FLIP_STATE_MAP[self.flip_state][2]
         # Move to next state
         if self.flip_timeout <=0:
@@ -164,11 +191,16 @@ class Controller:
         # set duty and direction
         direction = FLIP_STATE_MAP[self.flip_state][0]
         duty = FLIP_STATE_MAP[self.flip_state][1]
+        # close flipper while driving
+        if self.flip_state == 'idle' and self.retract_time > 0:
+            direction, duty = -1,50
+            self.retract_time -= self.time_delta
         # manual overrides for flip_up and down buttons (triangle and circle)
-        if self.input_flip_up:
-            direction, duty = 1,40
-        if self.input_flip_down:
-            direction, duty = -1,40
+        if self.flip_state == 'idle':
+            if self.input_flip_up:
+                direction, duty = 1,40
+            if self.input_flip_down:
+                direction, duty = -1,40
         set_flipper(direction, duty)
             
 
@@ -194,6 +226,7 @@ def main():
     try:
         init_socket()
         init_pigpio()
+        recorder.recorder_init()
         set_flipper(0,0)
         cont = Controller()
         wait_for_stillness()

@@ -72,14 +72,18 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 
 int gpio_fd = -1;
 int loopcount = 0; // Counts since last data
+static bool need_init = true;
 int ipc_socket = -1;
 int sensor_values_count = 0; // Number of sensor readings since startup
 int time_last = 0; // ms last reading
 int motion_last_time = 0; // time of last motion
 int motion_time_last = 0;
+int high_jerk_count = 0; // number of ticks jerk is too high
 
 const float JERK_THRESHOLD = 1.5;
 const int MOTION_TIME_THRESHOLD = 200; // millisecs
+
+const int HIGH_JERK_THRESHOLD = 800;
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
@@ -178,7 +182,7 @@ static void send_json_packet(
     if (motion_flag) puts(buf);
 }
 
-void setup() {
+static void init_mpu() {
     // initialize device
     printf("Resetting MPU\n");
     mpu.reset();
@@ -230,8 +234,13 @@ void setup() {
         // 2 = DMP configuration updates failed
         // (if it's going to break, usually the code will be 1)
         printf("DMP Initialization failed (code %d)\n", devStatus);
+        abort();
     }
-    ipc_socket = init_socket();
+    if (ipc_socket == -1) {
+        ipc_socket = init_socket();
+    }
+    need_init = false;
+    usleep(100000);
 }
 
 
@@ -240,6 +249,10 @@ void setup() {
 // ================================================================
 
 void loop() {
+    if (need_init) {
+        init_mpu();
+    }
+    
     loopcount += 1;
     // if programming failed, don't try to do anything
     if (!dmpReady) return;
@@ -304,6 +317,18 @@ void loop() {
             if (motion_now) {   
                 motion_last_time = time_now;
             }
+            if (jerk > HIGH_JERK_THRESHOLD) {
+                // Very jerky, this is unusual, or the MPU may be giving 
+                // crazy bad data.
+                high_jerk_count += 1;
+                if (high_jerk_count > 3) {
+                    printf("MPU GONE CRAZY\n");
+                    need_init = true;
+                    high_jerk_count = 0;
+                }
+            } else {
+                high_jerk_count = 0;
+            }
         }
         #endif
 
@@ -346,8 +371,6 @@ void loop() {
 }
 
 int main() {
-    setup();
-    usleep(100000);
     for (;;)
         loop();
 
