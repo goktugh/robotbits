@@ -52,7 +52,7 @@ module other_holes(hole_r=0) {
     body_hole_r = hole_r>0 ? hole_r : bolthole_r;
     mirror_x() {
         // Rear holes
-        for (x=[body_w / 6, body_w_half - 4]) {
+        for (x=[body_w / 6, body_w_half - 4, 7.5]) {
             y = -body_d_half + 4;
             translate([x,y]) 
             circle(r=body_hole_r);
@@ -80,41 +80,19 @@ module other_holes(hole_r=0) {
             translate([0,pi_hole_distance_y/2 ])
                 circle(r=pi_hole_radius);
         }
-    }
-    
-    // Holes for the raspberry pi gpio pins rear
-    /*
-    translate([0,pi_y]) {
-        // Right hand side - cutouts for I2C and power pins
-        translate([20,0])
-            square([12,4], center=true);
-        // Center - gpio23,24 - for drive motors
-        translate([4,0])
-            square([12,4], center=true);
-        // LHS - for the flipper controller pins
-        translate([-21,0])
-            square([7,4], center=true);
-        
-    }
-    */
-    
-    // Holes to mount the IMU. 15mm spaced, at rear. 
-    translate([0,-45]) {
-        spacing = 15.0; 
-        mirror_x() {
-            translate([spacing / 2, 0]) circle(r=pi_hole_radius);
-        }
-    }
+    }    
 }
 
 override_hole_r = 0; // Set this with -D to override hole size.
 
-module main() {
+module main(holes=true) {
     difference() {
         rounded_rect(body_w, body_d, 2);
         wheel_cutouts(override_hole_r);
         front_corner_cutouts();
-        other_holes(override_hole_r);
+        if(holes) {
+            other_holes(override_hole_r);
+        }
     }
 }
 

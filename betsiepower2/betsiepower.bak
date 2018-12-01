@@ -1,0 +1,433 @@
+EESchema Schematic File Version 4
+LIBS:betsiepower-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Betsie Power board"
+Date "2018-11-08"
+Rev ""
+Comp "Mark Robson"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Regulator_Linear:AZ1117-5.0 U1
+U 1 1 5BE49AE9
+P 2950 4050
+F 0 "U1" H 2950 4292 50  0000 C CNN
+F 1 "AZ1117-5.0" H 2950 4201 50  0000 C CNN
+F 2 "" H 2950 4300 50  0001 C CIN
+F 3 "https://www.diodes.com/assets/Datasheets/AZ1117.pdf" H 2950 4050 50  0001 C CNN
+	1    2950 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Male J1
+U 1 1 5BE49BC0
+P 1550 4000
+F 0 "J1" H 1656 4178 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 1656 4087 50  0000 C CNN
+F 2 "" H 1550 4000 50  0001 C CNN
+F 3 "~" H 1550 4000 50  0001 C CNN
+	1    1550 4000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1750 4000 2150 4000
+Wire Wire Line
+	2650 4050 2450 4050
+Wire Wire Line
+	2150 4050 2150 4000
+Wire Wire Line
+	2100 4100 2100 4350
+Wire Wire Line
+	2100 4350 2450 4350
+$Comp
+L Device:C C1
+U 1 1 5BE49D98
+P 2450 4200
+F 0 "C1" H 2565 4246 50  0000 L CNN
+F 1 "10uF" H 2565 4155 50  0000 L CNN
+F 2 "" H 2488 4050 50  0001 C CNN
+F 3 "~" H 2450 4200 50  0001 C CNN
+	1    2450 4200
+	1    0    0    -1  
+$EndComp
+Connection ~ 2450 4050
+Wire Wire Line
+	2450 4050 2150 4050
+Connection ~ 2450 4350
+Wire Wire Line
+	2450 4350 2600 4350
+Text GLabel 2450 3850 1    50   Input ~ 0
+VBAT
+Wire Wire Line
+	2450 3850 2450 4050
+Wire Wire Line
+	2950 4350 3200 4350
+Connection ~ 2950 4350
+Wire Wire Line
+	3250 4050 3550 4050
+$Comp
+L Device:C C2
+U 1 1 5BE4A034
+P 3550 4200
+F 0 "C2" H 3665 4246 50  0000 L CNN
+F 1 "47uF" H 3665 4155 50  0000 L CNN
+F 2 "" H 3588 4050 50  0001 C CNN
+F 3 "~" H 3550 4200 50  0001 C CNN
+	1    3550 4200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 4050 4200 4050
+$Comp
+L power:GND #PWR01
+U 1 1 5BE4A0C2
+P 2950 4350
+F 0 "#PWR01" H 2950 4100 50  0001 C CNN
+F 1 "GND" H 2955 4177 50  0000 C CNN
+F 2 "" H 2950 4350 50  0001 C CNN
+F 3 "" H 2950 4350 50  0001 C CNN
+	1    2950 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1750 4100 2100 4100
+$Comp
+L Driver_Motor:L293D U2
+U 1 1 5BE4ADA8
+P 7600 4100
+F 0 "U2" H 7600 5278 50  0000 C CNN
+F 1 "L293D" H 7600 5187 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm" H 7850 3350 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/l293.pdf" H 7300 4800 50  0001 C CNN
+	1    7600 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J2
+U 1 1 5BE4B052
+P 3100 2550
+F 0 "J2" H 3206 2928 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 3206 2837 50  0000 C CNN
+F 2 "" H 3100 2550 50  0001 C CNN
+F 3 "~" H 3100 2550 50  0001 C CNN
+	1    3100 2550
+	1    0    0    -1  
+$EndComp
+Text Notes 3050 2050 0    50   ~ 0
+Power out, weapon control
+Text Notes 1500 3750 0    50   ~ 0
+Power in\n
+Text GLabel 3300 2350 2    50   Input ~ 0
+VLOGIC
+$Comp
+L power:GND #PWR03
+U 1 1 5BE4B3AC
+P 4250 2450
+F 0 "#PWR03" H 4250 2200 50  0001 C CNN
+F 1 "GND" H 4255 2277 50  0000 C CNN
+F 2 "" H 4250 2450 50  0001 C CNN
+F 3 "" H 4250 2450 50  0001 C CNN
+	1    4250 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4250 2450 3300 2450
+Text GLabel 3300 2550 2    50   Input ~ 0
+WEAPON_EN
+Text GLabel 3300 2650 2    50   Input ~ 0
+WEAPON_UP
+Text GLabel 3300 2750 2    50   Input ~ 0
+WEAPON_DOWN
+Text Notes 7800 3050 0    50   ~ 0
+Actually SN754410\nPin compatible with L298
+Text GLabel 7100 3900 0    50   Input ~ 0
+WEAPON_EN
+Text GLabel 7100 4500 0    50   Input ~ 0
+WEAPON_EN
+Text GLabel 7100 3500 0    50   Input ~ 0
+WEAPON_UP
+Text GLabel 7100 3700 0    50   Input ~ 0
+WEAPON_DOWN
+Text GLabel 7100 4100 0    50   Input ~ 0
+WEAPON_DOWN
+Text GLabel 7100 4300 0    50   Input ~ 0
+WEAPON_UP
+Wire Wire Line
+	8100 3500 9100 3500
+Wire Wire Line
+	8100 4300 9100 4300
+Wire Wire Line
+	9100 4300 9100 3500
+Connection ~ 9100 3500
+Wire Wire Line
+	8100 3700 8850 3700
+Wire Wire Line
+	8100 4100 8850 4100
+Wire Wire Line
+	8850 4100 8850 3700
+Connection ~ 8850 3700
+Wire Wire Line
+	8850 3700 9300 3700
+$Comp
+L power:GND #PWR05
+U 1 1 5BE4BFC1
+P 7050 4900
+F 0 "#PWR05" H 7050 4650 50  0001 C CNN
+F 1 "GND" H 7055 4727 50  0000 C CNN
+F 2 "" H 7050 4900 50  0001 C CNN
+F 3 "" H 7050 4900 50  0001 C CNN
+	1    7050 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7800 4900 7700 4900
+Wire Wire Line
+	7500 4900 7700 4900
+Connection ~ 7700 4900
+Wire Wire Line
+	7500 4900 7400 4900
+Connection ~ 7500 4900
+Wire Wire Line
+	7400 4900 7050 4900
+Connection ~ 7400 4900
+Text GLabel 7500 2750 1    50   Input ~ 0
+VLOGIC
+Wire Wire Line
+	7500 2750 7500 2850
+$Comp
+L Device:C C3
+U 1 1 5BE4CE4E
+P 6950 3000
+F 0 "C3" H 7065 3046 50  0000 L CNN
+F 1 "10uF" H 7065 2955 50  0000 L CNN
+F 2 "" H 6988 2850 50  0001 C CNN
+F 3 "~" H 6950 3000 50  0001 C CNN
+	1    6950 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7500 2850 6950 2850
+Connection ~ 7500 2850
+Wire Wire Line
+	7500 2850 7500 3100
+$Comp
+L power:GND #PWR04
+U 1 1 5BE4D2A4
+P 6950 3150
+F 0 "#PWR04" H 6950 2900 50  0001 C CNN
+F 1 "GND" H 6955 2977 50  0000 C CNN
+F 2 "" H 6950 3150 50  0001 C CNN
+F 3 "" H 6950 3150 50  0001 C CNN
+	1    6950 3150
+	1    0    0    -1  
+$EndComp
+Text GLabel 7700 2750 1    50   Input ~ 0
+VBAT
+Wire Wire Line
+	7700 3100 7700 2800
+$Comp
+L Device:C C5
+U 1 1 5BE4D74F
+P 9400 2950
+F 0 "C5" H 9515 2996 50  0000 L CNN
+F 1 "47uF" H 9515 2905 50  0000 L CNN
+F 2 "" H 9438 2800 50  0001 C CNN
+F 3 "~" H 9400 2950 50  0001 C CNN
+	1    9400 2950
+	1    0    0    -1  
+$EndComp
+Connection ~ 7700 2800
+Wire Wire Line
+	7700 2800 7700 2750
+$Comp
+L power:GND #PWR07
+U 1 1 5BE4DC08
+P 9400 3100
+F 0 "#PWR07" H 9400 2850 50  0001 C CNN
+F 1 "GND" H 9405 2927 50  0000 C CNN
+F 2 "" H 9400 3100 50  0001 C CNN
+F 3 "" H 9400 3100 50  0001 C CNN
+	1    9400 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C4
+U 1 1 5BE4DF0B
+P 8950 2950
+F 0 "C4" H 9065 2996 50  0000 L CNN
+F 1 "10uF" H 9065 2905 50  0000 L CNN
+F 2 "" H 8988 2800 50  0001 C CNN
+F 3 "~" H 8950 2950 50  0001 C CNN
+	1    8950 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8950 2800 9400 2800
+$Comp
+L power:GND #PWR06
+U 1 1 5BE4DFFB
+P 8950 3100
+F 0 "#PWR06" H 8950 2850 50  0001 C CNN
+F 1 "GND" H 8955 2927 50  0000 C CNN
+F 2 "" H 8950 3100 50  0001 C CNN
+F 3 "" H 8950 3100 50  0001 C CNN
+	1    8950 3100
+	1    0    0    -1  
+$EndComp
+Connection ~ 8950 2800
+Wire Wire Line
+	7700 2800 8950 2800
+Text Notes 2750 3750 0    50   ~ 0
+KIA1117-5.0 pin compatible
+Text Notes 1350 4250 0    50   ~ 0
+Max 10V (2S)
+Connection ~ 3550 4050
+Text GLabel 3550 3550 1    50   Input ~ 0
+VLOGIC
+Wire Wire Line
+	3600 3550 3550 3550
+Wire Wire Line
+	3550 4050 3550 3550
+$Comp
+L Device:LED D1
+U 1 1 5BE50E5B
+P 4200 4200
+F 0 "D1" V 4238 4083 50  0000 R CNN
+F 1 "LED" V 4147 4083 50  0000 R CNN
+F 2 "" H 4200 4200 50  0001 C CNN
+F 3 "~" H 4200 4200 50  0001 C CNN
+	1    4200 4200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5BE50F1A
+P 4200 4500
+F 0 "R1" H 4270 4546 50  0000 L CNN
+F 1 "68" H 4270 4455 50  0000 L CNN
+F 2 "" V 4130 4500 50  0001 C CNN
+F 3 "~" H 4200 4500 50  0001 C CNN
+	1    4200 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5BE50FC9
+P 4200 4800
+F 0 "R2" H 4270 4846 50  0000 L CNN
+F 1 "68" H 4270 4755 50  0000 L CNN
+F 2 "" V 4130 4800 50  0001 C CNN
+F 3 "~" H 4200 4800 50  0001 C CNN
+	1    4200 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 5BE51007
+P 4200 4950
+F 0 "#PWR02" H 4200 4700 50  0001 C CNN
+F 1 "GND" H 4205 4777 50  0000 C CNN
+F 2 "" H 4200 4950 50  0001 C CNN
+F 3 "" H 4200 4950 50  0001 C CNN
+	1    4200 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Male J3
+U 1 1 5BE516BA
+P 9900 3600
+F 0 "J3" H 9873 3480 50  0000 R CNN
+F 1 "Conn_01x02_Male" H 9873 3571 50  0000 R CNN
+F 2 "" H 9900 3600 50  0001 C CNN
+F 3 "~" H 9900 3600 50  0001 C CNN
+	1    9900 3600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	9100 3500 9700 3500
+Wire Wire Line
+	9700 3600 9300 3600
+Wire Wire Line
+	9300 3600 9300 3700
+Text Notes 9500 3750 0    50   ~ 0
+Weapon power out
+Text GLabel 1950 2300 1    50   Input ~ 0
+WEAPON_EN
+$Comp
+L Device:R 10k1
+U 1 1 5BE528B0
+P 1950 2450
+F 0 "10k1" H 2020 2496 50  0000 L CNN
+F 1 "68" H 2020 2405 50  0000 L CNN
+F 2 "" V 1880 2450 50  0001 C CNN
+F 3 "~" H 1950 2450 50  0001 C CNN
+	1    1950 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 5BE52934
+P 1950 2700
+F 0 "#PWR0101" H 1950 2450 50  0001 C CNN
+F 1 "GND" H 1955 2527 50  0000 C CNN
+F 2 "" H 1950 2700 50  0001 C CNN
+F 3 "" H 1950 2700 50  0001 C CNN
+	1    1950 2700
+	1    0    0    -1  
+$EndComp
+Text Notes 2050 2250 0    50   ~ 0
+Weapon EN pulldown
+Text Label 9200 3500 0    50   ~ 0
+WEAPONO2
+Text Label 9300 3600 0    50   ~ 0
+WEAPONO1
+$Comp
+L power:GNDPWR #PWR0102
+U 1 1 5BE538A4
+P 2600 4350
+F 0 "#PWR0102" H 2600 4150 50  0001 C CNN
+F 1 "GNDPWR" H 2604 4196 50  0000 C CNN
+F 2 "" H 2600 4300 50  0001 C CNN
+F 3 "" H 2600 4300 50  0001 C CNN
+	1    2600 4350
+	1    0    0    -1  
+$EndComp
+Connection ~ 2600 4350
+Wire Wire Line
+	2600 4350 2950 4350
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 5BE53907
+P 2150 4000
+F 0 "#FLG0101" H 2150 4075 50  0001 C CNN
+F 1 "PWR_FLAG" H 2150 4174 50  0000 C CNN
+F 2 "" H 2150 4000 50  0001 C CNN
+F 3 "~" H 2150 4000 50  0001 C CNN
+	1    2150 4000
+	1    0    0    -1  
+$EndComp
+Connection ~ 2150 4000
+Wire Wire Line
+	1950 2600 1950 2700
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 5BE4BCFF
+P 3200 4350
+F 0 "#FLG0102" H 3200 4425 50  0001 C CNN
+F 1 "PWR_FLAG" H 3200 4524 50  0000 C CNN
+F 2 "" H 3200 4350 50  0001 C CNN
+F 3 "~" H 3200 4350 50  0001 C CNN
+	1    3200 4350
+	-1   0    0    1   
+$EndComp
+Connection ~ 3200 4350
+Wire Wire Line
+	3200 4350 3550 4350
+$EndSCHEMATC

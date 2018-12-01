@@ -20,7 +20,7 @@ printable that way.
 
 axle_diameter = 3.0;
 axle_radius = axle_diameter / 2;
-axle_radius_margin = 0.15; // Extra allowance for shrinkage etc
+axle_radius_margin = 0.3; // Extra allowance for shrinkage etc
 
 shaft_diameter = 12.0; // 
 shaft_radius = shaft_diameter / 2;
@@ -34,6 +34,7 @@ flipper_width = 60;
 flipper_scoop_width = 90; // Bottom part, scoop
 horiz_length = 57.0; // y axis
 thickness = 0.75;
+thickness2 = 1.0;
 bar_thickness = 2.0;
 diagonal_1_length = 26;
 diagonal_1_drop = 13;
@@ -79,6 +80,13 @@ module flipper_outline(chop=0)
     $fn = 8;
     polyline(flipper_outline_points,
         thickness / 2); // radius
+    i1 = len(flipper_outline_points) - 3;
+    polyline([
+        flipper_outline_points[i1], 
+        flipper_outline_points[i1 + 1],
+        flipper_outline_points[i1 + 2]
+        ],
+       thickness2); // radius
 }
 
 
