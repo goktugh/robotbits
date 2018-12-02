@@ -3,10 +3,10 @@ use <inc/bevel_lib.scad>;
 // $fa is related to arcs
 $fa = 0.8; // millimetres
 
-inner_radius = 24.5;
+inner_radius = 25.25;
 width = 2.5;
 
-tyre_thickness = 5.0; // Includes knobbles
+tyre_thickness = 4.5; // Includes knobbles
 
 button_radius = 2.5;
 
