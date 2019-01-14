@@ -30,9 +30,9 @@ FAST_TIME = 0.15 # drive fast for this long after stop
 # Flip sate map: direction, duty, time to next state, next state
 FLIP_STATE_MAP = {
     'idle': (0,0,0, 'idle'),
-    'flip': (1, 255, 0.05, 'flip2'),
+    'flip': (1, 255, 0.1, 'flip2'),
     'flip2': (1, 64, 0.1, 'hold'),
-    'hold': (0, 0, 0.15, 'retract'),
+    'hold': (0, 0, 0.1, 'retract'),
     'retract': (-1, 80, 0.25, 'retract2'),
     'retract2': (-1, 32, 0.15, 'idle'),
     # Special state for quick retraction.
