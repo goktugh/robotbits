@@ -12,9 +12,8 @@ pigpio_f = None
 GPIO_RIGHT = (25,7,8) # Enable, fwd, back
 GPIO_LEFT = (18,24,23) # Enable, fwd, back
 
-GPIO_FLIP_ENABLE = 19
-GPIO_FLIP_0 = 6 # Enable to flip up
-GPIO_FLIP_1 = 13 # enable to flip down
+GPIO_FLIP_0 = 13 # Enable to flip up
+GPIO_FLIP_1 = 19 # enable to flip down
 
 def init_pigpio():
     global pigpio_f
@@ -38,12 +37,18 @@ def set_neutral():
     
 def set_flipper(direction, duty):
     # Duty = 0...255
-    p0 = (direction > 0)
-    p1 = (direction < 0)
-    pigpio_f.write("p {} {}\n".format(GPIO_FLIP_ENABLE, int(duty)))
-    pigpio_f.write("w {} {}\n".format(GPIO_FLIP_0, int(p0)))
-    pigpio_f.write("w {} {}\n".format(GPIO_FLIP_1, int(p1)))
+    if direction > 0:
+        p0, p1 = duty,0
+    else:
+        p0, p1 = 0,duty
+
+    pigpio_f.write("p {} {} p {} {}\n".format(GPIO_FLIP_0, int(p0), GPIO_FLIP_1, int(p1)))
     pigpio_f.flush()
+
+def brake_flipper():
+    pigpio_f.write("w {} 1 w {} 1\n".format(GPIO_FLIP_0, GPIO_FLIP_1))
+    pigpio_f.flush()
+
 
 def init_socket(unit=0):
     global imu_socket

@@ -24,16 +24,18 @@ def set_flipper(direction, duty):
 
 if __name__ == '__main__':
     init_pigpio()
-    print("Flipping...")
-    set_flipper(1,192)
-    time.sleep(0.10)
-    print("waiting...")
-    set_flipper(0,0)
-    time.sleep(2.0)
-    print("retracting...")
-    # Retract slowly.
-    set_flipper(-1,48)
-    time.sleep(0.6)
-    print("end")
-    set_flipper(0,0)
+    while True:
+        print("Flipping...")
+        set_flipper(1,96)
+        time.sleep(0.1)
+        set_flipper(0,0)
+        time.sleep(0.5)
+        print("retracting...")
+        set_flipper(-1,64)
+        time.sleep(0.1)
+        set_flipper(-1,16)
+        time.sleep(0.3)
+        set_flipper(0,0)
+        time.sleep(1.5)
+
 

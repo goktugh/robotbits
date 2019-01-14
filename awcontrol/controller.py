@@ -9,7 +9,8 @@ import os
 import json
 import math
 
-from common import init_socket, init_pigpio, set_neutral, set_flipper, set_speeds, read_last_imu
+from common import init_socket, init_pigpio, set_neutral, set_speeds, read_last_imu
+from common import set_flipper, brake_flipper
 import input_reader
 import recorder
 
@@ -24,12 +25,13 @@ ROTATE_SPEED = 180 # Degrees per second, max
 
 DRIVE_SCALE = 0.3 # scaling factor for forward/back drive
 DRIVE_SCALE_FAST = 0.6 # when driving fast
-FAST_TIME = 0.1 # drive fast for this long after stop
+FAST_TIME = 0.15 # drive fast for this long after stop
 
 # Flip sate map: direction, duty, time to next state, next state
 FLIP_STATE_MAP = {
     'idle': (0,0,0, 'idle'),
-    'flip': (1, 255, 0.15, 'hold'),
+    'flip': (1, 255, 0.05, 'flip2'),
+    'flip2': (1, 64, 0.1, 'hold'),
     'hold': (0, 0, 0.15, 'retract'),
     'retract': (-1, 80, 0.25, 'retract2'),
     'retract2': (-1, 32, 0.15, 'idle'),
@@ -201,7 +203,10 @@ class Controller:
                 direction, duty = 1,40
             if self.input_flip_down:
                 direction, duty = -1,40
-        set_flipper(direction, duty)
+        if self.flip_state == 'hold':
+            brake_flipper()
+        else:
+            set_flipper(direction, duty)
             
 
 def norm_angle(a):
