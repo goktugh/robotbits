@@ -83,7 +83,7 @@ int high_jerk_count = 0; // number of ticks jerk is too high
 const float JERK_THRESHOLD = 1.5;
 const int MOTION_TIME_THRESHOLD = 200; // millisecs
 
-const int HIGH_JERK_THRESHOLD = 800;
+const int HIGH_JERK_THRESHOLD = 500;
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
