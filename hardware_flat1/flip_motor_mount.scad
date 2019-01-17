@@ -27,9 +27,10 @@ module motor_holder()
             }
         }
     // Hex pillar to support hex nut
+    pillar_height = 7.0;
     mirror_y() {
         translate([hole_offset_x, hole_offset_y]) {
-            cylinder(h=motor_height_half*2 + 2, r=2.25, $fn=6);
+            cylinder(h=pillar_height, r=4.0, $fn=6);
         }
     }
 }
@@ -46,7 +47,7 @@ module base_part()
 module holes1()
 {
     big_height = 20; // More than everything
-    hex_cutout_height = 8;
+    hex_cutout_height = 5.5;
     mirror_y() {
         translate([hole_offset_x, hole_offset_y, -0.1])
             cylinder(r=1.25, h=big_height);
