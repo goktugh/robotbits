@@ -47,10 +47,10 @@ module armour_weight_cutouts() {
     cutout_h = cutout_top - cutout_bot;
     cutout_mid = (cutout_bot + cutout_top) / 2;
     cutout_w = (body_w * 0.3);
-    cutout_thick = 0.3;
+    cutout_thick = 0.2;
     mirror_x() {
         // Cutouts of rear armour
-        translate([(cutout_w /2) + 4.0,(shell_thickness - cutout_thick),cutout_mid])
+        translate([(cutout_w /2) + 4.0,(shell_thickness - cutout_thick*2),cutout_mid])
             cube([cutout_w, shell_thickness, cutout_h], center=true);
         // side
         translate([body_w_half + body_w_fudge + (cutout_thick/2), 45.0, cutout_mid])
