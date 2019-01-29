@@ -33,7 +33,7 @@ module n20_motor()
     }
     // Cube gearbox
     translate([- gearbox_w_half, 0,0]) {
-        cube([ gearbox_w, gearbox_d, gearbox_h], center=true); 
+        cube([ gearbox_w + 0.1, gearbox_d, gearbox_h], center=true); 
     }
     // Shaft
     translate([0,0,0]) {
