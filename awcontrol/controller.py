@@ -237,14 +237,14 @@ def main():
         wait_for_stillness()
         # Do a little dance
         cont.set_speeds(0.2, 0.2)
-        time.sleep(0.12)
+        time.sleep(0.06)
         i = read_last_imu()
         if not i['motion']:
             raise Exception("Drive or IMU not working, cannot detect motion.")
         cont.set_speeds(0,0)
         time.sleep(1.0)
         cont.set_speeds(-0.2, -0.2)
-        time.sleep(0.12)
+        time.sleep(0.06)
         cont.set_speeds(0,0)
         time.sleep(1.0)
         # Done

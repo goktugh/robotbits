@@ -57,3 +57,9 @@ function off2 {
     pigs w $R_0 0 w $R_1 0
 }
 
+function fwd_test {
+    pwms_on
+    pigs w $L_0 0 p $L_1 32
+    pigs w $R_0 0 p $R_1 32
+}
+

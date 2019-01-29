@@ -27,6 +27,6 @@ PULSE=high, IN1=low, IN2=low = will deactivate the brake, let the motor run free
 
 FLIPPER
 
-GPIO_FLIP_0 = 13 # Enable to flip up
-GPIO_FLIP_1 = 19 # enable to flip down
+GPIO_FLIP_0 = 19 # Enable to flip up
+GPIO_FLIP_1 = 13 # enable to flip down
 
