@@ -3,9 +3,9 @@
 # Start pigpiod at boot time; enable some gpios
 # GPIO 18, 23 and 24, 25,7 and 8
 # Flipper: GPIO 19 (enable), 13,6
-mask=0x38c21c0
+# mask=0x38c21c0
 # -s 10 = read at 10us  (lower than default 5us)
-/usr/bin/pigpiod -x $mask
+# /usr/bin/pigpiod -x $mask
 
 # Start the sixad game controller driver; we need to wait for bt
 # to be ready.
@@ -13,6 +13,7 @@ mask=0x38c21c0
 hciconfig hci0 piscan
 sixad --start & ) 
 
+export HOME=/root
 # Start the imu daemon, in screen
 (cd /home/mark/robotbits/imu_daemon; screen -S imu -d -m ./imu_daemon )
 # Start the controller, in screen
