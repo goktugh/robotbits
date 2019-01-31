@@ -52,11 +52,12 @@ def brake_flipper():
 
 def init_socket(unit=0):
     global imu_socket
-    s = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
-    laddr = ('\0' + 'robot.IMU{}'.format(unit)).encode('ascii')
-    s.bind(laddr)
-    s.setblocking(0) # Make socket non-block
-    imu_socket = s
+    if imu_socket is None:
+        s = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+        laddr = ('\0' + 'robot.IMU{}'.format(unit)).encode('ascii')
+        s.bind(laddr)
+        s.setblocking(0) # Make socket non-block
+        imu_socket = s
 
 def read_last_imu_bin():
     # Read data from the imu socket, and return the last message.

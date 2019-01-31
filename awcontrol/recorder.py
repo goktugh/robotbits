@@ -25,6 +25,11 @@ def recorder_init():
 
 _fields = None
 
+def format_field(v):
+    if isinstance(v, float):
+        return '{:.3f}'.format(v)
+    return str(v)
+
 def recorder_write(d):
     global _fields
     # Dict supplied
@@ -35,7 +40,7 @@ def recorder_write(d):
     values = [time.clock_gettime(time.CLOCK_MONOTONIC)]
     for k in _fields[1:]:
         values.append(d.get(k))
-    line = '\t'.join(map(repr, values))
+    line = '\t'.join(map(format_field, values))
     print(line, file=output_f)
     output_f.flush()
 

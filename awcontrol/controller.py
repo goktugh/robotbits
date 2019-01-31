@@ -8,6 +8,7 @@ import time
 import os
 import json
 import math
+import traceback
 
 from common import init_socket, init_pigpio, set_neutral, set_speeds, read_last_imu
 from common import set_flipper, brake_flipper
@@ -51,6 +52,7 @@ class Controller:
     input_flip = False
     input_flip_up = False
     input_flip_down = False
+    input_signal = False # Do we have a signal from tx?
     flip_state = 'idle'
     flip_timeout = 0 # Time left to next state
     retract_time = 0 # If >0, then retract
@@ -85,6 +87,7 @@ class Controller:
         self.input_flip = control_pos.flip
         self.input_flip_up = control_pos.flip_up
         self.input_flip_down = control_pos.flip_down
+        self.input_signal = control_pos.signal
         if control_pos.stop:
             self.last_stop_time = self.time_last
         # Check if we should halt the robot?
@@ -164,12 +167,13 @@ class Controller:
         speeds = (-rot + forward_speed, rot +forward_speed) 
         self.set_speeds(*speeds)
         # write data record
-        recorder.recorder_write(
-            {'input_x': self.input_rotate, 'input_y':self.input_drive,
-            'target_yaw': self.target_yaw,
-            'yaw': yaw,
-            'speed_l': speeds[0], 'speed_r': speeds[1]
-            })
+        if self.input_signal: # only write data if signal
+            recorder.recorder_write(
+                {'input_x': self.input_rotate, 'input_y':self.input_drive,
+                'target_yaw': self.target_yaw,
+                'yaw': yaw,
+                'speed_l': speeds[0], 'speed_r': speeds[1]
+                })
         
         self.error_last = ang_error
         self.time_last = time_now
@@ -257,5 +261,13 @@ def main():
         except Exception as e:
             pass # Ignore now
 
+def startup_loop():
+    while True:
+        try:
+            main()
+        except Exception as e:
+            traceback.print_exc()
+            time.sleep(0.5)
+
 if __name__ == '__main__':
-    main()
+    startup_loop()
