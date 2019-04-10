@@ -4,8 +4,8 @@ import os
 
 pigpio_f = None
 
-GPIO_FLIP_0 = 13 # Enable to flip up
-GPIO_FLIP_1 = 19 # enable to flip down
+GPIO_FLIP_0 = 19 # Enable to flip up
+GPIO_FLIP_1 = 13 # enable to flip down
 
 def init_pigpio():
     global pigpio_f
