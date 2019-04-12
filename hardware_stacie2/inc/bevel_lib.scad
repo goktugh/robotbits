@@ -22,6 +22,23 @@ module rounded_square_centered(size=[1,1], radius=0.1) {
     }
 }
 
+module bevelled_square(size=[1,1], radius=0.1) {
+    polygon(points=[
+            // Left
+            [0, radius ],
+            [0, size[1] - radius ],
+            // Top
+            [radius, size[1]],
+            [size[0] - radius, size[1]],
+            // Right
+            [size[0], size[1] - radius],
+            [size[0], radius],
+            // Bot
+            [size[0] -radius, 0],
+            [radius, 0]
+        ]);
+}
+
 // Bevelled in x and y axes.
 module bevelledbox(size=[1,1,1], radius=0.1) {
     linear_extrude(height=size[2]) {

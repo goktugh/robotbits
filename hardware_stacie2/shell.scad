@@ -6,7 +6,7 @@ $fs = 0.6; // millimetres
 
 shell_w = 80;
 shell_d = 80;
-shell_h = 15;
+shell_h = 16;
 
 drive_motor_y = 23;
 flip_motor_y = -31;
@@ -39,7 +39,6 @@ module side_outline() {
 }
 
 module motor_cutouts() {
-    shell_w_half = shell_w/2;
     mirror_x() {
         // Drive motors
         translate([shell_w_half,drive_motor_y,shell_h/2]) {
@@ -63,15 +62,16 @@ module other_cutouts() {
     // fullybevelledbox is not centred.
     mirror_x() {
         translate([2, -24, 1 + 0.4])
-            fullybevelledbox([30,39, shell_h -3], radius=1.0);
+            fullybevelledbox([31.5,39, shell_h -3], radius=1.0);
     }
     // Wiring cutouts
     // Lengthwise cutout
     translate([-1.25,-shell_d_half + 3, 9])
         fullybevelledbox([2.5, shell_d - 10, shell_h], radius=1.0);
     // Cutout for the flipper axle etc
-    translate([-11, flip_motor_y - 2.5, shell_h - 10])
-        fullybevelledbox([22, 5, shell_h], radius=1.0);
+    cutout_axle_depth = 9;
+    translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 10])
+        fullybevelledbox([22, cutout_axle_depth, shell_h], radius=1.0);
     // Cutout for the flipper axle bits
     translate([-6, flip_motor_y - 6, 2])
         fullybevelledbox([12, 12, shell_h], radius=1.0);
@@ -97,6 +97,36 @@ module screw_holes() {
         }
     }
 }
+// Centred cylinder in the x axis
+module cylinder_x(r, len)
+{
+    rotate([0,90,0]) {
+        cylinder(h=len, r=r, center=true);
+    }
+}
+
+module axle_holes() {
+    wheel_holes_y = [-6, -35];
+    idle_holes_y = [8.5,-20];
+    shell_h_half = shell_h/2;
+    mirror_x() {
+        // These are holes for M3 bolts which will be the axles
+        // (wheels have bearings)
+        for (y = wheel_holes_y) {
+            translate([shell_w_half, y, shell_h_half]) 
+                cylinder_x(1.7, 20);
+            // Need a cutout for the bolt heads
+            translate([shell_w_half-2 - 3, y, shell_h_half]) 
+                cylinder_x(3.0, 6);
+            
+        }
+        // These are smaller holes for idler gears which don't carry weight
+        for (y = idle_holes_y) {
+            translate([shell_w_half, y, shell_h_half]) 
+                cylinder_x(0.8, 20);
+        }
+    }
+}
 
 module main()
 {
@@ -110,6 +140,7 @@ module main()
         lid_cutout();
         other_cutouts();
         screw_holes();
+        axle_holes();
     }
 }
 
