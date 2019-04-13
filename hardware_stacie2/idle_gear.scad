@@ -11,7 +11,6 @@ GEARWHEEL_COUNT=16;
 IDLE_COUNT=12;
 
 module main() {
-    
     difference() {
         union() {
             cylinder(r1=4,r2=4.5,h=0.5);

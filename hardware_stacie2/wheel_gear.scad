@@ -25,25 +25,49 @@ module wheel() {
     }
 }
 
-module main() {
-    difference() {
-        union() {
-            wheel();
+module wheel_with_gear() {
+   union() {
+        wheel();
 
-            // Gear
-            translate([0,0,WHEEL_THICKNESS])
-            linear_extrude(height=2.0, convexity=4) {
-                gear(number_of_teeth=GEARWHEEL_COUNT,
-                    circular_pitch = CP, flat=true,
-                    bore_diameter=0);    
-            }
-            translate([0,0,2.0 + WHEEL_THICKNESS])
-            cylinder(r1=4.5,r2=4,h=0.5);
+        // Gear
+        translate([0,0,WHEEL_THICKNESS])
+        linear_extrude(height=2.0, convexity=4) {
+            gear(number_of_teeth=GEARWHEEL_COUNT,
+                circular_pitch = CP, flat=true,
+                bore_diameter=0);    
         }
-        // hole
-        translate([0,0,-1])
-            cylinder(r=1.75, h=10);
+        translate([0,0,2.0 + WHEEL_THICKNESS])
+        cylinder(r1=5.5,r2=5,h=0.5);
     }
 }
 
-main();
+module wheel_on_shaft() {
+    difference() {
+        wheel_with_gear();
+        // hole
+        difference() {
+            cylinder(r=1.75, h=10);
+            // Flat side
+            translate([1.0,-3,0])
+                cube([5,5,10]);
+        }
+    }
+}
+
+module wheel_on_bearings() {
+    difference() {
+        wheel_with_gear();
+        // hole, 3mm
+        // Skip the hole, we can drill it out.
+        // cylinder(r=1.7, h=10);
+        // Bearing cutouts, 8mm * 4mm
+        translate([0,0,-0.1])
+            cylinder(r=4, h=4.1);
+        translate([0,0,WHEEL_THICKNESS + 2.5 - 4.0])
+            cylinder(r=4, h=4.1);
+            
+    }
+}
+
+wheel_on_shaft();
+// wheel_on_bearings();
