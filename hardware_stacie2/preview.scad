@@ -1,5 +1,6 @@
 use <shell.scad>;
 use <MCAD/involute_gears.scad>;
+use <flip_coupler.scad>;
 
 $fs = 0.6; // millimetres
 
@@ -60,3 +61,11 @@ module wheels() {
 // Shell
 color("lightblue") main();
 wheels();
+
+
+// Flip coupler
+color("lightgreen") {
+    translate([0,-31,9])
+        rotate([0,-90,0])
+            flip_coupler();
+}

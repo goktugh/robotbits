@@ -70,11 +70,11 @@ module other_cutouts() {
         fullybevelledbox([2.5, shell_d - 10, shell_h], radius=1.0);
     // Cutout for the flipper axle etc
     cutout_axle_depth = 9;
-    translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 10])
+    translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 12.5])
         fullybevelledbox([22, cutout_axle_depth, shell_h], radius=1.0);
     // Cutout for the flipper axle bits
-    translate([-6, flip_motor_y - 6, 2])
-        fullybevelledbox([12, 12, shell_h], radius=1.0);
+    translate([-6, flip_motor_y - 8, 2])
+        fullybevelledbox([12, 15, shell_h], radius=1.0);
     // Cut out the rear
     translate([0, -shell_d_half, shell_h])
         cube([22,5,4], center=true);
@@ -128,6 +128,30 @@ module axle_holes() {
     }
 }
 
+module wiring_channels() {
+    // Cutout from one side of the gubbins section to the other
+    // (for power wires etc)
+    translate([-10,9,shell_h-12])
+        fullybevelledbox([20,4,9], radius=1.5);
+    
+    // Cutouts from the gubbins to the front (drive) motors
+    // Which have their wiring near the centre.
+    mirror_x() {
+        translate([6,12,shell_h-12])
+            fullybevelledbox([4,8,9], radius=1.5);
+        
+    }
+    // Cutouts to allow wires to weapon motors
+    // Which have their wiring very near the edge.
+    mirror_x() {
+        translate([shell_w_half-5,flip_motor_y+3,shell_h-6])
+            fullybevelledbox([3,9,9], radius=1.5);
+        translate([shell_w_half-8,flip_motor_y+8,shell_h-6])
+            fullybevelledbox([6,4,9], radius=1.5);
+        
+    }    
+}
+
 module main()
 {
     difference() {
@@ -141,6 +165,7 @@ module main()
         other_cutouts();
         screw_holes();
         axle_holes();
+        wiring_channels();
     }
 }
 
