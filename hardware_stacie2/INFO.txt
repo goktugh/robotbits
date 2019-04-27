@@ -1,0 +1,35 @@
+MATERIALS
+---------
+
+Shell - has to be made from something a little more flexible than PLA.
+
+Flip coupler and wheels - can be PLA.
+
+Could use the ngen for wheels?!
+
+MAKING idle_gear
+------
+
+The very tiny idle gears are *very* difficult to 3d-print. This is 
+because they have an overhang and also have too much detail.
+
+We can use a raft? 
+
+Another problem is removing support material / raft is possibly very
+difficult without destroying the piece.
+
+MAKING wheel_gear
+----------------
+
+Wheels should be printed without any adhesion or support material 
+as it is difficult to remove.
+
+
+MAKING wheel_gear_bearing
+----------------
+
+This has an overhang / bridging. The cutouts for bearings (8x4x3).
+
+3mm hole needs to be drilled out, this could be done after bearings 
+are installed.
+

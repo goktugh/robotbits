@@ -46,7 +46,8 @@ module wheel_on_shaft() {
         wheel_with_gear();
         // hole
         difference() {
-            cylinder(r=1.75, h=10);
+            shaft_hole_radius = 1.5 + 0.4;
+            cylinder(r=shaft_hole_radius, h=10);
             // Flat side
             translate([1.0,-3,0])
                 cube([5,5,10]);
@@ -61,10 +62,11 @@ module wheel_on_bearings() {
         // Skip the hole, we can drill it out.
         // cylinder(r=1.7, h=10);
         // Bearing cutouts, 8mm * 4mm
+        bearing_radius = 4.0 + 0.2; // Allow for squidge factor
         translate([0,0,-0.1])
-            cylinder(r=4, h=4.1);
+            cylinder(r=bearing_radius, h=4.1);
         translate([0,0,WHEEL_THICKNESS + 2.5 - 4.0])
-            cylinder(r=4, h=4.1);
+            cylinder(r=bearing_radius, h=4.1);
             
     }
 }
