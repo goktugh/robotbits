@@ -74,7 +74,7 @@ module other_cutouts() {
         fullybevelledbox([22, cutout_axle_depth, shell_h], radius=1.0);
     // Cutout for the flipper axle bits
     translate([-6, flip_motor_y - 8, 2])
-        fullybevelledbox([12, 15, shell_h], radius=1.0);
+        fullybevelledbox([12, 14, shell_h], radius=1.0);
     // Cut out the rear
     translate([0, -shell_d_half, shell_h])
         cube([22,5,4], center=true);
