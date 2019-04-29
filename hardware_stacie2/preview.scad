@@ -1,6 +1,7 @@
 use <shell.scad>;
 use <MCAD/involute_gears.scad>;
 use <flip_coupler.scad>;
+use <lid.scad>;
 
 $fs = 0.6; // millimetres
 
@@ -69,3 +70,9 @@ color("lightgreen") {
         rotate([0,-90,0])
             flip_coupler();
 }
+
+// lid
+
+translate([0,0,20])
+    linear_extrude(height=1)
+        lid_main();

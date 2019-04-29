@@ -1,0 +1,20 @@
+shell_w = 80;
+shell_d = 80;
+shell_h = 16;
+
+drive_motor_y = 23;
+flip_motor_y = -31;
+
+front_slope = 12;
+rear_slope = 0; // Set this to slope the rear backwards
+
+shell_d_half = shell_d / 2;
+shell_w_half = shell_w / 2;
+
+screw_locations = [
+    [5, shell_d_half - 15], 
+    [shell_w_half - 5, -shell_d_half + 24],
+    [shell_w_half - 5, -shell_d_half + 42],
+    [8, -shell_d_half + 2.5]
+];
+

@@ -2,20 +2,9 @@ use <n20.scad>;
 use <inc/utils.scad>;
 use <inc/bevel_lib.scad>;
 
+include <inc/common.inc>;
+
 $fs = 0.6; // millimetres
-
-shell_w = 80;
-shell_d = 80;
-shell_h = 16;
-
-drive_motor_y = 23;
-flip_motor_y = -31;
-
-front_slope = 12;
-rear_slope = 0; // Set this to slope the rear backwards
-
-shell_d_half = shell_d / 2;
-shell_w_half = shell_w / 2;
 
 module mirror_xy() {
     mirror_x() {
@@ -72,6 +61,7 @@ module other_cutouts() {
     cutout_axle_depth = 9;
     translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 12.5])
         fullybevelledbox([22, cutout_axle_depth, shell_h], radius=1.0);
+        
     // Cutout for the flipper axle bits
     translate([-6, flip_motor_y - 8, 2])
         fullybevelledbox([12, 14, shell_h], radius=1.0);
@@ -79,13 +69,6 @@ module other_cutouts() {
     translate([0, -shell_d_half, shell_h])
         cube([22,5,4], center=true);
 }
-
-screw_locations = [
-    [5, shell_d_half - 15], 
-    [shell_w_half - 5, -shell_d_half + 24],
-    [shell_w_half - 5, -shell_d_half + 42],
-    [8, -shell_d_half + 2.5]
-];
 
 module screw_holes() {
     // We could use M2 bolts, self tappers or something else.
@@ -129,16 +112,19 @@ module axle_holes() {
 }
 
 module wiring_channels() {
-    // Cutout from one side of the gubbins section to the other
+    channel_h = 7;
+    // Cutouts from one side of the gubbins section to the other
     // (for power wires etc)
     translate([-10,9,shell_h-12])
-        fullybevelledbox([20,4,9], radius=1.5);
+        fullybevelledbox([20,4,channel_h], radius=1.5);
+    translate([-10,-22,shell_h-12])
+        fullybevelledbox([20,4,channel_h], radius=1.5);
     
     // Cutouts from the gubbins to the front (drive) motors
     // Which have their wiring near the centre.
     mirror_x() {
         translate([6,12,shell_h-12])
-            fullybevelledbox([4,8,9], radius=1.5);
+            fullybevelledbox([4,8,channel_h], radius=1.5);
         
     }
     // Cutouts to allow wires to weapon motors
