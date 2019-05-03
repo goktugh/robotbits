@@ -1,14 +1,11 @@
 use <shell.scad>;
 use <MCAD/involute_gears.scad>;
+include <inc/common.inc>;
 
 $fs = 0.2; // millimetres
 $fa = 4; // deg
 
 drive_motor_y = 23;
-
-CP=180;
-GEARWHEEL_COUNT=16;
-IDLE_COUNT=13;
 
 module main() {
     difference() {

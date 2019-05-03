@@ -2,14 +2,11 @@ use <shell.scad>;
 use <MCAD/involute_gears.scad>;
 use <flip_coupler.scad>;
 use <lid.scad>;
+include <inc/common.inc>;
 
 $fs = 0.6; // millimetres
 
 drive_motor_y = 23;
-
-CP=180;
-GEARWHEEL_COUNT=16;
-IDLE_COUNT=12;
 
 module gearwheel() {
     linear_extrude(height=4) {

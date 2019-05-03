@@ -99,14 +99,15 @@ module axle_holes() {
             translate([shell_w_half, y, shell_h_half]) 
                 cylinder_x(1.7, 20);
             // Need a cutout for the bolt heads
-            translate([shell_w_half-2 - 3, y, shell_h_half]) 
-                cylinder_x(3.0, 6);
+            translate([shell_w_half-1 - 3, y, shell_h_half]) 
+                cylinder_x(4.0, 6);
             
         }
         // These are smaller holes for idler gears which don't carry weight
+        // These can be tiny, use paperclips for axle
         for (y = idle_holes_y) {
             translate([shell_w_half, y, shell_h_half]) 
-                cylinder_x(0.8, 20);
+                cylinder_x(0.4, 20);
         }
     }
 }

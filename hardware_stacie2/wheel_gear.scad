@@ -1,15 +1,13 @@
 use <shell.scad>;
 use <MCAD/involute_gears.scad>;
 use <inc/bevel_lib.scad>;
+include <inc/common.inc>;
 
 $fs = 0.2; // millimetres
 $fa = 4; // degrees
 
 drive_motor_y = 23;
 
-CP=180;
-GEARWHEEL_COUNT=16;
-IDLE_COUNT=12;
 WHEEL_RADIUS = 12;
 WHEEL_THICKNESS = 6;
 

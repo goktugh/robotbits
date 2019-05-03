@@ -18,3 +18,8 @@ screw_locations = [
     [8, -shell_d_half + 2.5]
 ];
 
+// Gears set up
+CP=270; // pitch
+// teeth counts
+GEARWHEEL_COUNT=11;
+IDLE_COUNT=8;

@@ -23,10 +23,9 @@ module n20_motor(margin=0.2)
         $fa = 5.0; // more polygons?
         linear_extrude(motor_w, center=true) {
             intersection() {
-            
-                translate([0, motor_d_half - curve_rad - margin])
+                translate([0, motor_d_half - curve_rad + margin])
                     circle(r=curve_rad);
-                translate([0, -motor_d_half + curve_rad + margin])
+                translate([0, -motor_d_half + curve_rad - margin])
                     circle(r=curve_rad);
                 square([motor_h,motor_d + (margin*2)], center=true);
             }
