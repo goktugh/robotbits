@@ -139,7 +139,7 @@ module wiring_channels() {
     }    
 }
 
-module main()
+module shell_main(skip_motors=false)
 {
     difference() {
         rotate([0,0,90])
@@ -147,7 +147,14 @@ module main()
             linear_extrude(height=shell_w, center=true) {
                 side_outline();
             }
-        motor_cutouts();
+        if (! skip_motors) {
+            motor_cutouts();
+        } else {
+            // Motors skipped
+            mirror_x() 
+            translate([shell_w_half - 5, drive_motor_y,shell_h/2])
+                cylinder_x(2.5, 20);
+        }
         lid_cutout();
         other_cutouts();
         screw_holes();
@@ -156,4 +163,4 @@ module main()
     }
 }
 
-main();
+shell_main();

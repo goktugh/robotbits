@@ -3,7 +3,7 @@ use <MCAD/involute_gears.scad>;
 use <inc/bevel_lib.scad>;
 include <inc/common.inc>;
 
-$fs = 0.2; // millimetres
+$fs = 0.1; // millimetres
 $fa = 4; // degrees
 
 drive_motor_y = 23;
@@ -24,15 +24,18 @@ module wheel() {
 }
 
 module wheel_with_gear() {
+    //offset for splodge compensation
+    splodge_compensation = -0.2;
    union() {
         wheel();
 
         // Gear
         translate([0,0,WHEEL_THICKNESS])
         linear_extrude(height=2.0, convexity=4) {
-            gear(number_of_teeth=GEARWHEEL_COUNT,
-                circular_pitch = CP, flat=true,
-                bore_diameter=0);    
+            offset(splodge_compensation) 
+                gear(number_of_teeth=GEARWHEEL_COUNT,
+                    circular_pitch = CP, flat=true,
+                    bore_diameter=0);    
         }
         translate([0,0,2.0 + WHEEL_THICKNESS])
         cylinder(r1=5.5,r2=5,h=0.5);
