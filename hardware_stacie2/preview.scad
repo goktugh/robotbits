@@ -2,6 +2,7 @@ use <shell.scad>;
 use <MCAD/involute_gears.scad>;
 use <flip_coupler.scad>;
 use <lid.scad>;
+use <outerpanel.scad>;
 include <inc/common.inc>;
 
 $fs = 0.6; // millimetres
@@ -57,7 +58,7 @@ module wheels() {
 }
 
 // Shell
-color("lightblue") main();
+color("lightblue") shell_main();
 wheels();
 
 
@@ -73,3 +74,14 @@ color("lightgreen") {
 translate([0,0,20])
     linear_extrude(height=1)
         lid_main();
+        
+// side panels
+translate([-45,0,shell_h/2]) {
+    rotate([0,90,0]) 
+    {
+        linear_extrude(height=2) {
+            outerpanel();
+        }
+    }
+        
+}

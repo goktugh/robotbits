@@ -7,7 +7,7 @@ $fa = 4; // degrees
 
 main_height = 12.0; // Centre part
 side_height = 4.0; 
-RADIUS = 4.5;
+RADIUS = 4.0;
 side_radius = 2.75;
 bracketlen = 36;
 
@@ -18,8 +18,8 @@ module outside() {
         // Centre part
         hull() {
             cylinder(r=RADIUS,h=main_height, center=true);
-            translate([RADIUS + panel_offset, 0, - (main_height / 2)])
-            cube([thick, 4.5, main_height]);
+            translate([RADIUS + panel_offset, 2, - (main_height / 2)])
+            cube([thick, 2.5, main_height]);
         }
             
         // top-bottom
@@ -30,7 +30,7 @@ module outside() {
             bevelledbox_x([RADIUS + panel_offset, RADIUS*1.5, main_height], radius=2.0);
         */
         // Panel
-        translate([RADIUS + panel_offset, -RADIUS/2 + 2.0, - (main_height / 2)])
+        translate([RADIUS + panel_offset, -RADIUS/2 + 4.0, - (main_height / 2)])
             bevelledbox_x([thick, RADIUS*1.5 + bracketlen, main_height], radius=2.0);
     }
 }
