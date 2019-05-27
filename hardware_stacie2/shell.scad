@@ -30,7 +30,7 @@ module side_outline() {
 module motor_cutouts() {
     mirror_x() {
         // Drive motors
-        translate([shell_w_half,drive_motor_y,shell_h/2]) {
+        translate([shell_w_half,drive_motor_y,shell_h/2 -0.5]) {
             n20_motor_top_ext();
         }
         // Flip motors - these point inwards.

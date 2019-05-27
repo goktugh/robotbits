@@ -5,14 +5,14 @@ use <inc/utils.scad>;
 $fs = 0.2; // millimetres
 $fa = 4; // degrees
 
-main_height = 12.0; // Centre part
-side_height = 4.0; 
+main_height = 11.0; // Centre part
+side_height = 4.5; 
 RADIUS = 4.0;
 side_radius = 2.75;
 bracketlen = 36;
 
 module outside() {
-    thick = 1.0;
+    thick = 1.5;
     panel_offset = 2.0; // Extra distance for panel
     union() {
         // Centre part
@@ -32,6 +32,14 @@ module outside() {
         // Panel
         translate([RADIUS + panel_offset, -RADIUS/2 + 4.0, - (main_height / 2)])
             bevelledbox_x([thick, RADIUS*1.5 + bracketlen, main_height], radius=2.0);
+        // Panel: centre bracing beam
+        
+        hull() {
+            translate([RADIUS + panel_offset, RADIUS, 0.0])
+                octahedron(1.0);
+            translate([RADIUS + panel_offset, RADIUS  + bracketlen, 0.0])
+                octahedron(1.0);
+        }
     }
 }
 
@@ -61,7 +69,7 @@ module flip_coupler() {
         // hole
         translate([0,0,-20]) {
             difference() {
-                shaft_hole_radius = 1.5 + 0.4;
+                shaft_hole_radius = 1.5 + 0.2;
                 cylinder(r=shaft_hole_radius, h=100);
                 // Flat side
                 translate([-6.0,-3,0])

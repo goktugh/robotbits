@@ -7,7 +7,7 @@ $fs = 0.6; // millimetres
 module flip_cutout()
 {
     cutout_w = 12 + 1;
-    cutout_d = 40 + 12;
+    cutout_d = 40 + 13;
     translate([-cutout_w /2, -shell_d_half])
         square([cutout_w, cutout_d]);
 }
@@ -23,11 +23,12 @@ module lid_main()
                     square([w,d]);
                 flip_cutout();
             }
+            // Circle around the rear screw location
+            // which holds it in place. 
             mirror_x() {
-                for (location = screw_locations) {
+                location = screw_locations[3];
                     translate(location)
-                        circle(r=2.0);
-                }
+                        circle(r=3.0);
             }                
         }
         // Holes
