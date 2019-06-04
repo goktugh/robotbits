@@ -67,7 +67,7 @@ module other_cutouts() {
         fullybevelledbox([12, 14, shell_h], radius=1.0);
     // Cut out the rear
     translate([0, -shell_d_half, shell_h])
-        cube([22,5,4], center=true);
+        cube([28,5,4], center=true);
 }
 
 module screw_holes() {
@@ -107,7 +107,7 @@ module axle_holes() {
         // These can be tiny, use paperclips for axle
         for (y = idle_holes_y) {
             translate([shell_w_half, y, shell_h_half]) 
-                cylinder_x(0.4, 20);
+                cylinder_x(0.5, 20);
         }
     }
 }
@@ -139,6 +139,45 @@ module wiring_channels() {
     }    
 }
 
+module bottom_cutouts() 
+{
+    r = 3; // Radius of hex
+    spacing = 6.0;
+    min_x = 4.0 + r;
+    max_x = shell_w_half - 10;
+    min_y = -15;
+    max_y = 11;
+    $fn = 6; // cylinder -> hexagons
+    mirror_x() {
+        for (y= [min_y:spacing:max_y]) {
+            for (x= [min_x:spacing:max_x]) {
+                translate([x + (((y - min_y) / 2) % spacing) , y, -0.5])
+                    rotate([0,0,30])
+                        cylinder(r=r, h=5.0);
+            }
+        }
+    }
+}
+
+module wedge_cutout()
+{
+    front_offset = 2.5;
+    z_offset = 2.0;
+    thickness = 1.5;
+    intersection() {
+        // Offset the front part of shell
+        translate([0,0,- z_offset])
+            rotate([0,0,90])
+            rotate([90,0,0])
+                linear_extrude(height=shell_w - (thickness*2) , center=true) {
+                    side_outline();
+                }
+        // Cut off the front
+        translate([-shell_w_half, shell_d_half - front_slope + front_offset, -1.0])
+            cube([shell_w, front_slope, 50]);
+    }
+}
+
 module shell_main(skip_motors=false)
 {
     difference() {
@@ -160,6 +199,8 @@ module shell_main(skip_motors=false)
         screw_holes();
         axle_holes();
         wiring_channels();
+        bottom_cutouts();
+        wedge_cutout();
     }
 }
 

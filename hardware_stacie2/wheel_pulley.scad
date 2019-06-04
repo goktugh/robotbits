@@ -10,6 +10,8 @@ drive_motor_y = 23;
 
 WHEEL_RADIUS = 12;
 WHEEL_THICKNESS = 6;
+PULLEY_THICKNESS = 4.5;
+PULLEY_RADIUS = 9.0;
 
 module wheel() {
     tyrew = 1.0;
@@ -23,35 +25,37 @@ module wheel() {
     }
 }
 
-module wheel_with_gear(chamfer_thickness=0.5) {
-    //offset for splodge compensation
-    splodge_compensation = -0.2;
+module wheel_with_pulley(chamfer_thickness=0.5) {
    union() {
         wheel();
-
-        // Gear
+        // pulley
         translate([0,0,WHEEL_THICKNESS])
-        linear_extrude(height=2.0, convexity=4) {
-            offset(splodge_compensation) 
-                gear(number_of_teeth=GEARWHEEL_COUNT,
-                    circular_pitch = CP, flat=true,
-                    bore_diameter=0);    
-        }
-        translate([0,0,2.0 + WHEEL_THICKNESS])
-        cylinder(r1=5.5,r2=5,h=chamfer_thickness);
+            linear_extrude(PULLEY_THICKNESS, convexity=4) {
+                circle(r=PULLEY_RADIUS-0.5);
+                blob_count=12;
+                for (n=[0:blob_count]) {
+                    rotate([0,0,(n / blob_count * 360)]) {
+                        square([PULLEY_RADIUS*2, 2], center=true); 
+                    }
+                }
+            }
+        edge_thickness = 2.0;
+        translate([0,0,WHEEL_THICKNESS + PULLEY_THICKNESS - edge_thickness])
+            cylinder(r1=PULLEY_RADIUS - 0.5, r2=PULLEY_RADIUS + 0.5, h=edge_thickness);
+    
     }
 }
 
 module wheel_on_shaft() {
     difference() {
-        wheel_with_gear(chamfer_thickness=1.0);
+        wheel_with_pulley(chamfer_thickness=1.0);
         // hole
         difference() {
             shaft_hole_radius = 1.5 + 0.1;
-            cylinder(r=shaft_hole_radius, h=10);
+            cylinder(r=shaft_hole_radius, h=20);
             // Flat side
             translate([1.0,-3,0])
-                cube([5,5,10]);
+                cube([5,5,20]);
         }
         // Cutout opposite the flat side
         opposite_w = 4.5;
@@ -63,7 +67,7 @@ module wheel_on_shaft() {
 
 module wheel_on_bearings() {
     difference() {
-        wheel_with_gear();
+        wheel_with_pulley();
         // hole, 3mm
         // Skip the hole, we can drill it out.
         // cylinder(r=1.7, h=10);
