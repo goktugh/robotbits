@@ -75,7 +75,7 @@ module wheel_on_bearings() {
         bearing_radius = 4.0 + 0.2; // Allow for squidge factor
         translate([0,0,-0.1])
             cylinder(r=bearing_radius, h=4.1);
-        translate([0,0,WHEEL_THICKNESS + 2.5 - 4.0])
+        translate([0,0,WHEEL_THICKNESS + PULLEY_THICKNESS - 4.0])
             cylinder(r=bearing_radius, h=4.1);
             
     }
