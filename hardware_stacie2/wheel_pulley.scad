@@ -13,6 +13,22 @@ WHEEL_THICKNESS = 6;
 PULLEY_THICKNESS = 4.5;
 PULLEY_RADIUS = 9.0;
 
+/*
+ * How long should the band / belt be?
+ * 2*pi*PULLEY_RADIUS = 56.54 
+ * 2* distance between pulleys 
+    wheel_holes_y = [-6, -35];
+    drive_motor_y = 23;
+    
+    23 - (-35) = 58 (distance between wheels)
+    
+ * 58*2 + 56.54 = 172.54 (total length of belt)
+ 
+ * What should the diameter be?
+ * 172.54 / pi = ~ 55
+ */
+
+
 module wheel() {
     tyrew = 1.0;
     rim = 0.5;

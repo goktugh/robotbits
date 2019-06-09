@@ -3,6 +3,7 @@ use <MCAD/involute_gears.scad>;
 use <flip_coupler.scad>;
 use <lid.scad>;
 use <outerpanel.scad>;
+use <flip_lid.scad>;
 include <inc/common.inc>;
 
 $fs = 0.6; // millimetres
@@ -42,6 +43,7 @@ module wheels() {
         translate([0,drive_motor_y,0]) {
             rotate([0,90,0]) gearwheel();
         }
+        /*
         translate([0,8.5,0]) {
             rotate([0,90,0]) idlegear();
         }
@@ -51,6 +53,7 @@ module wheels() {
         translate([0,-20.5,0]) {
             rotate([0,90,0]) idlegear();
         }
+        */
         translate([0,-35,0]) {
             rotate([0,90,0]) gearwheel();
         }
@@ -71,9 +74,17 @@ color("lightgreen") {
 
 // lid
 
+/*
 translate([0,0,20])
     linear_extrude(height=1)
         lid_main();
+*/
+// Flip lid
+
+translate([0,0,25])
+    linear_extrude(height=1)
+        translate([0,-13])
+            flip_lid_main();
         
 // side panels
 translate([-45,0,shell_h/2]) {
