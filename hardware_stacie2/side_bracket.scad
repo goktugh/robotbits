@@ -6,11 +6,11 @@ $fs = 0.2; // millimetres
 bracket_height = 11.5; // Must be a little higher than the wheel thickness inc. pulley.
 bracket_thickness = 8.0;
 bolt_dist = 14.0; // Distance between bolt centres.
-bolt_radius = 1.5;
+bolt_radius = 1.6; // inncludes some splodge
 
 module side_bracket_main()
 {
-    overlap = 1.0;
+    overlap = 1.4;
     linear_extrude(bracket_height) {
         difference() {
             translate([-overlap,-(bracket_thickness /2)])

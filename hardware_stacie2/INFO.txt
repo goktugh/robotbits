@@ -7,16 +7,6 @@ Flip coupler and wheels - can be PLA.
 
 Could use the ngen for wheels?!
 
-MAKING idle_gear
-------
-
-The very tiny idle gears are *very* difficult to 3d-print. This is 
-because they have an overhang and also have too much detail.
-
-We can use a raft? 
-
-Another problem is removing support material / raft is possibly very
-difficult without destroying the piece.
 
 MAKING wheel_gear
 ----------------

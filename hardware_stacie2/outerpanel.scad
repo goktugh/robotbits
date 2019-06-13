@@ -4,8 +4,7 @@ $fs = 0.2; // millimetres
 
 module outerpanel()
 {
-    wheel_holes_y = [-6, -35, drive_motor_y];
-    idle_holes_y = [8.5,-20];
+    wheel_holes_y = [1, -13, -35, drive_motor_y];
     r = 8;
     // Outer
     difference()
@@ -20,10 +19,6 @@ module outerpanel()
         for (y = wheel_holes_y) {
             translate([0,y])
                 circle(1.5);
-        }
-        for (y = idle_holes_y) {
-            translate([0,y])
-                circle(0.4);
         }
     }
 }
