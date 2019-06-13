@@ -4,11 +4,11 @@ use <inc/bevel_lib.scad>;
 $fa = 0.8; // millimetres
 
 // This radius should be a little less than our wheels, to allow for
-// stretching.
-wheel_radius = 8.5;
-wheel_width = 5.5;
+// stretching. 
+wheel_radius = 6.5;
+wheel_width = 5.0;
 
-tyre_thickness = 3.0; // Includes knobbles
+tyre_thickness = 2.0; // Includes knobbles
 
 button_radius = 2.5;
 
@@ -43,7 +43,7 @@ module mould_outer()
     // This will be upside-down.
     overall_height = wheel_width + 1;
     hole_radius = button_radius + 0.4;
-    side_thickness = 2.0;
+    side_thickness = 1.5;
     rotate_extrude(convexity=3) {
         // Base
         translate([hole_radius,0])
@@ -53,7 +53,7 @@ module mould_outer()
               square([side_thickness, wheel_width+1]);
         }
     }
-    knobble_size = 1.0;
+    knobble_size = 0.5;
     knobble_count = 36;
     // Knobbly tread
     for(ang = [0:(360 / knobble_count) :360]) {
