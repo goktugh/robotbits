@@ -32,7 +32,7 @@ grub_screw_radius = 1.25;
 
 flipper_width = 60;
 flipper_scoop_width = 90; // Bottom part, scoop
-horiz_length = 57.0; // y axis
+horiz_length = 53.0; // y axis
 thickness = 1.0;
 thickness2 = 1.0;
 bar_thickness = 2.0;
