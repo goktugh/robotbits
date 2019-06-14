@@ -32,9 +32,19 @@ module holes()
     }
 }
 
+module front_clearance_holes()
+{
+    // Holes at the front to accomodate the front bolts, these
+    // need clearance for bolt heads
+    mirror_x() {
+        translate([5,37])
+            circle(3.5);
+    }
+}
+
 module front_flat()
 {
-    depth = 23;
+    depth = 32;
     translate([0,40 + (depth/2)]) {
         square([80,depth], center=true);
     }
@@ -56,6 +66,7 @@ module flip_lid_main()
             }
         }
         holes();
+        front_clearance_holes();
     }
     % square([11,11], center=true);
 }
