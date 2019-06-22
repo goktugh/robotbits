@@ -65,7 +65,7 @@ module flip_coupler() {
         // hole
         translate([0,0,-20]) {
             difference() {
-                shaft_hole_radius = 1.5 + 0.1;
+                shaft_hole_radius = 1.5 + 0.2;
                 cylinder(r=shaft_hole_radius, h=100);
                 // Flat side
                 translate([-6.0,-3,0])
