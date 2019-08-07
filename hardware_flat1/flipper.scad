@@ -32,8 +32,8 @@ grub_screw_radius = 1.25;
 
 flipper_width = 60;
 flipper_scoop_width = 90; // Bottom part, scoop
-horiz_length = 57.0; // y axis
-thickness = 0.75;
+horiz_length = 53.0; // y axis
+thickness = 1.0;
 thickness2 = 1.0;
 bar_thickness = 2.0;
 diagonal_1_length = 26;
@@ -100,14 +100,30 @@ module octahedron_yminus(C0=1.0) {
     }
 }
 
+// An octahedron with flat bits or something
+module ridge_yminus(C0=1.0) {
+    intersection() {
+        octahedron(C0 * 2.0);
+        translate([0,-C0,0])
+            cube([C0 * 2, C0 * 2, C0 * 2], center=true);
+    }
+}
+
+
+
 module flipper_reinforcement()
 {
     // For more strength: ridge 
     translate([0, -(thickness / 2)])
     {
+        // Lines in centre, and at edges of mounting piece
         // Centre line
-        polyline_hulls(flipper_outline_points_1) {
-                octahedron_yminus(ridge_radius);
+        for (x = [mount_x_pos - (shaft_length/2), 0, mount_x_pos + (shaft_length/2)]) {
+            // At this point we need to use the local z axis
+            translate([0,0,x])
+            polyline_hulls(flipper_outline_points_1) {
+                    ridge_yminus(ridge_radius);
+            }
         }
         
         mirror_z() {
@@ -115,9 +131,10 @@ module flipper_reinforcement()
             edge_offset = (flipper_width / 2) - ridge_radius;
             translate([0,0,edge_offset])
                 polyline_hulls(flipper_outline_points_1) {
-                    octahedron_yminus(ridge_radius);
+                    ridge_yminus(ridge_radius);
                 };
             // Diagonals
+            /*
             d1 = [
                 flipper_outline_points_1[0],
                 [ flipper_outline_points_1[1].x, flipper_outline_points_1[1].y, edge_offset],
@@ -135,7 +152,8 @@ module flipper_reinforcement()
                 ];
             polyline_hulls(d2) {
                 octahedron_yminus(ridge_radius);
-            };        
+            };
+            */
         }
     }
 }
