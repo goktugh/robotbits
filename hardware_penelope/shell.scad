@@ -61,13 +61,15 @@ module other_cutouts() {
     translate([-1.25,-shell_d_half + 3, 9])
         fullybevelledbox([2.5, shell_d - 10, shell_h], radius=1.0);
     // Cutout for the weapon axle etc
-    cutout_axle_depth = 9;
-    translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 12.5])
+    cutout_axle_depth = 10;
+    translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 13.0])
         fullybevelledbox([22, cutout_axle_depth, shell_h], radius=1.0);
         
     // Cutout for the weapon axle bits
-    translate([-6, flip_motor_y - 17, -5])
-        fullybevelledbox([12, 33, 32], radius=2.0);
+    weapon_axle_diameter = 22;
+    weapon_space = weapon_axle_diameter + 4;
+    translate([-6, flip_motor_y - (weapon_space/2), -5])
+        fullybevelledbox([12, weapon_space, weapon_space], radius=2.0);
     // Cut out the rear
     translate([0, -shell_d_half, shell_h])
         cube([28,5,4], center=true);
@@ -112,8 +114,8 @@ module wiring_channels() {
     channel_h = 8;
     // Cutouts from one side of the gubbins section to the other
     // (for power wires etc)
-    translate([-10,9,shell_h-12])
-        fullybevelledbox([20,4,channel_h], radius=1.5);
+    //translate([-10,9,shell_h-12]) // Front
+    //    fullybevelledbox([20,4,channel_h], radius=1.5);
     translate([-10,-22,shell_h-12])
         fullybevelledbox([20,4,channel_h], radius=1.5);
     
@@ -185,10 +187,10 @@ module axe_coupling() {
     // Show where the axe coupler will be
     rotate([0,90,0]) {
         union() {
-            // Two flange plates = diameter 32mm,
+            // Two flange plates = diameter 22mm,
             // thickness 2 mm.
             translate([0,0,1])
-                cylinder(r=16.0, h=2.0);
+                cylinder(r=11.0, h=2.0);
             // The next part is 10mm diameter, 10mm high
             translate([0,0,3])
                 cylinder(r=5.0, h=10.0);
@@ -223,4 +225,12 @@ module shell_main(skip_motors=false)
     translate([0,flip_motor_y,shell_h/2]) %axe_coupling();
 }
 
+module boost()
+{
+    color("red")
+        translate([4,-24,3])
+            cube([15,36,10]);
+}
+
 shell_main();
+// boost();
