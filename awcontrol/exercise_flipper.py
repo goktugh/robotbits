@@ -32,7 +32,7 @@ if __name__ == '__main__':
         time.sleep(0.5)
         print("retracting...")
         set_flipper(-1,64)
-        time.sleep(0.1)
+        time.sleep(0.2)
         set_flipper(-1,16)
         time.sleep(0.3)
         set_flipper(0,0)
