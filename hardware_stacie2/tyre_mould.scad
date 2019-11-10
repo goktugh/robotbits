@@ -5,10 +5,10 @@ $fa = 0.8; // millimetres
 
 // This radius should be a little less than our wheels, to allow for
 // stretching. 
-wheel_radius = 7.5;
+wheel_radius = 7.0;
 wheel_width = 5.0;
 
-tyre_thickness = 3.0; // Includes knobbles
+tyre_thickness = 3.5; // Includes knobbles
 
 button_radius = 2.5;
 
