@@ -98,6 +98,7 @@ module octahedron(C0=1.0) {
 }
 
 module fullybevelledbox(size=[1,1,1], radius=0.1) {
+    echo("FBB: size=", size);
     hull() {
         for (x = [radius, size[0] - radius]) {
             for (y = [radius, size[1] - radius]) {

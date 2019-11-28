@@ -15,6 +15,8 @@ screw_locations = [
     [shell_w_half - 5, 10], // front side
     [shell_w_half - 5, -4], // centre side
 
-    [5, -shell_d_half + 2.5] // rear pair
+    [5, -shell_d_half + 2.5], // rear pair
+    // Centre holes near the weapon.
+    [5, 8.5]
 ];
 

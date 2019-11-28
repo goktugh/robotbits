@@ -54,12 +54,27 @@ module other_cutouts() {
     // Cutouts: Battery / gubbins compartment
     // fullybevelledbox is not centred.
     mirror_x() {
-        translate([2, -26, 1 + 0.4])
-            fullybevelledbox([31.5,41, shell_h -3], radius=1.0);
+        difference() {
+            translate([2, -26, 1 + 0.4])
+                fullybevelledbox([31.5,41, shell_h -3], radius=1.0);
+            // This part is not cut out, it's a pillar for
+            // strength and bolting the lid.
+            translate([0,6,0])
+                bevelledbox([8,10,50], radius=1.0);
+                
+        }
     }
-    // Lengthwise cutout
-    translate([-1.25,-shell_d_half + 3, 9])
-        fullybevelledbox([2.5, shell_d - 10, shell_h], radius=1.0);
+    // Lengthwise cutout - for parking the axe weapon.
+    // Slightly angled
+    axe_park_d = shell_d - 10;
+    axe_park_h = (shell_h / 2) ;
+    axe_angle = atan(axe_park_h / axe_park_d);
+    translate([-1.25, flip_motor_y, (shell_h / 2) - 1])
+        rotate([-axe_angle,0,0])
+            translate([0,-axe_park_d,0])
+                fullybevelledbox([2.5, axe_park_d, shell_h], radius=1.0);
+        
+        
     // Cutout for the weapon axle etc
     cutout_axle_depth = 10;
     translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 13.0])
@@ -81,7 +96,8 @@ module screw_holes() {
     mirror_x() {
         for (location = screw_locations) {
             translate(location)
-                cylinder(r=r, h=shell_h +25);
+                translate([0,0,-1])
+                    cylinder(r=r, h=shell_h +25);
         }
     }
 }
@@ -114,16 +130,14 @@ module wiring_channels() {
     channel_h = 8;
     // Cutouts from one side of the gubbins section to the other
     // (for power wires etc)
-    //translate([-10,9,shell_h-12]) // Front
-    //    fullybevelledbox([20,4,channel_h], radius=1.5);
     translate([-10,-22,shell_h-12])
-        fullybevelledbox([20,4,channel_h], radius=1.5);
+        fullybevelledbox([20,8,channel_h], radius=1.5);
     
     // Cutouts from the gubbins to the rear (drive) motors
     // Which have their wiring near the centre.
-    mirror_x() {
+    color("pink") mirror_x() {
         translate([6,drive_motor_y + 2,shell_h-12])
-            fullybevelledbox([4,8,channel_h], radius=1.5);
+           fullybevelledbox([4,8,channel_h], radius=1.5);
         
     }
     // Cutouts to allow wires to weapon motors
