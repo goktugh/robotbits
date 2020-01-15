@@ -62,12 +62,22 @@ module other_cutouts() {
     translate([-11, flip_motor_y - (cutout_axle_depth/2), shell_h - 12.5])
         fullybevelledbox([22, cutout_axle_depth, shell_h], radius=1.0);
         
-    // Cutout for the flipper axle bits
-    translate([-6, flip_motor_y - 8, 2])
-        fullybevelledbox([12, 14, shell_h], radius=1.0);
     // Cut out the rear
     translate([0, -shell_d_half, shell_h])
         cube([28,5,4], center=true);
+    // Cutout for the flipper axle bits
+    translate([-6, flip_motor_y - 8, 2])
+        fullybevelledbox([12, 14, shell_h], radius=1.0);
+    //Cutout for the flip coupler to rotate.
+    // This is hexagonal.
+    af = 10.0; // Diameter across flat sides of flip coupler, allowing some margin
+    r1 = (af / 2 / cos(30)); // radius of the cylinder we need to make.
+    flip_axis_z = 9.0;
+    translate([0, flip_motor_y, flip_axis_z]) {
+        rotate([0,90,0])
+            cylinder(r=r1, h=20.0, center=true);
+    }
+
 }
 
 module screw_holes() {
