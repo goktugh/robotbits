@@ -11,6 +11,8 @@ RADIUS = 4.0;
 side_radius = 2.75;
 bracketlen = 36;
 
+centre_hex_tolerance = 0.2; // Amount of extra offset for centre hex. 
+
 module flip_coupler_centre()
 {
     // Across flats 8.0
@@ -22,12 +24,12 @@ module flip_coupler_centre()
     difference() {
         // Outer
          hull() {
-            cylinder(r=r1 + 0.5, h=total_height, $fn=6, center=true);
+            cylinder(r=r1 + 0.8 + centre_hex_tolerance, h=total_height, $fn=6, center=true);
             translate([RADIUS + panel_offset, 2, - (main_height / 2)])
             cube([thick, 2.5, main_height]);            
         }
          // Cutout for the alu shaft adapter
-         cylinder(r=r1, h=30.0, $fn=6, center=true);
+         cylinder(r=r1 + centre_hex_tolerance, h=30.0, $fn=6, center=true);
        }
 }
 
