@@ -118,6 +118,24 @@ static void mainloop()
     }
 }
 
+static void show_device_info()
+{
+    diag_println("device id=%02x %02x %02x",
+        (int) SIGROW.DEVICEID0,
+        (int) SIGROW.DEVICEID1,
+        (int) SIGROW.DEVICEID2);
+    diag_print("serial number: ");
+    uint8_t * serialnum = (uint8_t *) & (SIGROW.SERNUM0);
+    for (uint8_t i=0; i<10; i++) {
+        diag_print("%02x ", (int) serialnum[i]);
+    }
+    diag_puts("\r\n");
+    char buf[20];
+    strncpy(buf, (char *) serialnum, 10);
+    buf[10] = '\0';
+    diag_println("serial number (ascii) is:%s", buf);
+}
+
 int main(void)
 {
 	init_hardware();	
@@ -125,5 +143,6 @@ int main(void)
 	diag_puts("\r\n\r\n");
 	diag_puts("Hello, world");
 	diag_puts("\r\n\r\n");
+    show_device_info();
 	mainloop();
 }
