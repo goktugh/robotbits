@@ -2,13 +2,13 @@
 # We require the toolchain avr-gcc
 # from ../../avr_toolchain
 #
-OBJDIR=obj816
+OBJDIR=obj
 
 OBJ_FILES=main.o diag.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
 HEADERS=diag.h
 
-MCU=attiny816
+MCU=attiny3217
 
 ELF=$(OBJDIR)/test.elf
 HEX=$(OBJDIR)/test.hex
@@ -31,7 +31,7 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 	avr-gcc -c $(CFLAGS) -o $@ $<
 
 install: link
-	pyupdi.py -d tiny816 -c /dev/ttyUSB0 -f $(HEX)
+	pyupdi.py -d tiny3217 -c /dev/ttyUSB0 -f $(HEX)
 
 clean:
 	rm -r obj/
