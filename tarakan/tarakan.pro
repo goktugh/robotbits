@@ -1,4 +1,4 @@
-update=Thu 07 May 2020 12:15:52 BST
+update=Thu 07 May 2020 17:10:24 BST
 last_client=kicad
 [general]
 version=1
@@ -7,7 +7,9 @@ version=1
 [SchematicFrame]
 version=1
 [sheetnames]
-1=88ddaf30-56ba-4c26-b81a-da110da8bcf5:
+1=b0a0b282-9140-479b-ae23-fd2e540387ce:
+[PcbFrame]
+version=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
@@ -35,6 +37,7 @@ TrackWidth1=0.25
 TrackWidth2=0.5
 TrackWidth3=0.8
 TrackWidth4=1
+TrackWidth5=2.5
 ViaDiameter1=0.8
 ViaDrill1=0.4
 dPairWidth1=0.2
