@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "tarakan")(type "KiCad")(uri "${KIPRJMOD}/tarakan.pretty")(options "")(descr ""))
+)
