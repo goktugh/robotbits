@@ -1,4 +1,4 @@
-update=Sat 13 Jun 2020 20:38:11 BST
+update=Sun 14 Jun 2020 20:01:48 BST
 version=1
 last_client=kicad
 [general]
@@ -14,12 +14,12 @@ LibDir=
 [eeschema/libraries]
 [LibeditFrame]
 version=1
-[SchematicFrame]
-version=1
 [PcbFrame]
 version=1
+[SchematicFrame]
+version=1
 [sheetnames]
-1=156dbc2e-f998-4eab-a8c9-22ffb39d5feb:
+1=7909e921-a58b-44dc-b887-c44dad87f405:
 [pcbnew]
 version=1
 PageLayoutDescrFile=
@@ -67,6 +67,7 @@ Hole_too_close_to_pad=error
 Hole_too_close_to_track=error
 Drilled_holes_too_close_together=error
 Track_width_too_small=error
+Track_width_too_large=error
 Via_size_too_small=error
 Via_annulus_too_small=error
 Via_drill_too_small=error
@@ -85,9 +86,14 @@ NetClass_Via_Drill_too_small=error
 NetClass_uVia_Dia_too_small=error
 NetClass_uVia_Drill_too_small=error
 Via_inside_keepout_area=error
+Micro_via_inside_keepout_area=error
+Buried_via_inside_keepout_area=error
 Track_inside_keepout_area=error
 Pad_inside_keepout_area=error
 Footprint_inside_keepout_area=error
+Hole_inside_keepout_area=error
+Text_inside_keepout_area=error
+Graphic_inside_keepout_area=error
 Courtyards_overlap=error
 Footprint_has_no_courtyard_defined=ignore
 Footprint_has_malformed_courtyard=error
