@@ -1,6 +1,8 @@
-(kicad_sch (version 20200310) (host eeschema "5.99.0-unknown-5cf474e~101~ubuntu18.04.1")
+(kicad_sch (version 20200512) (host eeschema "5.99.0-unknown-c8476d6~101~ubuntu18.04.1")
 
-  (page "A4")
+  (page 1 2)
+
+  (paper "A4")
 
   (title_block
     (date "2020-04-29")
@@ -286,20 +288,20 @@
     )
   )
 
+  (junction (at 99.06 76.2))
   (junction (at 113.03 76.2))
+  (junction (at 120.65 76.2))
+  (junction (at 149.86 78.74))
+  (junction (at 181.61 109.22))
+  (junction (at 196.85 55.88))
+  (junction (at 203.2 41.91))
+  (junction (at 208.28 100.33))
+  (junction (at 208.28 137.16))
   (junction (at 208.28 152.4))
+  (junction (at 218.44 152.4))
   (junction (at 226.06 93.98))
   (junction (at 228.6 137.16))
-  (junction (at 120.65 76.2))
   (junction (at 236.22 93.98))
-  (junction (at 218.44 152.4))
-  (junction (at 181.61 109.22))
-  (junction (at 99.06 76.2))
-  (junction (at 208.28 100.33))
-  (junction (at 149.86 78.74))
-  (junction (at 208.28 137.16))
-  (junction (at 203.2 41.91))
-  (junction (at 196.85 55.88))
 
   (no_connect (at 219.71 60.96))
   (no_connect (at 217.17 60.96))

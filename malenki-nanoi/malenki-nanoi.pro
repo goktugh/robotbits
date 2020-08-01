@@ -1,4 +1,4 @@
-update=Wed 20 May 2020 18:32:41 BST
+update=Mon 22 Jun 2020 11:24:57 BST
 version=1
 last_client=kicad
 [general]
@@ -12,16 +12,12 @@ NetIExt=net
 version=1
 LibDir=
 [eeschema/libraries]
-[ModEditFrame]
+[LibeditFrame]
 version=1
 [SchematicFrame]
 version=1
-[LibeditFrame]
-version=1
-[PcbFrame]
-version=1
 [sheetnames]
-1=4cb4ba8a-c14f-4c6c-b5af-d3c9cb04ac19:
+1=abac0cd9-8d90-4b83-b174-8cd32b49331b:
 2=f8865f8d-c9c7-4324-8715-db444b940a42:radio
 [pcbnew]
 version=1
@@ -57,6 +53,8 @@ Track_ends_too_close=error
 Parallel_tracks_too_close=error
 Tracks_crossing=error
 Track_too_close_to_board_edge=error
+Via_too_close_to_board_edge=error
+Pad_too_close_to_board_edge=error
 Pads_too_close=error
 Pad_too_close_to_copper_item=error
 Copper_areas_intersect=error
@@ -68,6 +66,7 @@ Hole_too_close_to_pad=error
 Hole_too_close_to_track=error
 Drilled_holes_too_close_together=error
 Track_width_too_small=error
+Track_width_too_large=error
 Via_size_too_small=error
 Via_annulus_too_small=error
 Via_drill_too_small=error
@@ -86,9 +85,14 @@ NetClass_Via_Drill_too_small=error
 NetClass_uVia_Dia_too_small=error
 NetClass_uVia_Drill_too_small=error
 Via_inside_keepout_area=error
+Micro_via_inside_keepout_area=error
+Buried_via_inside_keepout_area=error
 Track_inside_keepout_area=error
 Pad_inside_keepout_area=error
 Footprint_inside_keepout_area=error
+Hole_inside_keepout_area=error
+Text_inside_keepout_area=error
+Graphic_inside_keepout_area=error
 Courtyards_overlap=error
 Footprint_has_no_courtyard_defined=ignore
 Footprint_has_malformed_courtyard=error
@@ -314,7 +318,7 @@ Enabled=0
 [pcbnew/Netclasses]
 [pcbnew/Netclasses/Default]
 Name=Default
-Clearance=0.2
+Clearance=0.15
 TrackWidth=0.25
 ViaDiameter=0.6
 ViaDrill=0.3
@@ -334,3 +338,7 @@ uViaDrill=0.1
 dPairWidth=0.2
 dPairGap=0.25
 dPairViaGap=0.25
+[ModEditFrame]
+version=1
+[PcbFrame]
+version=1
