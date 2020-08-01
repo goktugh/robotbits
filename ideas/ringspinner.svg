@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="ringspinner.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="448.53155"
+     inkscape:cy="570.67141"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0"
+     inkscape:window-width="1280"
+     inkscape:window-height="965"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid815"
+       units="mm"
+       spacingx="2"
+       spacingy="2" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path817"
+       cx="120"
+       cy="137"
+       r="50" />
+    <g
+       id="g831"
+       transform="translate(84,50)">
+      <rect
+         y="67"
+         x="50"
+         height="6"
+         width="18"
+         id="rect819"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         y="62.999996"
+         x="61.999996"
+         height="14"
+         width="8"
+         id="rect821"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text825"
+         y="71"
+         x="52"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="71"
+           x="52"
+           id="tspan823"
+           sodipodi:role="line">motor+wheel</tspan></text>
+    </g>
+    <g
+       id="g831-3"
+       transform="translate(84,84)">
+      <rect
+         y="67"
+         x="50"
+         height="6"
+         width="18"
+         id="rect819-6"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         y="62.999996"
+         x="61.999996"
+         height="14"
+         width="8"
+         id="rect821-7"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text825-5"
+         y="71"
+         x="52"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="71"
+           x="52"
+           id="tspan823-3"
+           sodipodi:role="line">motor+wheel</tspan></text>
+    </g>
+    <g
+       id="g831-5"
+       transform="rotate(-180,77.999998,95)">
+      <rect
+         y="67"
+         x="50"
+         height="6"
+         width="18"
+         id="rect819-62"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         y="62.999996"
+         x="61.999996"
+         height="14"
+         width="8"
+         id="rect821-9"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text825-1"
+         y="71"
+         x="52"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="71"
+           x="52"
+           id="tspan823-2"
+           sodipodi:role="line">motor+wheel</tspan></text>
+    </g>
+    <g
+       id="g831-5-6"
+       transform="rotate(180,78,112)">
+      <rect
+         y="67"
+         x="50"
+         height="6"
+         width="18"
+         id="rect819-62-2"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         y="62.999996"
+         x="61.999996"
+         height="14"
+         width="8"
+         id="rect821-9-6"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text825-1-1"
+         y="71"
+         x="52"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="71"
+           x="52"
+           id="tspan823-2-8"
+           sodipodi:role="line">motor+wheel</tspan></text>
+    </g>
+    <g
+       id="g924"
+       transform="translate(0,1.889881)">
+      <circle
+         r="12"
+         cy="105"
+         cx="120"
+         id="path915"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text919"
+         y="103"
+         x="114"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="103"
+           x="114"
+           id="tspan917"
+           sodipodi:role="line">BLDC</tspan></text>
+    </g>
+    <g
+       id="g970"
+       transform="translate(-80,-16)">
+      <rect
+         y="155"
+         x="110"
+         height="30.000002"
+         width="20"
+         id="rect961"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text965"
+         y="169"
+         x="118"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="169"
+           x="118"
+           id="tspan963"
+           sodipodi:role="line">ESC</tspan></text>
+    </g>
+    <rect
+       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect972"
+       width="19"
+       height="42"
+       x="37"
+       y="-170"
+       transform="rotate(90)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="178"
+       y="109"
+       id="text976"><tspan
+         sodipodi:role="line"
+         id="tspan974"
+         x="178"
+         y="109"
+         style="stroke-width:0.26458332">6mm gear motor</tspan><tspan
+         sodipodi:role="line"
+         x="178"
+         y="111.64584"
+         style="stroke-width:0.26458332"
+         id="tspan978">17mm motor + gearbox</tspan><tspan
+         sodipodi:role="line"
+         x="178"
+         y="114.29166"
+         style="stroke-width:0.26458332"
+         id="tspan980">3.5mm shaft</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="73.999992"
+       y="192.99998"
+       id="text1003"><tspan
+         sodipodi:role="line"
+         id="tspan1001"
+         x="73.999992"
+         y="192.99998"
+         style="stroke-width:0.26458332">Profile of ring</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 69.999999,197 v 20 h 4 l 8,-8 1.999999,-2 -9.999999,-10 z"
+       id="path1005"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="53.999996"
+       y="206.99998"
+       id="text1009"><tspan
+         sodipodi:role="line"
+         id="tspan1007"
+         x="53.999996"
+         y="206.99998"
+         style="stroke-width:0.26458332">Ring profile --&gt;</tspan></text>
+    <g
+       id="g1137"
+       transform="translate(2.0000033,-1.9999935)">
+      <rect
+         transform="rotate(45)"
+         y="89.802559"
+         x="205.76807"
+         height="6"
+         width="12"
+         id="rect1011"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         transform="rotate(45)"
+         id="text1015"
+         y="93.746796"
+         x="207.62943"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="93.746796"
+           x="207.62943"
+           id="tspan1013"
+           sodipodi:role="line">Bearing</tspan></text>
+    </g>
+    <g
+       id="g1026"
+       transform="rotate(45,97.828409,202.58578)">
+      <rect
+         y="206.99998"
+         x="94"
+         height="16"
+         width="6"
+         id="rect1017"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         transform="rotate(-90)"
+         id="text1021"
+         y="98.257668"
+         x="-219.12233"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="98.257668"
+           x="-219.12233"
+           id="tspan1019"
+           sodipodi:role="line">M3 bolt</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="52.124588"
+       y="211.53453"
+       id="text1030"><tspan
+         sodipodi:role="line"
+         id="tspan1028"
+         x="52.124588"
+         y="211.53453"
+         style="stroke-width:0.26458332">Area 45 mm^2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="72"
+       y="237"
+       id="text1034"><tspan
+         sodipodi:role="line"
+         id="tspan1032"
+         x="72"
+         y="237"
+         style="stroke-width:0.26458332">5*10mm, what is the volume?</tspan><tspan
+         sodipodi:role="line"
+         x="72"
+         y="239.64583"
+         style="stroke-width:0.26458332"
+         id="tspan1040" /><tspan
+         sodipodi:role="line"
+         x="72"
+         y="242.29167"
+         style="stroke-width:0.26458332"
+         id="tspan1046">Outer = 100*100*pi</tspan><tspan
+         sodipodi:role="line"
+         x="72"
+         y="244.9375"
+         style="stroke-width:0.26458332"
+         id="tspan1048">inner = 95*95 * pi</tspan><tspan
+         sodipodi:role="line"
+         x="72"
+         y="247.58333"
+         style="stroke-width:0.26458332"
+         id="tspan1050">diff = ~ 3000 mm^2</tspan><tspan
+         sodipodi:role="line"
+         x="72"
+         y="250.22917"
+         style="stroke-width:0.26458332"
+         id="tspan1052">volume = 30000 mm^3</tspan><tspan
+         sodipodi:role="line"
+         x="72"
+         y="252.875"
+         style="stroke-width:0.26458332"
+         id="tspan1054" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="122"
+       y="249"
+       id="text1058"><tspan
+         sodipodi:role="line"
+         id="tspan1056"
+         x="122"
+         y="249"
+         style="stroke-width:0.26458332">density of Alu = 2.7 kg/l </tspan><tspan
+         sodipodi:role="line"
+         x="122"
+         y="251.64583"
+         style="stroke-width:0.26458332"
+         id="tspan1062" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="75.999992"
+       y="253"
+       id="text1066"><tspan
+         sodipodi:role="line"
+         id="tspan1064"
+         x="75.999992"
+         y="253"
+         style="stroke-width:0.26458332">80 grams</tspan></text>
+    <circle
+       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path817-9"
+       cx="120"
+       cy="137"
+       r="43" />
+    <g
+       id="g1097"
+       transform="translate(-61,34)">
+      <rect
+         y="57"
+         x="70"
+         height="13"
+         width="51"
+         id="rect1088"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text1092"
+         y="67"
+         x="80"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="67"
+           x="80"
+           id="tspan1090"
+           sodipodi:role="line">Turnigy battery 1S 200mah</tspan></text>
+    </g>
+    <g
+       id="g1097-2"
+       transform="translate(-61,47)">
+      <rect
+         y="57"
+         x="70"
+         height="13"
+         width="51"
+         id="rect1088-0"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text1092-2"
+         y="67"
+         x="80"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="67"
+           x="80"
+           id="tspan1090-3"
+           sodipodi:role="line">Turnigy battery 1S 200mah</tspan></text>
+    </g>
+    <g
+       id="g1145"
+       transform="rotate(90,111.5,146.5)">
+      <rect
+         y="128"
+         x="102"
+         height="21"
+         width="36"
+         id="rect1123"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text1127"
+         y="140"
+         x="112"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="140"
+           x="112"
+           id="tspan1125"
+           sodipodi:role="line">2S 180mah</tspan></text>
+    </g>
+  </g>
+</svg>
