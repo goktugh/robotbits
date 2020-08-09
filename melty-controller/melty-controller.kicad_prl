@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 31,
+    "active_layer": 36,
     "active_layer_preset": "",
     "hidden_nets": [],
     "high_contrast_mode": 0,
@@ -51,7 +51,7 @@
       33,
       34
     ],
-    "visible_layers": "15055_80000000"
+    "visible_layers": "15050_80000000"
   },
   "meta": {
     "filename": "melty-controller.kicad_prl",
