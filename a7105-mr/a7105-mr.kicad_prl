@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 0,
+    "active_layer": 40,
     "active_layer_preset": "",
     "hidden_nets": [],
     "high_contrast_mode": 0,
@@ -48,7 +48,7 @@
       30,
       31
     ],
-    "visible_layers": "3d300_80000001"
+    "visible_layers": "3ffff_80000001"
   },
   "meta": {
     "filename": "a7105-mr.kicad_prl",
