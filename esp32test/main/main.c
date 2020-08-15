@@ -14,7 +14,7 @@
 
 #include "comms.h"
 #include "fs.h"
-
+#include "motors.h"
 
 #define BLINK_GPIO 2
 #define OTHER_GPIO 13
@@ -56,7 +56,7 @@ static void mainloop_task(void *pvParameters)
         printf("Loop %d...\n", i);
         fflush(stdout);
         // vTaskDelay(1000 / portTICK_PERIOD_MS);
-        busy_sleep(250000);
+        busy_sleep(2 * 1000 * 1000);
         esp_task_wdt_reset();
         taskYIELD();
         i += 1;
@@ -88,6 +88,7 @@ void app_main()
     printf("Initialising comms\n");
     comms_init();    
     web_server_init();
+    motors_init();
 
     printf("Setting gpio up for led\n");
     gpio_pad_select_gpio(BLINK_GPIO);
