@@ -10,6 +10,16 @@ asmtest1:
 
 .global asmsum
 
+; Define the vport to use to pulse sck line
+vport_sck=VPORTA_OUT
+bit_sck=7
+
+.macro pulse_sck
+    sbi vport_sck, bit_sck 
+    nop
+    cbi vport_sck, bit_sck 
+.endm
+
 ; Add two 16-bit integers.
 asmsum:
     ; First paramter is r24:r25
@@ -23,6 +33,7 @@ asmsum:
     
 ; Junk test function test assembler out
 junk0:
+    pulse_sck
 .rept 10 ; Example loop unrolling
     nop
     lsl r24

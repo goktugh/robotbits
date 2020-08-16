@@ -1,3 +1,12 @@
+/*
+ * Test program for the avr attiny13
+ * 
+ * Newer attiny are much better, e.g. attiny402 has more of everything
+ * and is just as cheap.
+ * 
+ * But the attiny13 is widely available and jlc always have them in stock.
+ */
+
 #include <avr/io.h>
 
 // attiny13 default clock is nominally 9.6mhz

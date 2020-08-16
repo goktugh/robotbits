@@ -77,26 +77,28 @@ static void test_crc()
     uint16_t crctest = calc_crc(throttle << 1);
     printf("throttle = %04hx value with crc = %04hx\n",
         throttle, crctest);    
-    assert(crctest == 0x826c);
+    assert(crctest == 0x82c6);
 }
 
 static void motors_init_rmt()
 {
     /* Initialise RMT (remote control) peripheral.
      */
-    rmt_config_t config;
-    memset(&config, 0, sizeof(config)); // initialise unused fields to 0
-    config.rmt_mode = RMT_MODE_TX;
-    config.channel = 0; // In case we use multiple channels.
-    config.gpio_num = MOTOR0_GPIO;
-    config.mem_block_num = 1;
-    config.tx_config.idle_output_en = 1;
-    config.tx_config.idle_level = 0;
-    config.clk_div = CLOCK_DIVIDER;
-    ESP_ERROR_CHECK(rmt_config(&config));
-    ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
-    ESP_LOGI(MOTORS_TAG, "rmt ok");
-
+    for (uint8_t motor = 0; motor < 2; motor ++) {
+        rmt_config_t config;
+        memset(&config, 0, sizeof(config)); // initialise unused fields to 0
+        config.rmt_mode = RMT_MODE_TX;
+        config.channel = motor; // channel0 for motor0, c1 for motor1
+        config.gpio_num = (motor==1) ? MOTOR1_GPIO : MOTOR0_GPIO;
+        config.mem_block_num = 1;
+        config.tx_config.idle_output_en = 1;
+        config.tx_config.idle_level = 0;
+        config.clk_div = CLOCK_DIVIDER;
+        ESP_LOGI(MOTORS_TAG, "Initialising rmt %d", motor);
+        ESP_ERROR_CHECK(rmt_config(&config));
+        ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
+        ESP_LOGI(MOTORS_TAG, "rmt %d ok", motor);
+    }
 }
 
 static void transmit_command(uint8_t motor, uint16_t top_12_bits)
@@ -121,7 +123,7 @@ static void transmit_command(uint8_t motor, uint16_t top_12_bits)
         cmdbits = cmdbits << 1; // Shift bits left
     }
     // Write and wait.
-    esp_err_t err = rmt_write_items(0, pulses, 16, true); 
+    esp_err_t err = rmt_write_items(motor, pulses, 16, true); 
     ESP_ERROR_CHECK(err);
 }
 
@@ -137,6 +139,7 @@ void motors_init()
     
     motors_init_rmt();
     transmit_command(0,0);
+    transmit_command(1,0);
 }
 
 
@@ -155,3 +158,8 @@ typedef struct rmt_item32_s {
 } rmt_item32_t;
 
 */
+
+void motor_set_speed_signed(uint8_t motor, int speed_signed)
+{
+    // TODO
+}

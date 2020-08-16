@@ -33,7 +33,7 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 # Assembly language compile
 $(OBJDIR)/%.o: %.S Makefile $(HEADERS)
 	@mkdir -p $(OBJDIR)
-	avr-gcc -c $(CFLAGS) -o $@ $<
+	avr-gcc -c $(CFLAGS) -Xassembler -a=$(OBJDIR)/$(<).lst -o $@ $<
 
 install: link
 	pyupdi.py -d tiny3217 -c /dev/ttyUSB0 -f $(HEX)

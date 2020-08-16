@@ -50,11 +50,12 @@ static void init_timer()
     // enable WOA
     // enable WOB
     // Enable A and B comparator
+    // And enable WOC and WOD
     TCD0.FAULTCTRL = 
         TCD_CMPAEN_bm   
         | TCD_CMPBEN_bm;
     _PROTECTED_WRITE(TCD0.FAULTCTRL,
-        TCD_CMPAEN_bm | TCD_CMPBEN_bm);
+        TCD_CMPAEN_bm | TCD_CMPBEN_bm | TCD_CMPCEN_bm | TCD_CMPDEN_bm);
  
     // Set the comparators up
     TCD0.CMPASET = 312; // Time before cmpa goes high
@@ -68,7 +69,12 @@ static void init_timer()
     // Finally turn the thing on.
     TCD0.CTRLA = TCD_ENABLE_bm |
         TCD_CLKSEL_SYSCLK_gc | // sys clock
-        TCD_CNTPRES_DIV32_gc; // divider
+        TCD_SYNCPRES_DIV2_gc | // prescale by 2
+        TCD_CNTPRES_DIV32_gc; // further prescale by 32
+        
+    // Enable PC0 as output for TCD.WOC
+    PORTC.DIRSET |= 1 << 0;
+    
 }
 
 static void init_ccl()
@@ -108,11 +114,9 @@ static void mainloop()
         _delay_ms(10);
         // Switch pulse len
         TCD0.CMPBSET = pulselen;
-        // Restart the timer on TCD0.
-        // Force the outputs low (one-shot operation)
-        TCD0.CTRLC = TCD_CMPOVR_bm;
-        // Then restart the timer.
-        TCD0.CTRLE = TCD_RESTART_bm;
+        // synchronise at end of cycle
+        // TCD0.CTRLE = TCD_SYNCEOC_bm;
+        TCD0.CTRLE = TCD_SYNCEOC_bm;
         pulselen += 1;
         if (pulselen > 624) pulselen = 312;
     }
