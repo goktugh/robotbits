@@ -161,5 +161,21 @@ typedef struct rmt_item32_s {
 
 void motor_set_speed_signed(uint8_t motor, int speed_signed)
 {
-    // TODO
+    // dshot commands:
+    // 0= off
+    // 1..47 reserved (config etc)
+    // 48..1047 = forward speeds
+    // 1049..2047 = reverse speeds
+    // 1048=?
+    uint16_t dshot = 0; // motor off
+    if (speed_signed > 0) {
+        dshot = 47 + speed_signed;
+        if (dshot > 1047) dshot = 1047;
+    }
+    if (speed_signed < 0) {
+        dshot = 1048 - speed_signed;
+        if (dshot > 2047) dshot = 2047;
+    }
+    uint16_t top_12_bits = (dshot << 1 );
+    transmit_command(motor, top_12_bits);
 }

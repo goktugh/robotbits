@@ -1,5 +1,5 @@
 #include "comms.h"
-
+#include "wifi_password.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -18,8 +18,8 @@
 #include "freertos/event_groups.h"
 
 
-#define WIFI_SSID "esptest"
-#define WIFI_PASS "esptest111"
+#define WIFI_AP_SSID "esptest"
+#define WIFI_AP_PASS "esptest111"
 static const char * TAG = "wifi";
 
 static int s_retry_num = 0;
@@ -85,8 +85,8 @@ static void wifi_init_common()
 
 static void wifi_init_sta()
 {
-    static const char * ssid = "wrong";
-    static const char * password = "wrong";
+    static const char * ssid = WIFI_STA_SSID;
+    static const char * password = WIFI_STA_PASS;
     
     wifi_init_common();
     s_wifi_event_group = xEventGroupCreate();
@@ -107,9 +107,9 @@ static void wifi_init_softap()
 
     wifi_config_t wifi_config = {
         .ap = {
-            .ssid = WIFI_SSID,
-            .ssid_len = strlen(WIFI_SSID),
-            .password = WIFI_PASS,
+            .ssid = WIFI_AP_SSID,
+            .ssid_len = strlen(WIFI_AP_SSID),
+            .password = WIFI_AP_PASS,
             .max_connection = 10,
             .authmode = WIFI_AUTH_WPA_WPA2_PSK
         },
@@ -121,7 +121,7 @@ static void wifi_init_softap()
     ESP_ERROR_CHECK(esp_wifi_start());
 
     printf("wifi_init_softap finished. SSID:%s password:%s\n",
-             WIFI_SSID, WIFI_PASS);
+             WIFI_AP_SSID, WIFI_AP_PASS);
 }
 
 #define SERVER_TAG "udp_server_task"
@@ -164,8 +164,6 @@ static void udp_server_task(void *pvParameters)
             }
         }
     }
-    
-    
     vTaskDelete(NULL);
 }   
 

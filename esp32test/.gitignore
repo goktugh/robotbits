@@ -1,2 +1,4 @@
 build/
 *.bin
+wifi_password.h
+

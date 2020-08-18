@@ -97,6 +97,8 @@ void fs_init()
     if (f != NULL) {
         fprintf(f, "Hi there\n");
         fclose(f);
+    } else {
+        ESP_LOGW(TAG, "Failed to open log file");
     }
 }
 
@@ -104,8 +106,6 @@ static char chunk_buf[4096];
 
 // Arbitrary:
 #define FILE_PATH_MAX 200
-
-
 
 // SUPER SIMPLE WEB SERVER:
 // only get, gets files from the fs
@@ -123,10 +123,8 @@ static esp_err_t download_directory_index(httpd_req_t *req)
     char filepath[FILE_PATH_MAX];
     // Copy the req->uri and remove the last character - always /
     map_path(req, filepath);
-    ESP_LOGI(TAG, "P0 %s", filepath);
     filepath[FILE_PATH_MAX - 1] = '\0'; // esure null terminated
     filepath[strlen(filepath) -1 ] = '\0'; // one char shorter.
-    ESP_LOGI(TAG, "P1 %s", filepath);
     struct stat file_stat;
 
     // Try to stat the dir,
