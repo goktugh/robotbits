@@ -35,6 +35,8 @@ static EventGroupHandle_t s_wifi_event_group;
 
 #define EXAMPLE_ESP_MAXIMUM_RETRY  100
 
+comms_state_t comms_state; 
+
 static void wifi_event_handler(void* arg, esp_event_base_t event_base,
                                     int32_t event_id, void* event_data)
 {
@@ -127,6 +129,34 @@ static void wifi_init_softap()
 #define SERVER_TAG "udp_server_task"
 #define PORT 4200
 
+static int parse_packet_param(const uint8_t *packet, size_t len)
+{
+    char buf[50];
+    if (len >= sizeof(buf)) { return 0; }
+    memcpy(buf, packet+1, len-1);
+    buf[len] = '\0'; // null terminate the string.
+    return atoi(buf);
+}
+
+static void process_packet(const uint8_t *packet, size_t len)
+{
+    if (len < 3) {
+        return;
+    }
+    // First character = command
+    uint8_t cmd = packet[0];
+    switch(cmd) {
+        case 'M':
+            comms_state.motor_speed = parse_packet_param(packet, len);
+            printf("Setting motor speed to %d\n", comms_state.motor_speed);
+            break;
+        case 'C':
+            comms_state.pending_command = parse_packet_param(packet, len);
+            printf("Sending dshot command %d\n", comms_state.pending_command);
+            break;
+    }
+}
+
 static void udp_server_task(void *pvParameters)
 {
     ESP_LOGI(SERVER_TAG, "Begin udp_server_task");
@@ -161,6 +191,7 @@ static void udp_server_task(void *pvParameters)
                 memcpy(packetout + 1, packet, packetlen);
                 sendto(sock, packetout, packetlen+1, 0,
                     (struct sockaddr *) &source_addr, addrlen);
+                process_packet(packet, packetlen);
             }
         }
     }

@@ -12,6 +12,7 @@
 
 #include "driver/gpio.h"
 
+#include "utils.h"
 #include "comms.h"
 #include "fs.h"
 #include "motors.h"
@@ -34,19 +35,9 @@ static void init_misc()
     
 }
 
-static void busy_sleep(uint64_t us)
-{
-    int64_t t0 = esp_timer_get_time();
-    while (1) {
-        int64_t t1 = esp_timer_get_time();
-        if ((t1 - t0) > us) {
-            break;
-        }
-    }
-}
-
 static void mainloop_task(void *pvParameters)
 {
+    motors_init();
     // Add current task to watchdog.
     esp_task_wdt_add(NULL);
     int i = 0;
@@ -56,9 +47,18 @@ static void mainloop_task(void *pvParameters)
         printf("Loop %d...\n", i);
         fflush(stdout);
         // vTaskDelay(1000 / portTICK_PERIOD_MS);
-        busy_sleep(2 * 1000 * 1000);
+        for (int j=0; j<250; j++) {
+            busy_sleep(2 * 1000);
+            int cmd = comms_state.pending_command;
+            if (cmd != 0) {
+                // Send the command
+                motor_send_dshot_command(0, cmd);
+                comms_state.pending_command = 0;
+            } else {
+                motor_set_speed_signed(0, comms_state.motor_speed);
+            }
+        }
         esp_task_wdt_reset();
-        taskYIELD();
         i += 1;
     }    
 }
@@ -88,7 +88,6 @@ void app_main()
     printf("Initialising comms\n");
     comms_init();    
     web_server_init();
-    motors_init();
 
     printf("Setting gpio up for led\n");
     gpio_pad_select_gpio(BLINK_GPIO);

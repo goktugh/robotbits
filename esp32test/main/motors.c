@@ -8,6 +8,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "driver/rmt.h"
+#include "utils.h"
 
 /*
  * DSHOT600 protocol
@@ -29,6 +30,12 @@
  * OR set clk_div to 1, and use 44 as a value for the pulses
  * short_time = 44 ticks, ( rounding down)
  * long_time = 89 ticks (rounding up)
+ * 
+ * DSHOT150
+ * 150 = speed in kbits / sec
+ * 6.6us per bit
+ * high time = 4.4us, 355 80mhz ticks
+ * low time = 2.2us, 178 80mhz ticks
  *  
  */
 
@@ -36,14 +43,20 @@
 // Must equal 1/600 sec
 
 #define CLOCK_DIVIDER 1
+// dshot600
 // Short time, T0H or T1L
-#define PULSE_SHORT_TIME 44
+// #define PULSE_SHORT_TIME 44
 // Longer pulses for T1H or T0L
-#define PULSE_LONG_TIME 89
+// #define PULSE_LONG_TIME 89
+//dshot 150
+#define PULSE_SHORT_TIME 178
+#define PULSE_LONG_TIME 355
 
 
 #define MOTOR0_GPIO 25
 #define MOTOR1_GPIO 26
+#define MOTOR0_PWM_GPIO 27
+#define MOTOR1_PWM_GPIO 33
 
 #define MOTORS_TAG "motors"
 
@@ -97,16 +110,27 @@ static void motors_init_rmt()
         ESP_LOGI(MOTORS_TAG, "Initialising rmt %d", motor);
         ESP_ERROR_CHECK(rmt_config(&config));
         ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
-        ESP_LOGI(MOTORS_TAG, "rmt %d ok", motor);
+        ESP_LOGI(MOTORS_TAG, "rmt %d ok", config.channel);
+        // Configure RMT channels 2,3 to generate servo pulses instead.
+        memset(&config, 0, sizeof(config)); // initialise unused fields to 0
+        config.rmt_mode = RMT_MODE_TX;
+        config.channel = motor+2; // channel2 for motor0, c3 for motor1
+        config.gpio_num = (motor==1) ? MOTOR1_PWM_GPIO : MOTOR0_PWM_GPIO;
+        config.mem_block_num = 1;
+        config.tx_config.idle_output_en = 1;
+        config.tx_config.idle_level = 0;
+        config.clk_div = 80; // Set for microseconds.
+        ESP_ERROR_CHECK(rmt_config(&config));
+        ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
+        ESP_LOGI(MOTORS_TAG, "rmt %d ok", config.channel);
     }
 }
 
-static void transmit_command(uint8_t motor, uint16_t top_12_bits)
+static void send_pulses(uint8_t motor, uint16_t pulses_int)
 {
-    uint16_t command = calc_crc(top_12_bits);
+    uint16_t cmdbits = pulses_int;
     // Build 16-bit (32 pulses) of data
     rmt_item32_t pulses[16];
-    uint16_t cmdbits = command;
     // Iterate through bits, most-significant first.
     for (uint8_t i=0; i<16; i++) {
         pulses[i].level0 = 1;
@@ -124,22 +148,86 @@ static void transmit_command(uint8_t motor, uint16_t top_12_bits)
     }
     // Write and wait.
     esp_err_t err = rmt_write_items(motor, pulses, 16, true); 
-    ESP_ERROR_CHECK(err);
+    ESP_ERROR_CHECK(err);    
 }
+
+static void transmit_command(uint8_t motor, uint16_t top_12_bits)
+{
+    uint16_t command = calc_crc(top_12_bits);
+    send_pulses(motor, command);
+}
+
+static void transmit_command_all(uint16_t top_12_bits)
+{
+    transmit_command(0,top_12_bits);
+    transmit_command(1,top_12_bits);    
+}
+
+static void send_200ms_stuff(uint16_t cmd)
+{
+    for (int n=0; n<100; n++) {
+        transmit_command_all(cmd);
+        busy_sleep(2000); // 2 ms
+    }    
+}
+
+static void motor_send_dshot_command_all(uint16_t cmd)
+{
+    uint16_t top_12_bits = (cmd << 1 );
+    // Set tele. flag
+    top_12_bits |= 1;
+    for (int n=0; n<20; n++) {
+        transmit_command(0, top_12_bits);
+        transmit_command(1, top_12_bits);
+        busy_sleep(2000); // 2 ms
+    }        
+}
+
+// See:
+// https://github.com/bitdump/BLHeli/blob/master/BLHeli_32%20ARM/BLHeli_32%20Firmware%20specs/Digital_Cmd_Spec.txt
+#define DSHOT_CMD_3D_MODE_ON 10
+#define DSHOT_CMD_LED0_ON 22
+#define DSHOT_CMD_LED1_ON 23
+#define DSHOT_CMD_LED2_ON 24
+#define DSHOT_CMD_LED0_OFF 26
+#define DSHOT_CMD_LED1_OFF 27
+#define DSHOT_CMD_LED2_OFF 28
 
 void motors_init()
 {
-    gpio_pad_select_gpio(MOTOR0_GPIO);
-    gpio_pad_select_gpio(MOTOR1_GPIO);
-    /* Set the GPIO as a push/pull output */
-    gpio_set_direction(MOTOR0_GPIO, GPIO_MODE_OUTPUT);
-    gpio_set_direction(MOTOR1_GPIO, GPIO_MODE_OUTPUT);
+    // Note, it is not necessary to enable outputs,
+    // the rmt peripheral or library does it anyway.
 
     test_crc();
     
     motors_init_rmt();
-    transmit_command(0,0);
-    transmit_command(1,0);
+    // Try to get the ESC going...
+    // Initialise dshot protocol by sending some 0 words
+    // Start with nothing every 2 ms.
+    // We need to wait for the startup beep.
+    printf("motors_init: Waiting for motor startup beep\n");
+    for (int n=0; n< 10; n++) {
+        send_200ms_stuff(0);
+    }
+    printf("motors_init: Trying some commands\n");
+    // Start again
+    // send_200ms_stuff(0);
+    // Now try a (high throttle)
+    // send_200ms_stuff(600);
+    // Then nothing again.
+    send_200ms_stuff(0);
+    // Now set 3d mode (many times)
+    motor_send_dshot_command_all(DSHOT_CMD_3D_MODE_ON);
+    send_200ms_stuff(0);
+    motor_send_dshot_command_all(DSHOT_CMD_3D_MODE_ON);
+    // Set the funky light colours
+    motor_send_dshot_command_all(DSHOT_CMD_LED0_OFF);
+    motor_send_dshot_command_all(DSHOT_CMD_LED1_OFF);
+    motor_send_dshot_command_all(DSHOT_CMD_LED2_OFF);
+    // Now set different colours for M0 and M1
+    motor_send_dshot_command(0, DSHOT_CMD_LED0_ON);
+    motor_send_dshot_command(1, DSHOT_CMD_LED1_ON);
+    printf("motors_init: Finished \n");
 }
 
 
@@ -177,5 +265,20 @@ void motor_set_speed_signed(uint8_t motor, int speed_signed)
         if (dshot > 2047) dshot = 2047;
     }
     uint16_t top_12_bits = (dshot << 1 );
+    transmit_command(motor, top_12_bits);
+    // Send PWM pulses
+    rmt_item32_t pulses[16];
+    pulses[0].level0 = 1;
+    pulses[0].level1 = 0;
+    pulses[0].duration0 = speed_signed + 1500; // Microseconds
+    pulses[0].duration1 = 2000;
+    rmt_write_items(motor+2, pulses, 1, false); // Do not wait.
+}
+
+void motor_send_dshot_command(uint8_t motor, int cmd)
+{
+    uint16_t top_12_bits = (cmd << 1 );
+    // Set tele. flag
+    top_12_bits |= 1;
     transmit_command(motor, top_12_bits);
 }
