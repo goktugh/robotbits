@@ -247,7 +247,7 @@ typedef struct rmt_item32_s {
 
 */
 
-void motor_set_speed_signed(uint8_t motor, int speed_signed)
+void motor_set_speed_signed(uint8_t motor, int speed_signed, bool send_telemetry)
 {
     // dshot commands:
     // 0= off
@@ -265,6 +265,9 @@ void motor_set_speed_signed(uint8_t motor, int speed_signed)
         if (dshot > 2047) dshot = 2047;
     }
     uint16_t top_12_bits = (dshot << 1 );
+    if (send_telemetry) { // add telemetry bit
+        top_12_bits |= 1;
+    }
     transmit_command(motor, top_12_bits);
     // Send PWM pulses
     rmt_item32_t pulses[16];

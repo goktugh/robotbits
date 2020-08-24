@@ -82,3 +82,19 @@ TODO:
 4. Build wheels with silicone tyres - to fit snugly
     over motor outrunner
     Or just tyres directly over outrunner?
+
+---
+NOTE on telemetry from ESCs:
+
+"KISS ESC 32-bit series onewire telemetry protocol"
+
+bit rate is 115200
+packets are 10 bytes long
+temperature, voltage (2-byte), current (2-byte), consumption (2-byte), rpm (2-byte), 8-bit crc
+
+RPM is in ERPM /100 e.g. 100= 10k ERPM which is the number of commuatation
+cycles per minute, not necesssarily (or usually) the same as revolutions,
+most motors have more than 6 poles
+
+
+

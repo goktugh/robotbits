@@ -50,12 +50,13 @@ static void mainloop_task(void *pvParameters)
         for (int j=0; j<250; j++) {
             busy_sleep(2 * 1000);
             int cmd = comms_state.pending_command;
+            bool send_telemetry = ((j% 50) == 0);
             if (cmd != 0) {
                 // Send the command
                 motor_send_dshot_command(0, cmd);
                 comms_state.pending_command = 0;
             } else {
-                motor_set_speed_signed(0, comms_state.motor_speed);
+                motor_set_speed_signed(0, comms_state.motor_speed, send_telemetry);
             }
         }
         esp_task_wdt_reset();
