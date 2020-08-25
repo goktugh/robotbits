@@ -125,9 +125,9 @@ module motor_mounts()
             // Piece which sticks the triangle mount on to the inner wall.
             // Less than full height; the wires need to go over.
             mirror_y() {
-                translate([-5,triangle_y_offset+4,0])
+                translate([-6,triangle_y_offset+4,0])
                     linear_extrude(height=12.0) {
-                        polygon([[0,0],[10,0], [8,2], [0,2]]);
+                        polygon([[0,0],[12,0], [10,2], [0,2]]);
                     }
             }
         }
