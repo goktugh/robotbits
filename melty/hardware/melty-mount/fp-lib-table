@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "melty")(type "KiCad")(uri "${KIPRJMOD}/melty.pretty")(options "")(descr ""))
+)
