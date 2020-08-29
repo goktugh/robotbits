@@ -1,0 +1,25 @@
+TODO things
+
+
+1. In motors module, initialise esc telemetry uart
+    - Use a GPIO pin which we can access on dev board.
+    DONE
+    
+1. Get esc telemetry received 
+    decipher esc telemetry.
+    PARTIALLY done
+    
+1. Motors module should check telemetry is working during initialisation,
+    on both ESCs.
+    
+We can do motor initialisation in parallel, there are some
+delays necessary to wait for the ESCs to startup in the case of power
+on.
+
+Also disarm the ESC by waiting some time (1 sec?) with no commands
+    sent, there is no other way to disarm that I know
+    
+1. Try higher speed DSHOT, maybe 600 khz
+
+
+    

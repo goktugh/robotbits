@@ -8,8 +8,10 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "driver/rmt.h"
+#include "driver/uart.h"
 #include "utils.h"
 
+#include <stdbool.h>
 /*
  * DSHOT600 protocol
  * https://blck.mn/2016/11/dshot-the-new-kid-on-the-block/
@@ -45,18 +47,24 @@
 #define CLOCK_DIVIDER 1
 // dshot600
 // Short time, T0H or T1L
-// #define PULSE_SHORT_TIME 44
+#define PULSE_SHORT_TIME 44
 // Longer pulses for T1H or T0L
-// #define PULSE_LONG_TIME 89
+#define PULSE_LONG_TIME 89
 //dshot 150
-#define PULSE_SHORT_TIME 178
-#define PULSE_LONG_TIME 355
+// #define PULSE_SHORT_TIME 178
+// #define PULSE_LONG_TIME 355
 
 
 #define MOTOR0_GPIO 25
 #define MOTOR1_GPIO 26
 #define MOTOR0_PWM_GPIO 27
 #define MOTOR1_PWM_GPIO 33
+#define TELEMETRY_GPIO 35
+// Uart instance which we use for telemetry. uart0 is used for
+// the normal diagnostic printf etc.
+static const int telemetry_uart=1; 
+
+static bool telemetry_expected;
 
 #define MOTORS_TAG "motors"
 
@@ -124,6 +132,33 @@ static void motors_init_rmt()
         ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
         ESP_LOGI(MOTORS_TAG, "rmt %d ok", config.channel);
     }
+}
+
+static void motors_init_telemetry()
+{
+    /*
+     * Initialise uart peripheral on telemetry port.
+     */
+    uart_config_t uart_config = {
+        .baud_rate = 115200,
+        .data_bits = UART_DATA_8_BITS,
+        .parity = UART_PARITY_DISABLE,
+        .stop_bits = UART_STOP_BITS_1,
+        .flow_ctrl = UART_HW_FLOWCTRL_CTS_RTS,
+        .rx_flow_ctrl_thresh = 122,
+    };
+    ESP_ERROR_CHECK(uart_param_config(telemetry_uart, &uart_config));
+    // uart will only need rx, not anything else.
+    ESP_ERROR_CHECK(uart_set_pin(telemetry_uart, 
+        UART_PIN_NO_CHANGE, // TX pin
+        TELEMETRY_GPIO, // RX pin
+        UART_PIN_NO_CHANGE, // rts
+        UART_PIN_NO_CHANGE  // cts
+        ));
+    const int buf_size = UART_FIFO_LEN*2;
+    ESP_ERROR_CHECK(uart_driver_install(telemetry_uart, buf_size, 0, 0, NULL, 0));
+    ESP_LOGI(MOTORS_TAG, "motors_init_telemetry done");
+
 }
 
 static void send_pulses(uint8_t motor, uint16_t pulses_int)
@@ -201,15 +236,16 @@ void motors_init()
     test_crc();
     
     motors_init_rmt();
+    motors_init_telemetry();
     // Try to get the ESC going...
     // Initialise dshot protocol by sending some 0 words
     // Start with nothing every 2 ms.
     // We need to wait for the startup beep.
     printf("motors_init: Waiting for motor startup beep\n");
-    for (int n=0; n< 10; n++) {
+    for (int n=0; n< 15; n++) {
         send_200ms_stuff(0);
     }
-    printf("motors_init: Trying some commands\n");
+    printf("motors_init: Sending initialisation commands\n");
     // Start again
     // send_200ms_stuff(0);
     // Now try a (high throttle)
@@ -228,6 +264,9 @@ void motors_init()
     motor_send_dshot_command(0, DSHOT_CMD_LED0_ON);
     motor_send_dshot_command(1, DSHOT_CMD_LED1_ON);
     printf("motors_init: Finished \n");
+    // After motors_init is finished we must continue to send commands
+    // to the esc, at least every 10ms (or something?) otherwise it will
+    // disarm, power down and reset it settings (e.g. 3d mode, led colour)
 }
 
 
@@ -267,6 +306,9 @@ void motor_set_speed_signed(uint8_t motor, int speed_signed, bool send_telemetry
     uint16_t top_12_bits = (dshot << 1 );
     if (send_telemetry) { // add telemetry bit
         top_12_bits |= 1;
+        // Clear any old rubbish in the buffer for telemetry.
+        uart_flush_input(telemetry_uart);
+        telemetry_expected = true;
     }
     transmit_command(motor, top_12_bits);
     // Send PWM pulses
@@ -284,4 +326,46 @@ void motor_send_dshot_command(uint8_t motor, int cmd)
     // Set tele. flag
     top_12_bits |= 1;
     transmit_command(motor, top_12_bits);
+}
+
+/*
+ * Telemetry see
+ * http://ultraesc.de/downloads/KISS_telemetry_protocol.pdf
+ * 
+ * 10 bytes long binary, with a checksum or something.
+ * 
+ * Telemetry uses big-endian format.
+ * byte offset 7,8 = ERPM
+ */
+#define TELEMETRY_PACKET_LEN 10
+
+static void handle_telemetry_packet(uint8_t *telemetry_buf);
+
+void motor_poll_telemetry()
+{
+    // check if we have received telemetry in the buffer
+    size_t len;
+    if (uart_get_buffered_data_len(telemetry_uart, &len) == ESP_OK) {
+        // Ignore any data if no telemetry is expected yet.
+        if ((len >= TELEMETRY_PACKET_LEN) && telemetry_expected) {
+            // Get telemetry data immediately with no waiting.
+            uint8_t telemetry_buf[TELEMETRY_PACKET_LEN];
+            int res = uart_read_bytes(telemetry_uart, telemetry_buf, TELEMETRY_PACKET_LEN, 0);
+            // If telemetry is valid
+            if (res == TELEMETRY_PACKET_LEN) {
+                // Handle it somehow
+                handle_telemetry_packet(telemetry_buf);
+            }
+        }
+    }
+}
+
+static void handle_telemetry_packet(uint8_t *telemetry_buf)
+{
+    // Erpm / 100
+    uint16_t erpm = ((telemetry_buf[7]) << 8) + telemetry_buf[8];
+    // Batt. voltage
+    uint16_t volts = ((telemetry_buf[1]) << 8) + telemetry_buf[2];
+    printf("Telem: erpm=%04d x100 volts=%04d /100 \n", erpm, volts);
+    telemetry_expected = false;
 }

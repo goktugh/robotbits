@@ -9,3 +9,5 @@ void motors_init();
 void motor_set_speed_signed(uint8_t motor, int speed_signed, bool send_telemetry); 
 
 void motor_send_dshot_command(uint8_t motor, int cmd); 
+
+void motor_poll_telemetry();

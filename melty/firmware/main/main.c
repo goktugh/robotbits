@@ -56,6 +56,7 @@ static void main_loop()
             } else {
                 motor_set_speed_signed(0, comms_state.motor_speed, send_telemetry);
             }
+            motor_poll_telemetry();
         }
         esp_task_wdt_reset();
         i += 1;
