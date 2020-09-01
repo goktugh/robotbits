@@ -6,6 +6,8 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_system.h"
+#include "esp_event.h"
 #include "esp_log.h"
 #include "driver/rmt.h"
 #include "driver/uart.h"
@@ -54,20 +56,47 @@
 // #define PULSE_SHORT_TIME 178
 // #define PULSE_LONG_TIME 355
 
+#define NUM_MOTORS 2
+
+// Minimum time between dshot commands:
+// A dshot command takes 16 * 1/600000 sec =~ 26 us
+#define MIN_DSHOT_INTERVAL_US 50
+// Time to wait before we send another dshot command
+// even if nothing has changed, because we should keep the esc
+// awake so it doesn't disarm.
+// (I don't know where this is documented but it is typically 20ms
+// for PWM)
+#define DSHOT_REPEAT_INTERVAL_US 5000
+// Time between telemetry, needs to be long enough that telemetry
+// packet is complete. Telemetry packets are 10 bytes long
+// 10 bytes @115k baud, 10 bits per packet =~ 1 ms transmit time.
+// leave a gap between.
+// Note that telemetry is shared between all motors, so we need to
+// only request telemetry on one motor at once, and remember which
+// motor it was.
+#define TELEMETRY_INTERVAL 25000 
 
 #define MOTOR0_GPIO 25
 #define MOTOR1_GPIO 26
 #define MOTOR0_PWM_GPIO 27
 #define MOTOR1_PWM_GPIO 33
 #define TELEMETRY_GPIO 35
+// for diag messages
+#define MOTORS_TAG "motors"
+
+typedef struct {
+    int last_speed_signed;
+    int64_t last_send_time; // from esp_timer_get_time in microseconds
+} motor_state_t;
+
+static motor_state_t motor_state[NUM_MOTORS];
 // Uart instance which we use for telemetry. uart0 is used for
 // the normal diagnostic printf etc.
 static const int telemetry_uart=1; 
-
-static bool telemetry_expected;
-
-#define MOTORS_TAG "motors"
-
+static bool telemetry_expected; // true= expecting a telemetry packet.
+// Last motor we requested telemetry.
+static int telemetry_last_motor;
+int64_t telemetry_last_send_time; 
 /*
  * Taken from https://github.com/gueei/DShot-Arduino/blob/master/src/DShot.cpp
  */
@@ -286,7 +315,7 @@ typedef struct rmt_item32_s {
 
 */
 
-void motor_set_speed_signed(uint8_t motor, int speed_signed, bool send_telemetry)
+static void motor_set_speed_dshot(uint8_t motor, int speed_signed, bool send_telemetry)
 {
     // dshot commands:
     // 0= off
@@ -320,6 +349,33 @@ void motor_set_speed_signed(uint8_t motor, int speed_signed, bool send_telemetry
     rmt_write_items(motor+2, pulses, 1, false); // Do not wait.
 }
 
+void motor_set_speed_signed(uint8_t motor, int speed_signed)
+{
+    int64_t now = esp_timer_get_time();
+    int64_t interval = (now - motor_state[motor].last_send_time);
+    if (interval < MIN_DSHOT_INTERVAL_US) {
+        // Do not send too often! otherwise the previous
+        // command might not be finished, or the esc might not have
+        // time to process.
+        return;
+    }
+    if ((interval > DSHOT_REPEAT_INTERVAL_US) || (speed_signed != motor_state[motor].last_speed_signed)) {
+        // If we want to repeat the command, OR
+        // the throttle is different:
+        bool send_telemetry = false;
+        // Only send telemetry if there is not telemetry in progress
+        // and we have not requested telemetry already
+        int64_t telemetry_age = now - telemetry_last_send_time;
+        if (telemetry_age > TELEMETRY_INTERVAL) {
+            send_telemetry = true;
+            telemetry_last_send_time = now;
+        }
+        motor_set_speed_dshot(motor, speed_signed, send_telemetry);
+        motor_state[motor].last_speed_signed = speed_signed;
+        motor_state[motor].last_send_time = now;
+    }
+}
+    
 void motor_send_dshot_command(uint8_t motor, int cmd)
 {
     uint16_t top_12_bits = (cmd << 1 );
