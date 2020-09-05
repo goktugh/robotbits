@@ -63,10 +63,13 @@ motor_cutout_w = 44;
 
 module motor_cutouts()
 {
-    // Cut down the wall for the motor mount
-    translate([inner_radius-10.0, - (motor_cutout_w/2), base_thick + 0.5]) {
-        cube([18, motor_cutout_w, overall_height]);
+    // Cut down the wall and base for the motor mount
+    translate([inner_radius-10.0, - (motor_cutout_w/2), -1.0]) {
+        cube([10, motor_cutout_w, overall_height + 2]);
     }
+    // Cut a bit more off.
+    translate([inner_radius-10.0, -10, base_thick])
+        cube([13, 20, overall_height + 2]);
 }
 
 motor_mount_width = 44;
@@ -135,6 +138,17 @@ module motor_mounts()
     }
 }
 
+module battery_cutouts()
+{
+    // This is kind of weird cylindrical cutout
+    // for the battery to sit in, ideally fairly tightly.
+    mirror_y() {
+        translate([0,inner_radius + 3.5,6.0]) 
+            rotate([0,90,0])
+            cylinder(r=4.0, h=50, center=true);
+    }
+}
+
 module main()
 {
     difference() {
@@ -143,6 +157,7 @@ module main()
         }
         motor_cutouts();
         mirror([1,0,0]) motor_cutouts();
+        battery_cutouts();
     }
     motor_mounts();
     mirror([1,0,0]) motor_mounts();
