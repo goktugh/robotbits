@@ -12,7 +12,7 @@ $fa = 4;
 */
 
 outer_diameter = 104.0;
-inner_diameter = 60.0;
+inner_diameter = 58.0;
 // Height must not be too high, so our tyres can stick out the top/
 // bottom.
 overall_height = 17.0; 
@@ -22,6 +22,7 @@ inner_radius = inner_diameter / 2;
 outer_radius = outer_diameter / 2;
 chamfer = 1.0;
 wall_thick = 3.0;
+wall_thick_inner = 2.0;
 base_thick = 2.0;
 
 module walls_outline()
@@ -32,9 +33,9 @@ module walls_outline()
             [inner_radius, overall_height-chamfer],
             [inner_radius+chamfer, overall_height],
 
-            [inner_radius+wall_thick - chamfer, overall_height],
-            [inner_radius+wall_thick, overall_height - chamfer],
-            [inner_radius+wall_thick, base_thick],
+            [inner_radius+wall_thick_inner - chamfer, overall_height],
+            [inner_radius+wall_thick_inner, overall_height - chamfer],
+            [inner_radius+wall_thick_inner, base_thick],
             [outer_radius-wall_thick, base_thick],
             [outer_radius-wall_thick, outer_height - chamfer],
             [outer_radius-wall_thick + chamfer, outer_height],
@@ -125,7 +126,7 @@ module motor_mounts()
             // Piece which sticks the triangle mount on to the inner wall.
             // Less than full height; the wires need to go over.
             mirror_y() {
-                translate([-6,triangle_y_offset+4,0])
+                translate([-8.5,triangle_y_offset+4,1.0])
                     linear_extrude(height=12.0) {
                         polygon([[0,0],[12,0], [10,2], [0,2]]);
                     }
