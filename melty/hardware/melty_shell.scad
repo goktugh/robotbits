@@ -68,8 +68,8 @@ module motor_cutouts()
         cube([10, motor_cutout_w, overall_height + 2]);
     }
     // Cut a bit more off.
-    translate([inner_radius-10.0, -10, base_thick])
-        cube([13, 20, overall_height + 2]);
+    translate([inner_radius-10.0, -12, base_thick])
+        cube([13, 24, overall_height + 2]);
 }
 
 motor_mount_width = 44;
