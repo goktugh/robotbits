@@ -1,0 +1,28 @@
+1. PCB electronics: Build controlboard power supply 
+    and test that the 3.3v is ok
+    
+1. PCB electronics: Mount the esp32-pico-d4 and antenna - spin that up and get it
+    working.
+        - Need to get soicbite thing for it.
+    
+1. Design and build wheel of correct dimensions - diameter at least
+    18mm, maybe 20mm,
+    over the 15mm can of the motor.
+  
+    - Maybe 3d printed
+    - Either put on silicone tyres, OR
+    - superglue bits of old rubber gloves, neatly
+
+1. Make a power distribution board, with veroboard.
+    - Switch.
+    - space to connect ESCs and controlboard.
+    
+1. Make harness to connect 2x lipo
+
+1. Figure out how to fit all the gubbins into the shell
+    - the control board needs to sit vertically, ideally.
+    - the ESCs can be any way.
+
+1. 
+
+1. 

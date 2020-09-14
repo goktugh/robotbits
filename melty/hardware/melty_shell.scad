@@ -16,7 +16,7 @@ inner_diameter = 58.0;
 // Height must not be too high, so our tyres can stick out the top/
 // bottom.
 overall_height = 17.0; 
-outer_height = 14.0;
+outer_height = 17.0;
 
 inner_radius = inner_diameter / 2;
 outer_radius = outer_diameter / 2;
@@ -65,7 +65,7 @@ module motor_cutouts()
 {
     // Cut down the wall and base for the motor mount
     translate([inner_radius-10.0, - (motor_cutout_w/2), -1.0]) {
-        cube([10, motor_cutout_w, overall_height + 2]);
+        cube([10.5, motor_cutout_w, overall_height + 2]);
     }
     // Cut a bit more off.
     translate([inner_radius-10.0, -12, base_thick])
@@ -87,14 +87,15 @@ module cylinder_x(r, h)
 module triangle_mount()
 {
     mount_width = 8.0;
-    mount_depth = 16.0;
-    t1 = 2.0;
+    mount_depth = 8.0;
+    mount_height_rear = 12.0;
+    t1 = 2.0; // thickness of mount front.
     translate([0,-mount_width/2, 0])
     difference()
     {
         hull() {
             cube([t1, mount_width, overall_height]);
-            cube([mount_depth, mount_width, t1]);
+            cube([mount_depth, mount_width, mount_height_rear]);
         }
         // Screw hole.
         translate([-1,mount_width/2,overall_height/2])
