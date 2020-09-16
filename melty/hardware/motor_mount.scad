@@ -5,10 +5,10 @@ width=44;
 height=14;
 corner=2;
 
-kerf = 0.2;
-centre_rad = 1.25 - kerf;
+kerf = 0.15;
+centre_rad = 1.5 - kerf;
 outer_rad = 1.0 - kerf;
-hole_spacing = 38.0;
+hole_spacing = 36.0;
 
 module main()
 {
