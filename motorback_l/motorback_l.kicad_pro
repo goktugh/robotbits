@@ -45,7 +45,7 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 0.19999999999999998
+          "min_clearance": 0.25
         }
       },
       "diff_pair_dimensions": [
@@ -119,7 +119,6 @@
         "solder_paste_margin_ratio": -0.0
       },
       "track_widths": [
-        0.25,
         0.25,
         0.3
       ],
@@ -315,7 +314,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "motorback.kicad_pro",
+    "filename": "motorback_l.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -384,10 +383,10 @@
       "default_text_size": 50.0,
       "default_wire_thickness": 6.0,
       "field_names": [],
-      "intersheets_ref_prefix": "[",
+      "intersheets_ref_prefix": "",
       "intersheets_ref_short": false,
       "intersheets_ref_show": false,
-      "intersheets_ref_suffix": "]",
+      "intersheets_ref_suffix": "",
       "pin_symbol_size": 25.0,
       "text_offset_ratio": 0.3
     },
@@ -406,7 +405,7 @@
   },
   "sheets": [
     [
-      "53ed2e94-d069-4c6c-b550-b7243c14677a",
+      "e68bfc79-1db4-42f8-8cc0-dab532e64491",
       ""
     ]
   ],
