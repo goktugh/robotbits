@@ -1,4 +1,4 @@
-(kicad_sch (version 20200714) (host eeschema "5.99.0-unknown-9f20c61~102~ubuntu18.04.1")
+(kicad_sch (version 20200828) (generator eeschema)
 
   (page 1 1)
 
@@ -10,7 +10,7 @@
   )
 
   (lib_symbols
-    (symbol "Connector:Conn_01x04_Male" (pin_names hide)
+    (symbol "Connector:Conn_01x04_Male" (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (id 0) (at 0 5.08 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -46,19 +46,31 @@
           (stroke (width 0.1524)) (fill (type outline))
         )
         (polyline
-          (pts (xy 1.27 -5.08) (xy 0.8636 -5.08))
+          (pts
+            (xy 1.27 -5.08)
+            (xy 0.8636 -5.08)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 -2.54) (xy 0.8636 -2.54))
+          (pts
+            (xy 1.27 -2.54)
+            (xy 0.8636 -2.54)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 0) (xy 0.8636 0))
+          (pts
+            (xy 1.27 0)
+            (xy 0.8636 0)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 2.54) (xy 0.8636 2.54))
+          (pts
+            (xy 1.27 2.54)
+            (xy 0.8636 2.54)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (pin passive line (at 5.08 2.54 180) (length 3.81)
@@ -79,7 +91,7 @@
         )
       )
     )
-    (symbol "Connector:Conn_01x08_Male" (pin_names hide)
+    (symbol "Connector:Conn_01x08_Male" (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (id 0) (at 0 10.16 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -127,35 +139,59 @@
           (stroke (width 0.1524)) (fill (type outline))
         )
         (polyline
-          (pts (xy 1.27 -10.16) (xy 0.8636 -10.16))
+          (pts
+            (xy 1.27 -10.16)
+            (xy 0.8636 -10.16)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 -7.62) (xy 0.8636 -7.62))
+          (pts
+            (xy 1.27 -7.62)
+            (xy 0.8636 -7.62)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 -5.08) (xy 0.8636 -5.08))
+          (pts
+            (xy 1.27 -5.08)
+            (xy 0.8636 -5.08)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 -2.54) (xy 0.8636 -2.54))
+          (pts
+            (xy 1.27 -2.54)
+            (xy 0.8636 -2.54)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 0) (xy 0.8636 0))
+          (pts
+            (xy 1.27 0)
+            (xy 0.8636 0)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 2.54) (xy 0.8636 2.54))
+          (pts
+            (xy 1.27 2.54)
+            (xy 0.8636 2.54)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 5.08) (xy 0.8636 5.08))
+          (pts
+            (xy 1.27 5.08)
+            (xy 0.8636 5.08)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 7.62) (xy 0.8636 7.62))
+          (pts
+            (xy 1.27 7.62)
+            (xy 0.8636 7.62)
+          )
           (stroke (width 0.1524)) (fill (type none))
         )
         (pin passive line (at 5.08 7.62 180) (length 3.81)
@@ -192,7 +228,7 @@
         )
       )
     )
-    (symbol "Connector:TestPoint" (pin_numbers hide) (pin_names (offset 0.762) hide)
+    (symbol "Connector:TestPoint" (pin_numbers hide) (pin_names (offset 0.762) hide) (in_bom yes) (on_board yes)
       (property "Reference" "TP" (id 0) (at 0 6.858 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -211,7 +247,7 @@
       (property "ki_description" "test point" (id 5) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_fp_filters" "Pin*\nTest*" (id 6) (at 0 0 0)
+      (property "ki_fp_filters" "Pin* Test*" (id 6) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (symbol "TestPoint_0_1"
@@ -224,7 +260,7 @@
         )
       )
     )
-    (symbol "Device:Antenna_Shield" (pin_numbers hide) (pin_names hide)
+    (symbol "Device:Antenna_Shield" (pin_numbers hide) (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "AE" (id 0) (at -1.905 4.445 0)
         (effects (font (size 1.27 1.27)) (justify right))
       )
@@ -252,23 +288,39 @@
         )
         (circle (center 0.762 -1.905) (radius 0.1778) (stroke (width 0)) (fill (type outline)))
         (polyline
-          (pts (xy 0 -2.54) (xy 0 0))
+          (pts
+            (xy 0 -2.54)
+            (xy 0 0)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0 5.08) (xy 0 -3.81))
+          (pts
+            (xy 0 5.08)
+            (xy 0 -3.81)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.762 -1.905) (xy 2.54 -1.905))
+          (pts
+            (xy 0.762 -1.905)
+            (xy 2.54 -1.905)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 2.54 -2.54) (xy 2.54 -1.905))
+          (pts
+            (xy 2.54 -2.54)
+            (xy 2.54 -1.905)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 5.08) (xy 0 0) (xy -1.27 5.08))
+          (pts
+            (xy 1.27 5.08)
+            (xy 0 0)
+            (xy -1.27 5.08)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
       )
@@ -283,7 +335,7 @@
         )
       )
     )
-    (symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254))
+    (symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
       (property "Reference" "C" (id 0) (at 0.635 2.54 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -307,11 +359,17 @@
       )
       (symbol "C_0_1"
         (polyline
-          (pts (xy -2.032 -0.762) (xy 2.032 -0.762))
+          (pts
+            (xy -2.032 -0.762)
+            (xy 2.032 -0.762)
+          )
           (stroke (width 0.508)) (fill (type none))
         )
         (polyline
-          (pts (xy -2.032 0.762) (xy 2.032 0.762))
+          (pts
+            (xy -2.032 0.762)
+            (xy 2.032 0.762)
+          )
           (stroke (width 0.508)) (fill (type none))
         )
       )
@@ -326,7 +384,7 @@
         )
       )
     )
-    (symbol "Device:L" (pin_numbers hide) (pin_names hide)
+    (symbol "Device:L" (pin_numbers hide) (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "L" (id 0) (at -1.27 0 90)
         (effects (font (size 1.27 1.27)))
       )
@@ -345,7 +403,7 @@
       (property "ki_description" "Inductor" (id 5) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_fp_filters" "Choke_*\n*Coil*\nInductor_*\nL_*" (id 6) (at 0 0 0)
+      (property "ki_fp_filters" "Choke_* *Coil* Inductor_* L_*" (id 6) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (symbol "L_0_1"
@@ -373,7 +431,7 @@
         )
       )
     )
-    (symbol "Device:LED" (pin_numbers hide) (pin_names hide)
+    (symbol "Device:LED" (pin_numbers hide) (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "D" (id 0) (at 0 2.54 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -392,31 +450,50 @@
       (property "ki_description" "Light emitting diode" (id 5) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_fp_filters" "LED*\nLED_SMD:*\nLED_THT:*" (id 6) (at 0 0 0)
+      (property "ki_fp_filters" "LED* LED_SMD:* LED_THT:*" (id 6) (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (symbol "LED_0_1"
         (polyline
-          (pts (xy -1.27 -1.27) (xy -1.27 1.27))
+          (pts
+            (xy -1.27 -1.27)
+            (xy -1.27 1.27)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
         (polyline
-          (pts (xy -1.27 0) (xy 1.27 0))
-          (stroke (width 0)) (fill (type none))
-        )
-        (polyline
-          (pts (xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27))
-          (stroke (width 0.254)) (fill (type none))
-        )
-        (polyline
-          (pts (xy -3.048 -0.762) (xy -4.572 -2.286) (xy -3.81 -2.286) (xy -4.572 -2.286)
-               (xy -4.572 -1.524)
+          (pts
+            (xy -1.27 0)
+            (xy 1.27 0)
           )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy -1.778 -0.762) (xy -3.302 -2.286) (xy -2.54 -2.286) (xy -3.302 -2.286)
-               (xy -3.302 -1.524)
+          (pts
+            (xy 1.27 -1.27)
+            (xy 1.27 1.27)
+            (xy -1.27 0)
+            (xy 1.27 -1.27)
+          )
+          (stroke (width 0.254)) (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -3.048 -0.762)
+            (xy -4.572 -2.286)
+            (xy -3.81 -2.286)
+            (xy -4.572 -2.286)
+            (xy -4.572 -1.524)
+          )
+          (stroke (width 0)) (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -1.778 -0.762)
+            (xy -3.302 -2.286)
+            (xy -2.54 -2.286)
+            (xy -3.302 -2.286)
+            (xy -3.302 -1.524)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -432,7 +509,7 @@
         )
       )
     )
-    (symbol "Device:R" (pin_numbers hide) (pin_names (offset 0))
+    (symbol "Device:R" (pin_numbers hide) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "R" (id 0) (at 2.032 0 90)
         (effects (font (size 1.27 1.27)))
       )
@@ -470,7 +547,7 @@
         )
       )
     )
-    (symbol "RF_Module:ESP32-PICO-D4" (pin_names (offset 0.508))
+    (symbol "RF_Module:ESP32-PICO-D4" (in_bom yes) (on_board yes)
       (property "Reference" "U" (id 0) (at -17.78 39.37 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -696,7 +773,7 @@
         )
       )
     )
-    (symbol "Transistor_FET:AO3400A" (pin_names (offset 0.508) hide)
+    (symbol "Transistor_FET:AO3400A" (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "Q" (id 0) (at 5.08 1.905 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -723,47 +800,89 @@
         (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0)) (fill (type outline)))
         (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0)) (fill (type outline)))
         (polyline
-          (pts (xy 0.254 0) (xy -2.54 0))
+          (pts
+            (xy 0.254 0)
+            (xy -2.54 0)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.254 1.905) (xy 0.254 -1.905))
+          (pts
+            (xy 0.254 1.905)
+            (xy 0.254 -1.905)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.762 -1.27) (xy 0.762 -2.286))
+          (pts
+            (xy 0.762 -1.27)
+            (xy 0.762 -2.286)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.762 0.508) (xy 0.762 -0.508))
+          (pts
+            (xy 0.762 0.508)
+            (xy 0.762 -0.508)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.762 2.286) (xy 0.762 1.27))
+          (pts
+            (xy 0.762 2.286)
+            (xy 0.762 1.27)
+          )
           (stroke (width 0.254)) (fill (type none))
         )
         (polyline
-          (pts (xy 2.54 2.54) (xy 2.54 1.778))
+          (pts
+            (xy 2.54 2.54)
+            (xy 2.54 1.778)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0))
+          (pts
+            (xy 2.54 -2.54)
+            (xy 2.54 0)
+            (xy 0.762 0)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778))
+          (pts
+            (xy 0.762 -1.778)
+            (xy 3.302 -1.778)
+            (xy 3.302 1.778)
+            (xy 0.762 1.778)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0))
+          (pts
+            (xy 1.016 0)
+            (xy 2.032 0.381)
+            (xy 2.032 -0.381)
+            (xy 1.016 0)
+          )
           (stroke (width 0)) (fill (type outline))
         )
         (polyline
-          (pts (xy 2.794 0.508) (xy 2.921 0.381) (xy 3.683 0.381) (xy 3.81 0.254))
+          (pts
+            (xy 2.794 0.508)
+            (xy 2.921 0.381)
+            (xy 3.683 0.381)
+            (xy 3.81 0.254)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381))
+          (pts
+            (xy 3.302 0.381)
+            (xy 2.921 -0.254)
+            (xy 3.683 -0.254)
+            (xy 3.302 0.381)
+          )
           (stroke (width 0)) (fill (type none))
         )
       )
@@ -782,7 +901,7 @@
         )
       )
     )
-    (symbol "malenki-nano-rescue:Conn_01x02_Male-Connector" (pin_names hide)
+    (symbol "malenki-nano-rescue:Conn_01x02_Male-Connector" (pin_names hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (id 0) (at 0 2.54 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -806,11 +925,17 @@
           (stroke (width 0)) (fill (type outline))
         )
         (polyline
-          (pts (xy 1.27 -2.54) (xy 0.8636 -2.54))
+          (pts
+            (xy 1.27 -2.54)
+            (xy 0.8636 -2.54)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (polyline
-          (pts (xy 1.27 0) (xy 0.8636 0))
+          (pts
+            (xy 1.27 0)
+            (xy 0.8636 0)
+          )
           (stroke (width 0)) (fill (type none))
         )
         (pin passive line (at 5.08 0 180) (length 3.81)
@@ -823,7 +948,7 @@
         )
       )
     )
-    (symbol "malenki-nano-rescue:GND-power" (power) (pin_names (offset 0))
+    (symbol "malenki-nano-rescue:GND-power" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -6.35 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -838,8 +963,13 @@
       )
       (symbol "GND-power_0_1"
         (polyline
-          (pts (xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54)
-               (xy -1.27 -1.27) (xy 0 -1.27)
+          (pts
+            (xy 0 0)
+            (xy 0 -1.27)
+            (xy 1.27 -1.27)
+            (xy 0 -2.54)
+            (xy -1.27 -1.27)
+            (xy 0 -1.27)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -851,7 +981,7 @@
         )
       )
     )
-    (symbol "malenki-nano-rescue:PWR_FLAG-power" (power) (pin_numbers hide) (pin_names (offset 0) hide)
+    (symbol "malenki-nano-rescue:PWR_FLAG-power" (power) (pin_numbers hide) (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
       (property "Reference" "#FLG" (id 0) (at 0 1.905 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -866,8 +996,13 @@
       )
       (symbol "PWR_FLAG-power_0_1"
         (polyline
-          (pts (xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54)
-               (xy 1.016 1.905) (xy 0 1.27)
+          (pts
+            (xy 0 0)
+            (xy 0 1.27)
+            (xy -1.016 1.905)
+            (xy 0 2.54)
+            (xy 1.016 1.905)
+            (xy 0 1.27)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -879,7 +1014,7 @@
         )
       )
     )
-    (symbol "melty1:HT7233"
+    (symbol "melty1:HT7233" (in_bom yes) (on_board yes)
       (property "Reference" "U" (id 0) (at 0 1.27 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -913,7 +1048,7 @@
         )
       )
     )
-    (symbol "melty1:MMA1200KEG"
+    (symbol "melty1:MMA1200KEG" (in_bom yes) (on_board yes)
       (property "Reference" "U" (id 0) (at 8.89 13.97 0)
         (effects (font (size 1.27 1.27)))
       )
@@ -998,7 +1133,7 @@
         )
       )
     )
-    (symbol "melty1:MT2492" (pin_names (offset 0.508))
+    (symbol "melty1:MT2492" (in_bom yes) (on_board yes)
       (property "Reference" "U" (id 0) (at -2.54 8.89 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -1052,7 +1187,7 @@
         )
       )
     )
-    (symbol "power:GND" (power) (pin_names (offset 0))
+    (symbol "power:GND" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (id 0) (at 0 -6.35 0)
         (effects (font (size 1.27 1.27)) hide)
       )
@@ -1073,8 +1208,13 @@
       )
       (symbol "GND_0_1"
         (polyline
-          (pts (xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54)
-               (xy -1.27 -1.27) (xy 0 -1.27)
+          (pts
+            (xy 0 0)
+            (xy 0 -1.27)
+            (xy 1.27 -1.27)
+            (xy 0 -2.54)
+            (xy -1.27 -1.27)
+            (xy 0 -1.27)
           )
           (stroke (width 0)) (fill (type none))
         )
@@ -1088,60 +1228,60 @@
     )
   )
 
-  (junction (at 33.02 34.29) (diameter 0) (color 0 0 0 0))
-  (junction (at 33.02 58.42) (diameter 0) (color 0 0 0 0))
-  (junction (at 44.45 26.67) (diameter 0) (color 0 0 0 0))
-  (junction (at 44.45 34.29) (diameter 0) (color 0 0 0 0))
-  (junction (at 50.8 26.67) (diameter 0) (color 0 0 0 0))
-  (junction (at 50.8 34.29) (diameter 0) (color 0 0 0 0))
-  (junction (at 50.8 71.12) (diameter 0) (color 0 0 0 0))
-  (junction (at 66.04 34.29) (diameter 0) (color 0 0 0 0))
-  (junction (at 68.58 53.34) (diameter 0) (color 0 0 0 0))
-  (junction (at 77.47 63.5) (diameter 0) (color 0 0 0 0))
-  (junction (at 77.47 71.12) (diameter 0) (color 0 0 0 0))
-  (junction (at 78.74 26.67) (diameter 0) (color 0 0 0 0))
-  (junction (at 78.74 34.29) (diameter 0) (color 0 0 0 0))
-  (junction (at 83.82 173.99) (diameter 0) (color 0 0 0 0))
-  (junction (at 85.09 110.49) (diameter 0) (color 0 0 0 0))
-  (junction (at 86.36 26.67) (diameter 0) (color 0 0 0 0))
-  (junction (at 87.63 53.34) (diameter 0) (color 0 0 0 0))
-  (junction (at 87.63 59.69) (diameter 0) (color 0 0 0 0))
-  (junction (at 87.63 71.12) (diameter 0) (color 0 0 0 0))
-  (junction (at 100.33 110.49) (diameter 0) (color 0 0 0 0))
-  (junction (at 118.11 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 120.65 63.5) (diameter 0) (color 0 0 0 0))
-  (junction (at 121.92 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 128.27 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 128.27 63.5) (diameter 0) (color 0 0 0 0))
-  (junction (at 146.05 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 148.59 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 151.13 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 153.67 40.64) (diameter 0) (color 0 0 0 0))
-  (junction (at 237.49 110.49) (diameter 0) (color 0 0 0 0))
+  (junction (at 33.02 34.29) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 33.02 58.42) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 44.45 26.67) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 44.45 34.29) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 50.8 26.67) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 50.8 34.29) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 50.8 71.12) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 66.04 34.29) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 68.58 53.34) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 77.47 63.5) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 77.47 71.12) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 78.74 26.67) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 78.74 34.29) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 83.82 173.99) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 85.09 110.49) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 86.36 26.67) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 87.63 53.34) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 87.63 59.69) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 87.63 71.12) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 100.33 110.49) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 118.11 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 120.65 63.5) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 121.92 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 128.27 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 128.27 63.5) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 146.05 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 148.59 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 151.13 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 153.67 40.64) (diameter 1.016) (color 0 0 0 0))
+  (junction (at 237.49 110.49) (diameter 1.016) (color 0 0 0 0))
 
-  (no_connect (at 130.81 71.12))
-  (no_connect (at 130.81 68.58))
-  (no_connect (at 171.45 104.14))
-  (no_connect (at 251.46 73.66))
-  (no_connect (at 171.45 127))
-  (no_connect (at 207.01 96.52))
-  (no_connect (at 194.31 88.9))
-  (no_connect (at 171.45 124.46))
-  (no_connect (at 171.45 106.68))
-  (no_connect (at 130.81 101.6))
-  (no_connect (at 130.81 111.76))
-  (no_connect (at 171.45 93.98))
-  (no_connect (at 130.81 109.22))
-  (no_connect (at 130.81 73.66))
   (no_connect (at 130.81 106.68))
-  (no_connect (at 171.45 91.44))
-  (no_connect (at 130.81 104.14))
-  (no_connect (at 171.45 99.06))
-  (no_connect (at 130.81 76.2))
-  (no_connect (at 171.45 116.84))
-  (no_connect (at 130.81 99.06))
+  (no_connect (at 171.45 124.46))
   (no_connect (at 171.45 101.6))
+  (no_connect (at 130.81 104.14))
+  (no_connect (at 171.45 88.9))
+  (no_connect (at 130.81 73.66))
+  (no_connect (at 130.81 76.2))
+  (no_connect (at 171.45 127))
+  (no_connect (at 130.81 68.58))
+  (no_connect (at 130.81 99.06))
+  (no_connect (at 251.46 73.66))
+  (no_connect (at 130.81 101.6))
+  (no_connect (at 171.45 116.84))
+  (no_connect (at 171.45 91.44))
+  (no_connect (at 171.45 93.98))
+  (no_connect (at 171.45 104.14))
+  (no_connect (at 171.45 106.68))
   (no_connect (at 241.3 34.29))
+  (no_connect (at 130.81 71.12))
+  (no_connect (at 207.01 96.52))
+  (no_connect (at 130.81 111.76))
+  (no_connect (at 171.45 99.06))
+  (no_connect (at 130.81 109.22))
 
   (wire (pts (xy 15.24 118.11) (xy 33.02 118.11))
     (stroke (width 0) (type solid) (color 0 0 0 0))
@@ -1389,9 +1529,6 @@
   (wire (pts (xy 171.45 86.36) (xy 194.31 86.36))
     (stroke (width 0) (type solid) (color 0 0 0 0))
   )
-  (wire (pts (xy 171.45 88.9) (xy 194.31 88.9))
-    (stroke (width 0) (type solid) (color 0 0 0 0))
-  )
   (wire (pts (xy 171.45 96.52) (xy 207.01 96.52))
     (stroke (width 0) (type solid) (color 0 0 0 0))
   )
@@ -1541,6 +1678,10 @@
   (text "Power" (at 71.12 19.05 180)
     (effects (font (size 2.5 2.5)) (justify right bottom))
   )
+  (text "The LED shines to the LEFT hand side of conventional\ncurrent, (not right)"
+    (at 86.36 180.34 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+  )
   (text "R12 = (R11 / ((VOUT / VFB) - 1)) " (at 92.71 74.93 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
@@ -1563,10 +1704,6 @@
   (text "U2TXD" (at 129.54 101.6 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
-  (text "The LED shines to the right hand side of conventional\ncurrent, "
-    (at 139.7 180.34 0)
-    (effects (font (size 1.27 1.27)) (justify right bottom))
-  )
   (text "ESP32 MCU / Radio" (at 171.45 35.56 180)
     (effects (font (size 2.5 2.5)) (justify right bottom))
   )
@@ -1574,13 +1711,17 @@
     (at 184.15 27.94 0)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
-  (text "boot be low at boot" (at 193.04 88.9 180)
+  (text "DNP, internal pull-up exists" (at 187.96 60.96 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+  )
+  (text "DNP" (at 190.5 142.24 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
   (text "Bootstrap enable diag" (at 195.58 96.52 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
-  (text "VDD_SDIO is supplied by internal regulator" (at 212.09 134.62 180)
+  (text "VDD_SDIO is supplied by internal regulator\nThis cap is not needed"
+    (at 212.09 134.62 0)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
   (text "telemetry from escs (serial)" (at 238.76 107.95 180)
@@ -2791,178 +2932,178 @@
 
   (symbol_instances
     (path "/00000000-0000-0000-0000-00005cdf9b16"
-      (reference "#FLG0101") (unit 1)
+      (reference "#FLG0101") (unit 1) (value "PWR_FLAG") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005cdcedf5"
-      (reference "#FLG0102") (unit 1)
+      (reference "#FLG0102") (unit 1) (value "PWR_FLAG") (footprint "")
     )
     (path "/3a7499af-db73-4882-99e3-e8238c95f598"
-      (reference "#FLG0103") (unit 1)
+      (reference "#FLG0103") (unit 1) (value "PWR_FLAG") (footprint "")
     )
     (path "/983be544-9de7-4ac6-8757-1d47b7a21d70"
-      (reference "#PWR01") (unit 1)
+      (reference "#PWR01") (unit 1) (value "GND") (footprint "")
     )
     (path "/6b249487-279a-4bab-98ce-560a5dfc4cb3"
-      (reference "#PWR02") (unit 1)
+      (reference "#PWR02") (unit 1) (value "GND") (footprint "")
     )
     (path "/a8fb7af7-5e1a-40d0-8c05-5b49fff3f74e"
-      (reference "#PWR03") (unit 1)
+      (reference "#PWR03") (unit 1) (value "GND") (footprint "")
     )
     (path "/f0666eca-ac18-44f5-a55d-51e5ed066097"
-      (reference "#PWR05") (unit 1)
+      (reference "#PWR05") (unit 1) (value "GND") (footprint "")
     )
     (path "/22263480-d56d-434d-8bb0-65b9edd072cd"
-      (reference "#PWR06") (unit 1)
+      (reference "#PWR06") (unit 1) (value "GND") (footprint "")
     )
     (path "/d6af4720-1913-4736-8f14-99a5596325a1"
-      (reference "#PWR07") (unit 1)
+      (reference "#PWR07") (unit 1) (value "GND") (footprint "")
     )
     (path "/53948e1d-3ba7-461d-92ef-5959d7c0ff1e"
-      (reference "#PWR08") (unit 1)
+      (reference "#PWR08") (unit 1) (value "GND") (footprint "")
     )
     (path "/75d0f94a-d85d-4c3d-bce5-58d3f84977c0"
-      (reference "#PWR09") (unit 1)
+      (reference "#PWR09") (unit 1) (value "GND") (footprint "")
     )
     (path "/71231c80-938c-454b-a54d-d70daeee067d"
-      (reference "#PWR011") (unit 1)
+      (reference "#PWR011") (unit 1) (value "GND") (footprint "")
     )
     (path "/d15a4cb6-d668-46e6-b081-ec3407adecd6"
-      (reference "#PWR012") (unit 1)
+      (reference "#PWR012") (unit 1) (value "GND") (footprint "")
     )
     (path "/650096b6-814a-41cf-ab52-2cd624bb5348"
-      (reference "#PWR013") (unit 1)
+      (reference "#PWR013") (unit 1) (value "GND") (footprint "")
     )
     (path "/0353bf9d-afe5-4992-8b6d-969793220d63"
-      (reference "#PWR014") (unit 1)
+      (reference "#PWR014") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00005cdc503d"
-      (reference "#PWR0101") (unit 1)
+      (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
     )
     (path "/644c6974-1bd8-46ef-900f-10cf0f47ab74"
-      (reference "#PWR0102") (unit 1)
+      (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
     )
     (path "/3e5907fd-015b-4a1f-9c61-1ad675f5a180"
-      (reference "AE1") (unit 1)
+      (reference "AE1") (unit 1) (value " AN9520-245 ") (footprint "melty-controller:AN9520-245")
     )
     (path "/07835ab1-8915-45b5-930b-d3cff5dd3f46"
-      (reference "C1") (unit 1)
+      (reference "C1") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00005cdc3232"
-      (reference "C2") (unit 1)
+      (reference "C2") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/c62bf5f2-fbe8-4c00-8f04-84d989529140"
-      (reference "C3") (unit 1)
+      (reference "C3") (unit 1) (value "22nF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/e36b083b-4d0e-405a-ab85-36939474b5d0"
-      (reference "C4") (unit 1)
+      (reference "C4") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/c04de0b0-58f5-42ea-9f3a-a19cf04dda0a"
-      (reference "C5") (unit 1)
+      (reference "C5") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/35c76b5a-71a0-437a-871f-352bfc88364d"
-      (reference "C6") (unit 1)
+      (reference "C6") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/f00d564e-1fb1-4850-9540-09f82415d90a"
-      (reference "C7") (unit 1)
+      (reference "C7") (unit 1) (value "10nF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/b5d94bfb-3f59-4c78-acaa-87c14c9ca355"
-      (reference "C8") (unit 1)
+      (reference "C8") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/d8fca467-47b5-4771-a1e4-e22891867f74"
-      (reference "C9") (unit 1)
+      (reference "C9") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/a206cb7f-0c70-49d6-a37a-f51150496f5f"
-      (reference "D1") (unit 1)
+      (reference "D1") (unit 1) (value "LED") (footprint "LED_SMD:LED_0805_2012Metric_Castellated")
     )
     (path "/877b2fa5-c990-4b77-8122-8f3cf4b4c578"
-      (reference "D2") (unit 1)
+      (reference "D2") (unit 1) (value "white side smd") (footprint "melty-controller:LED_SIDEVIEW")
     )
     (path "/04e21c41-29f7-44b8-bde6-6934a2f592ae"
-      (reference "D3") (unit 1)
+      (reference "D3") (unit 1) (value "white side smd") (footprint "melty-controller:LED_SIDEVIEW")
     )
     (path "/840b6e3b-f765-4467-87d6-142b04604fb2"
-      (reference "D4") (unit 1)
+      (reference "D4") (unit 1) (value "white side smd") (footprint "melty-controller:LED_SIDEVIEW")
     )
     (path "/197af9f3-2f12-4d66-bc94-1842476c7141"
-      (reference "D5") (unit 1)
+      (reference "D5") (unit 1) (value "white side smd") (footprint "melty-controller:LED_SIDEVIEW")
     )
     (path "/b9ba4a0d-4dad-4aad-ad6b-9604e049679b"
-      (reference "D6") (unit 1)
+      (reference "D6") (unit 1) (value "LED") (footprint "LED_SMD:LED_0805_2012Metric_Castellated")
     )
     (path "/00000000-0000-0000-0000-00005cdc3c93"
-      (reference "J1") (unit 1)
+      (reference "J1") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_Wire:SolderWire-0.5sqmm_1x02_P4.6mm_D0.9mm_OD2.1mm")
     )
     (path "/9f5f335b-9dca-46f4-903e-d448dad0439d"
-      (reference "J2") (unit 1)
+      (reference "J2") (unit 1) (value "soicbite") (footprint "melty-controller:SOIC_clipProgSmall")
     )
     (path "/635acef9-2430-4621-9b86-cce3bee656a7"
-      (reference "J3") (unit 1)
+      (reference "J3") (unit 1) (value "esc_io") (footprint "Connector_PinHeader_2.00mm:PinHeader_1x04_P2.00mm_Vertical")
     )
     (path "/7b4a6076-b295-41e1-859b-663483f16353"
-      (reference "L1") (unit 1)
+      (reference "L1") (unit 1) (value "10uH") (footprint "Inductor_SMD:L_1210_3225Metric")
     )
     (path "/5afa19f9-f2d6-4d9c-a31a-a36406d7289f"
-      (reference "Q1") (unit 1)
+      (reference "Q1") (unit 1) (value "2N7002ET1G") (footprint "Package_TO_SOT_SMD:SOT-23")
     )
     (path "/1253f789-8d1d-480e-a5a3-838092220321"
-      (reference "R1") (unit 1)
+      (reference "R1") (unit 1) (value "22k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/cbce08c8-186e-40cc-8c09-8fde4b1641c5"
-      (reference "R2") (unit 1)
+      (reference "R2") (unit 1) (value "22k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/a8cae15e-e8e5-4609-b11f-ffd9a9b99b0e"
-      (reference "R3") (unit 1)
+      (reference "R3") (unit 1) (value "220R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/ae68a2f6-5fcd-4b79-9d70-f77880fe1174"
-      (reference "R4") (unit 1)
+      (reference "R4") (unit 1) (value "100R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/d7074d37-f9ca-4ee4-b7a4-c7c021856308"
-      (reference "R5") (unit 1)
+      (reference "R5") (unit 1) (value "100R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/e8306dd5-28f7-4310-a93d-ccb5c0b0d11a"
-      (reference "R6") (unit 1)
+      (reference "R6") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/266cca23-85f8-4c13-ab1d-dcc762903566"
-      (reference "R7") (unit 1)
+      (reference "R7") (unit 1) (value "220R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/ec7156c2-8d91-40d7-98cb-18d9b883b454"
-      (reference "R8") (unit 1)
+      (reference "R8") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/8e4e2b3f-b78e-4c68-bc45-14a60eb5dfd7"
-      (reference "R9") (unit 1)
+      (reference "R9") (unit 1) (value "22k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/89d74986-9cb7-485c-88ee-0624b38c2c79"
-      (reference "R10") (unit 1)
+      (reference "R10") (unit 1) (value "22k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/3a158a15-107a-48c3-9ca5-0d84a1995b88"
-      (reference "R11") (unit 1)
+      (reference "R11") (unit 1) (value "100k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/784efd7d-b4d7-4668-ab85-24bec515352b"
-      (reference "R12") (unit 1)
+      (reference "R12") (unit 1) (value "22k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/5d1463a4-9d44-4050-b19b-6fef46b0bcf5"
-      (reference "TP1") (unit 1)
+      (reference "TP1") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.5x1.5mm")
     )
     (path "/16b5af06-e38c-47e8-be10-157b89e8cc2b"
-      (reference "TP2") (unit 1)
+      (reference "TP2") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.5x1.5mm")
     )
     (path "/6a4587a3-cf5e-4524-a8c1-3f68fefec719"
-      (reference "TP3") (unit 1)
+      (reference "TP3") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.5x1.5mm")
     )
     (path "/351c7b9e-3c3a-4f95-85df-106866db9b8b"
-      (reference "TP4") (unit 1)
+      (reference "TP4") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.5x1.5mm")
     )
     (path "/b91b9274-ad09-4c59-9311-b440a305e6c7"
-      (reference "U1") (unit 1)
+      (reference "U1") (unit 1) (value "ESP32-PICO-D4") (footprint "melty-controller:esp32-pico-special")
     )
     (path "/f413f9ad-ff79-4ea6-b3f3-f9696b7384d7"
-      (reference "U2") (unit 1)
+      (reference "U2") (unit 1) (value "MT2492") (footprint "Package_TO_SOT_SMD:SOT-23-6")
     )
     (path "/cdec65cd-e2ae-4279-993a-93d5bfa2a208"
-      (reference "U3") (unit 1)
+      (reference "U3") (unit 1) (value "MMA1200KEG") (footprint "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm")
     )
     (path "/9a10ae2e-8e0f-4c67-bfd0-6e3a31c7fe69"
-      (reference "U4") (unit 1)
+      (reference "U4") (unit 1) (value "HT7250") (footprint "Package_TO_SOT_SMD:SOT-23")
     )
   )
 )
