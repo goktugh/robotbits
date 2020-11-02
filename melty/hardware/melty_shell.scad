@@ -23,7 +23,19 @@ outer_radius = outer_diameter / 2;
 chamfer = 1.0;
 wall_thick = 3.0;
 wall_thick_inner = 2.0;
-base_thick = 2.0;
+base_thick = 3.0;
+
+bolt_r1 = 34;
+bolt_r2 = 46;
+
+bolt_ang = 38;
+bolt_x1 = sin(bolt_ang);
+bolt_y1 = cos(bolt_ang);
+
+bolt_holes_xy = [
+    [bolt_x1 * bolt_r1,bolt_y1 * bolt_r1],
+    [bolt_x1 * bolt_r2,bolt_y1 * bolt_r2]
+];
 
 module walls_outline()
 {
@@ -99,7 +111,7 @@ module triangle_mount()
         }
         // Screw hole.
         translate([-1,mount_width/2,overall_height/2])
-            cylinder_x(r=1.25, h=20); 
+            cylinder_x(r=1.5, h=20); 
     }
 }
 
@@ -107,6 +119,12 @@ module mirror_y()
 {
     children();
     mirror([0,1,0]) children();
+}
+
+module mirror_x()
+{
+    children();
+    mirror([1,0,0]) children();
 }
 
 module motor_mounts()
@@ -130,8 +148,8 @@ module motor_mounts()
             // Piece which sticks the triangle mount on to the inner wall.
             // Less than full height; the wires need to go over.
             mirror_y() {
-                translate([-8.5,triangle_y_offset+4,1.0])
-                    linear_extrude(height=12.0) {
+                translate([-8.5,triangle_y_offset+4,2.0])
+                    linear_extrude(height=11.0) {
                         polygon([[0,0],[12,0], [10,2], [0,2]]);
                     }
             }
@@ -144,21 +162,67 @@ module battery_cutouts()
     // This is kind of weird cylindrical cutout
     // for the battery to sit in, ideally fairly tightly.
     mirror_y() {
-        translate([0,inner_radius + 3.5,6.0]) 
+        translate([0,inner_radius + 3.5,7.0]) 
             rotate([0,90,0])
-            cylinder(r=4.0, h=50, center=true);
+            cylinder(r=4.0, h=30, center=true);
+    }
+}
+
+module bolt_holes()
+{
+    mirror_x()
+    mirror_y()
+    {
+        translate([0,0,-1])
+        for (xy = bolt_holes_xy) {
+            translate([xy[0], xy[1]]) {
+                cylinder(r=1.1, h=50);
+            }
+        }
+    }
+}
+
+module bolt_holders()
+{
+    // Need to have enough radius to hold threaded
+    // inserts.
+    mirror_x()
+    mirror_y()
+    {
+        translate([0,0,base_thick - 0.5])
+        for (xy = bolt_holes_xy) {
+            translate([xy[0], xy[1]]) {
+                cylinder(r=2.5, h=3.5);
+            }
+        }
+    }
+}
+
+module weapon_cutout()
+{
+    weapon_width = 8.0;
+    weapon_thickness = 2.0;
+    rotate([0,0,90-bolt_ang]) {
+        cube([outer_diameter + 10, weapon_width + 0.4, weapon_thickness * 2],
+            center=true);
     }
 }
 
 module main()
 {
     difference() {
-        rotate_extrude(convexity=4) {
-            walls_outline();
+        union()
+        {
+            rotate_extrude(convexity=4) {
+                walls_outline();
+            }
+            bolt_holders();
         }
         motor_cutouts();
         mirror([1,0,0]) motor_cutouts();
         battery_cutouts();
+        bolt_holes();
+        weapon_cutout();
     }
     motor_mounts();
     mirror([1,0,0]) motor_mounts();
