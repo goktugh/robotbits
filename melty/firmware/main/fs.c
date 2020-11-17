@@ -87,19 +87,6 @@ void fs_init()
             }
         }
     }
-    // Example: Create a log file with higher id than any existing.
-    int highest_id = find_highest_numeric_file(logs_path);
-    highest_id += 1;
-    char log_fname[256];
-    snprintf(log_fname, sizeof(log_fname), "%s/%04d.log", logs_path, highest_id);
-    ESP_LOGI(TAG, "Opening log %s", log_fname);
-    f = fopen(log_fname, "w");
-    if (f != NULL) {
-        fprintf(f, "Hi there\n");
-        fclose(f);
-    } else {
-        ESP_LOGW(TAG, "Failed to open log file");
-    }
 }
 
 static char chunk_buf[4096];

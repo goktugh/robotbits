@@ -17,8 +17,8 @@
 #include "fs.h"
 #include "motors.h"
 
-#define BLINK_GPIO 2
-#define OTHER_GPIO 13
+#define BLINK_GPIO 21
+#define WHITE_GPIO 23
 
 
 static void init_misc()
@@ -59,14 +59,22 @@ static void main_loop()
         }
         esp_task_wdt_reset();
         i += 1;
+        gpio_set_level(BLINK_GPIO, (i%2));
+        gpio_set_level(WHITE_GPIO, (i%2));
     }    
 }
 
 static void main_init()
 {
-    printf("initialising misc things...\n");
-    init_misc();
-    
+    printf("Setting gpio up for led...\n");
+    gpio_pad_select_gpio(BLINK_GPIO);
+    gpio_pad_select_gpio(WHITE_GPIO);
+    /* Set the GPIO as a push/pull output */
+    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_direction(WHITE_GPIO, GPIO_MODE_OUTPUT);
+    // Enable our blink gpio during startup...
+    gpio_set_level(BLINK_GPIO, 1);
+
     printf("initialising filesystem...\n");
     fs_init();
 
@@ -74,12 +82,6 @@ static void main_init()
     comms_init();    
     web_server_init();
 
-    printf("Setting gpio up for led...\n");
-    gpio_pad_select_gpio(BLINK_GPIO);
-    gpio_pad_select_gpio(OTHER_GPIO);
-    /* Set the GPIO as a push/pull output */
-    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
-    gpio_set_direction(OTHER_GPIO, GPIO_MODE_OUTPUT);
     printf("Initialising motors...\n");
     motors_init();
 }
@@ -87,16 +89,18 @@ static void main_init()
 
 static void main_task(void *pvParameters)
 {
+    printf("main_task startup\n");
     main_init();
     main_loop();
 }
 
 void app_main()
 {
-    init_misc();
     printf("Hello Melty world!\n");
-    printf("Starting main task\n");
-
+    printf("In app_main\n");
+    printf("initialising misc things...\n");
+    init_misc();
+    
     uint32_t core = 1;
     xTaskCreatePinnedToCore(main_task, "main_task", 4096, NULL, 5, NULL, core);
 }
