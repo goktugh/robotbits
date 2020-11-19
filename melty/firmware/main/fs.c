@@ -1,9 +1,11 @@
 #include "fs.h"
 
 #include "esp_vfs.h"
-#include "esp_vfs_fat.h"
+#include "esp_spiffs.h"
 #include "esp_system.h"
 #include "esp_http_server.h"
+#include "esp_err.h"
+#include "esp_log.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -14,9 +16,6 @@
  */
 
 static const char *TAG = "my_fs";
-
-// Handle of the wear levelling library instance
-static wl_handle_t s_wl_handle = WL_INVALID_HANDLE;
 
 // Mount path for the partition
 const char *base_path = FLASH_PATH;
@@ -47,19 +46,28 @@ static int find_highest_numeric_file(const char *path)
 
 void fs_init()
 {
-    ESP_LOGI(TAG, "Mounting FAT filesystem");
-    // To mount device we need name of device partition, define base_path
-    // and allow format partition in case if it is new one and was not formated before
-    const esp_vfs_fat_mount_config_t mount_config = {
-            .max_files = 4,
-            .format_if_mount_failed = true,
-            .allocation_unit_size = CONFIG_WL_SECTOR_SIZE
+    ESP_LOGI(TAG, "Initializing SPIFFS");
+    
+    esp_vfs_spiffs_conf_t conf = {
+      .base_path = FLASH_PATH,
+      .partition_label = NULL,
+      .max_files = 5,
+      .format_if_mount_failed = true
     };
-    esp_err_t err = esp_vfs_fat_spiflash_mount(base_path, "storage", &mount_config, &s_wl_handle);
+
+    esp_err_t err = esp_vfs_spiffs_register(&conf);
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to mount FATFS (%s)", esp_err_to_name(err));
+        ESP_LOGE(TAG, "Failed to mount fs (%s)", esp_err_to_name(err));
         return;
     }
+    size_t total = 0, used = 0;
+    esp_err_t ret = esp_spiffs_info(NULL, &total, &used);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to get SPIFFS partition information (%s)", esp_err_to_name(ret));
+    } else {
+        ESP_LOGI(TAG, "Partition size: total: %d, used: %d", total, used);
+    }
+    
     FILE *f = fopen(FLASH_PATH "/hello2.txt", "w");
     if (f != NULL) {
         fprintf(f, "Hello, World\n");
@@ -68,10 +76,6 @@ void fs_init()
     } else {
         ESP_LOGE(TAG, "FS: Failed to open file");
     }
-    // Example make a directory.
-    int mode = 0777; // octal mode for new dir (probably noop anyway)
-    const char * logs_path = FLASH_PATH "/logs";
-    mkdir(logs_path, mode);
     // Example list files:
     {
         DIR *d = opendir(base_path);
@@ -86,6 +90,15 @@ void fs_init()
                 }
             }
         }
+    }
+    int highest_id = find_highest_numeric_file(FLASH_PATH);
+    char fnbuf[200];
+    snprintf(fnbuf, sizeof(fnbuf), FLASH_PATH "/%04d.log", highest_id + 1);
+    FILE * f2 = fopen(fnbuf, "w");
+    if (f2 != NULL) {
+        fclose(f2);
+    } else {
+        ESP_LOGE(TAG, "Failed to open log file");
     }
 }
 
@@ -112,6 +125,11 @@ static esp_err_t download_directory_index(httpd_req_t *req)
     map_path(req, filepath);
     filepath[FILE_PATH_MAX - 1] = '\0'; // esure null terminated
     filepath[strlen(filepath) -1 ] = '\0'; // one char shorter.
+
+    /* Do not stat() directory as the filesystem probably does not
+     * support that operation.
+     */
+    /*
     struct stat file_stat;
 
     // Try to stat the dir,
@@ -121,6 +139,7 @@ static esp_err_t download_directory_index(httpd_req_t *req)
         httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Error");
         return ESP_FAIL;
     }
+    */
 
     // Set up headers
     httpd_resp_set_hdr(req, "Connection", "close"); // important- otherwise connection hangs.

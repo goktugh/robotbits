@@ -23,3 +23,26 @@ Also disarm the ESC by waiting some time (1 sec?) with no commands
 
 
     
+-----
+
+
+ERPM:
+-----
+
+Motors have 12 magnets. These are in pairs (N/S)
+ERPM is the number of commutations per minute, for all phases, so
+we need to divide by half the number of poles,
+
+SO RPM = ERPM / 6
+
+At throttle 50, ERPM = 10000 RPM = 1666
+At throttle 100, ERPM = 16000 RPM = 2666
+Throttle 200 ERPM = 31500
+Throttle 400 ERPM = 62000
+Throttle 500 ERPM = 76000 RPM = 12666
+Throttle 1000 ERPM = 150000 RPM = 25k
+
+
+
+
+
