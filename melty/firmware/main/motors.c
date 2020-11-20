@@ -416,8 +416,32 @@ void motor_poll_telemetry()
     }
 }
 
+uint8_t update_crc8(uint8_t crc, uint8_t crc_seed)
+{
+    uint8_t crc_u, i;
+    crc_u = crc;
+    crc_u ^= crc_seed;
+    for ( i=0; i<8; i++) 
+        crc_u = ( crc_u & 0x80 ) ? 0x7 ^ ( crc_u << 1 ) : ( crc_u << 1 );
+    return (crc_u);
+}
+
+uint8_t get_crc8(uint8_t *Buf, uint8_t BufLen)
+{
+    uint8_t crc = 0, i;
+    for( i=0; i<BufLen; i++) 
+        crc = update_crc8(Buf[i], crc);
+    return (crc);
+}
+
 static void handle_telemetry_packet(uint8_t *telemetry_buf)
 {
+    uint8_t expected_crc = get_crc8(telemetry_buf, 9);
+    uint8_t got_crc = telemetry_buf[9];
+    if (got_crc != expected_crc) {
+        printf("crc fail expected: %02x got: %02x", expected_crc, got_crc);
+        return;
+    }
     // Erpm / 100
     uint16_t erpm = ((telemetry_buf[7]) << 8) + telemetry_buf[8];
     // Batt. voltage
