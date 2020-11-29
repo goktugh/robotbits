@@ -16,6 +16,7 @@
 #include "comms.h"
 #include "fs.h"
 #include "motors.h"
+#include "controller.h"
 
 #define BLINK_GPIO 21
 #define WHITE_GPIO 23
@@ -81,6 +82,9 @@ static void main_init()
     printf("Initialising comms...\n");
     comms_init();    
     web_server_init();
+    
+    printf("Initialising controller\n");
+    controller_init();
 
     printf("Initialising motors...\n");
     motors_init();

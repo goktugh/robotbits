@@ -43,6 +43,21 @@ Throttle 500 ERPM = 76000 RPM = 12666
 Throttle 1000 ERPM = 150000 RPM = 25k
 
 
+--
+Speed of rotation of robot
+
+The diameter of the wheels is not the same as the circle they make
+on the floor.
+
+Circle = approx 46mm
+wheel = approx 18mm (motor can=15mm)
+
+approx 2.5*
+
+At throttle 100, RPM(motor) = 2666, RPM(robot)= ~ 1000
+
+At 1000 RPM (16 revs/s) blade diameter 110mm = 5529 mm /sec 
+
 
 
 

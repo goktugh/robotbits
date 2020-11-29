@@ -416,7 +416,7 @@ void motor_poll_telemetry()
     }
 }
 
-uint8_t update_crc8(uint8_t crc, uint8_t crc_seed)
+static uint8_t update_crc8(uint8_t crc, uint8_t crc_seed)
 {
     uint8_t crc_u, i;
     crc_u = crc;
@@ -426,7 +426,7 @@ uint8_t update_crc8(uint8_t crc, uint8_t crc_seed)
     return (crc_u);
 }
 
-uint8_t get_crc8(uint8_t *Buf, uint8_t BufLen)
+static uint8_t get_crc8(uint8_t *Buf, uint8_t BufLen)
 {
     uint8_t crc = 0, i;
     for( i=0; i<BufLen; i++) 
