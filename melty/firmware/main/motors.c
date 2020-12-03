@@ -80,7 +80,7 @@
 #define MOTOR1_GPIO 26
 #define MOTOR0_PWM_GPIO 27
 #define MOTOR1_PWM_GPIO 33
-#define TELEMETRY_GPIO 22
+#define TELEMETRY_GPIO 2
 // for diag messages
 #define MOTORS_TAG "motors"
 
@@ -96,7 +96,9 @@ static const int telemetry_uart=1;
 static bool telemetry_expected; // true= expecting a telemetry packet.
 // Last motor we requested telemetry.
 static int telemetry_last_motor;
-int64_t telemetry_last_send_time; 
+static int64_t telemetry_last_send_time; 
+static uint16_t telemetry_last_erpm; 
+uint16_t motor_telemetry_rpm[2];
 /*
  * Taken from https://github.com/gueei/DShot-Arduino/blob/master/src/DShot.cpp
  */
@@ -167,7 +169,17 @@ static void motors_init_telemetry()
 {
     /*
      * Initialise uart peripheral on telemetry port.
+     * 
+     * Note that ESCs telemetry pins are "open collector" outputs,
+     * so that vehicles with multiple ESCs can combine the outputs
+     * by simply connecting the pins together; we have to ensure
+     * that they don't both talk at the same time.
      */
+     
+    // Start by setting the pin to pull high because it might
+    // have a "pull low" set by default.
+    ESP_ERROR_CHECK(gpio_set_pull_mode(TELEMETRY_GPIO,  GPIO_PULLUP_ONLY));
+    // Configure the uart.
     uart_config_t uart_config = {
         .baud_rate = 115200,
         .data_bits = UART_DATA_8_BITS,
@@ -186,8 +198,9 @@ static void motors_init_telemetry()
         ));
     const int buf_size = UART_FIFO_LEN*2;
     ESP_ERROR_CHECK(uart_driver_install(telemetry_uart, buf_size, 0, 0, NULL, 0));
+    telemetry_last_motor = 420; // Dummy initialisation value.
+    telemetry_last_erpm = 420;
     ESP_LOGI(MOTORS_TAG, "motors_init_telemetry done");
-
 }
 
 static void send_pulses(uint8_t motor, uint16_t pulses_int)
@@ -338,6 +351,7 @@ static void motor_set_speed_dshot(uint8_t motor, int speed_signed, bool send_tel
         // Clear any old rubbish in the buffer for telemetry.
         uart_flush_input(telemetry_uart);
         telemetry_expected = true;
+        telemetry_last_motor = motor;
     }
     transmit_command(motor, top_12_bits);
     // Send PWM pulses
@@ -363,10 +377,10 @@ void motor_set_speed_signed(uint8_t motor, int speed_signed)
         // If we want to repeat the command, OR
         // the throttle is different:
         bool send_telemetry = false;
-        // Only send telemetry if there is not telemetry in progress
-        // and we have not requested telemetry already
+        // Only send telemetry if enough time has passed
+        // and the last telemetry was the opposite motor.
         int64_t telemetry_age = now - telemetry_last_send_time;
-        if (telemetry_age > TELEMETRY_INTERVAL) {
+        if ((telemetry_age > TELEMETRY_INTERVAL) && (telemetry_last_motor != motor)) {
             send_telemetry = true;
             telemetry_last_send_time = now;
         }
@@ -434,6 +448,11 @@ static uint8_t get_crc8(uint8_t *Buf, uint8_t BufLen)
     return (crc);
 }
 
+// Divider: number of motor poles / 2
+// This is the number of electronic commutation cycles per rev of
+// motor.
+static const uint16_t ERPM_DIVIDER = 6;
+
 static void handle_telemetry_packet(uint8_t *telemetry_buf)
 {
     uint8_t expected_crc = get_crc8(telemetry_buf, 9);
@@ -446,6 +465,12 @@ static void handle_telemetry_packet(uint8_t *telemetry_buf)
     uint16_t erpm = ((telemetry_buf[7]) << 8) + telemetry_buf[8];
     // Batt. voltage
     uint16_t volts = ((telemetry_buf[1]) << 8) + telemetry_buf[2];
-    printf("Telem: erpm=%04d x100 volts=%04d /100 \n", erpm, volts);
+    if (erpm != telemetry_last_erpm) {
+        printf("Telem: m=%d erpm=%04d x100 volts=%04d /100 \n", telemetry_last_motor, erpm, volts);
+        telemetry_last_erpm = erpm;
+    }
+    uint16_t rpm = erpm / ERPM_DIVIDER;
+    motor_telemetry_rpm[telemetry_last_motor] = rpm;
+    
     telemetry_expected = false;
 }

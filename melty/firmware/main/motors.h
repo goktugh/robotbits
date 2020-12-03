@@ -13,3 +13,6 @@ void motor_set_speed_signed(uint8_t motor, int speed_signed);
 void motor_send_dshot_command(uint8_t motor, int cmd); 
 
 void motor_poll_telemetry();
+
+// Last known speed of the motors, in RPM
+extern uint16_t motor_telemetry_rpm[2];

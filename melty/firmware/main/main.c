@@ -18,7 +18,7 @@
 #include "motors.h"
 #include "controller.h"
 
-#define BLINK_GPIO 21
+#define SIGNAL_GPIO 21
 #define WHITE_GPIO 23
 
 
@@ -55,26 +55,26 @@ static void main_loop()
                 comms_state.pending_command = 0;
             } else {
                 motor_set_speed_signed(0, comms_state.motor_speed);
+                motor_set_speed_signed(1, - comms_state.motor_speed);
             }
             motor_poll_telemetry();
         }
         esp_task_wdt_reset();
         i += 1;
-        gpio_set_level(BLINK_GPIO, (i%2));
         gpio_set_level(WHITE_GPIO, (i%2));
+        // Enable the signal LED.
+        gpio_set_level(SIGNAL_GPIO, comms_state.got_signal);
     }    
 }
 
 static void main_init()
 {
     printf("Setting gpio up for led...\n");
-    gpio_pad_select_gpio(BLINK_GPIO);
+    gpio_pad_select_gpio(SIGNAL_GPIO);
     gpio_pad_select_gpio(WHITE_GPIO);
     /* Set the GPIO as a push/pull output */
-    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_direction(SIGNAL_GPIO, GPIO_MODE_OUTPUT);
     gpio_set_direction(WHITE_GPIO, GPIO_MODE_OUTPUT);
-    // Enable our blink gpio during startup...
-    gpio_set_level(BLINK_GPIO, 1);
 
     printf("initialising filesystem...\n");
     fs_init();
