@@ -1,0 +1,4 @@
+[submodule "melty/firmware/components/ps3"]
+	path = melty/firmware/components/ps3
+	url = git@github.com:rrooding/esp32-ps3.git
+	branch = feature/esp-idf-4-support

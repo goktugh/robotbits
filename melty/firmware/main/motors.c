@@ -80,7 +80,7 @@
 #define MOTOR1_GPIO 26
 #define MOTOR0_PWM_GPIO 27
 #define MOTOR1_PWM_GPIO 33
-#define TELEMETRY_GPIO 35
+#define TELEMETRY_GPIO 22
 // for diag messages
 #define MOTORS_TAG "motors"
 
