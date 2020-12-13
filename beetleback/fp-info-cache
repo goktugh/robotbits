@@ -1,4 +1,4 @@
-18989670554730416
+19017954364457416
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -50911,6 +50911,13 @@ http://www.display-elektronik.de/filter/DE113-RS-20_635.pdf
 40
 40
 Display_7Segment
+DE119-XX-XX
+https://www.display-elektronik.de/filter/DE119-RS-20_635.pdf
+4 digit 7 segment LCD 
+0
+40
+40
+Display_7Segment
 DE122-XX-XX
 http://www.display-elektronik.de/filter/DE122-RS-20_635.pdf
 6 digit 7 segment LCD 
@@ -82858,3 +82865,17 @@ varistor SIOV
 0
 2
 2
+beetleback
+bbb_motorpin
+
+
+0
+1
+1
+beetleback
+tda21220
+HVQFN, 40 Pin (https://www.nxp.com/docs/en/package-information/SOT618-1.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
+HVQFN NoLead
+0
+50
+41
