@@ -1143,10 +1143,10 @@
   (junction (at 244.475 135.89) (diameter 1.016) (color 0 0 0 0))
   (junction (at 244.475 137.16) (diameter 1.016) (color 0 0 0 0))
 
-  (no_connect (at 27.94 50.8))
-  (no_connect (at 182.88 118.745))
   (no_connect (at 182.88 147.955))
+  (no_connect (at 182.88 118.745))
   (no_connect (at 178.435 66.04))
+  (no_connect (at 27.94 50.8))
 
   (wire (pts (xy 18.415 170.18) (xy 24.13 170.18))
     (stroke (width 0) (type solid) (color 0 0 0 0))
@@ -1481,8 +1481,8 @@
     (at 86.995 116.205 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
-  (text "33kohm = 25mA gate drive current\n200kohm = 50mA\n(see drv8701 electrical characteristics)\n\n50mA gate drive current gives apprx 1us worst-case."
-    (at 88.265 184.785 0)
+  (text "33kohm = 25mA gate drive current\n200kohm = 50mA\nopen circuit = 100mA\n(see drv8701 electrical characteristics)\n\n50mA gate drive current gives apprx 1us worst-case."
+    (at 88.265 188.595 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
   (text "IDRIVE:\n\nhigher resistors give more current charging the gates which\nmakes faster switching.\n\nI think 33k is a typical conservative value"
@@ -1935,16 +1935,16 @@
     (property "Reference" "R3" (id 0) (at 114.8081 121.4056 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "220k" (id 1) (at 114.808 123.704 0)
+    (property "Value" "DNP" (id 1) (at 114.808 123.704 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Resistor_SMD:R_0402_1005Metric" (id 2) (at 111.252 122.555 90)
+    (property "Footprint" "Resistor_SMD:R_0603_1608Metric" (id 2) (at 111.252 122.555 90)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 113.03 122.555 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC" "C25767" (id 4) (at 113.03 122.555 0)
+    (property "LCSC" "" (id 4) (at 113.03 122.555 0)
       (effects (font (size 1.27 1.27)) hide)
     )
   )
@@ -2458,7 +2458,7 @@
       (reference "R2") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0402_1005Metric")
     )
     (path "/96fca56c-a1c6-47bb-9c21-6e480b894a8c"
-      (reference "R3") (unit 1) (value "220k") (footprint "Resistor_SMD:R_0402_1005Metric")
+      (reference "R3") (unit 1) (value "DNP") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/1f054975-e5a8-442f-b188-82daf3387f2d"
       (reference "R4") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0402_1005Metric")
