@@ -1,0 +1,23 @@
+PB0 - MOTOR_PWM_1
+PB1 - MOTOR_PWM_2
+PB2 - PWMIN
+PB3 - ~FAULT
+PB4 - Led (active high)
+PB5 - reset (NC)
+
+We can use the hardware PWM generator from the timer
+to pulse PB0 or PB1.
+
+Then in the main loop, we can just loop checking PWMIN and timer
+
+
+Timer is only 8-bit so need to set the divider to a reasonable time,
+then as it overflows, we increment a global variable to store the time
+since startup.
+
+The time since startup is important as we need to remember when the
+last pulse was, too long between pulses = failsafe, turn off motor.
+
+We also need to measure the pulse width accurately.
+
+ 

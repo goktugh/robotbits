@@ -1143,10 +1143,10 @@
   (junction (at 244.475 135.89) (diameter 1.016) (color 0 0 0 0))
   (junction (at 244.475 137.16) (diameter 1.016) (color 0 0 0 0))
 
-  (no_connect (at 182.88 147.955))
-  (no_connect (at 182.88 118.745))
   (no_connect (at 178.435 66.04))
+  (no_connect (at 182.88 118.745))
   (no_connect (at 27.94 50.8))
+  (no_connect (at 182.88 147.955))
 
   (wire (pts (xy 18.415 170.18) (xy 24.13 170.18))
     (stroke (width 0) (type solid) (color 0 0 0 0))
@@ -1513,6 +1513,10 @@
     (at 255.27 44.45 0)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
+  (text "Possible alternative:\nVishay Intertech SI7288DP-T1-GE3 "
+    (at 272.415 90.17 0)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+  )
 
   (label "VBAT" (at 18.415 170.18 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -1531,6 +1535,9 @@
   )
   (label "MOTOR_PWM_2" (at 124.46 128.27 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
+  )
+  (label "IDRIVE" (at 132.715 118.745 180)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
   )
   (label "VBAT" (at 187.96 87.63 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))

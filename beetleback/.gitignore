@@ -1,3 +1,5 @@
+plot/
+output.*
 fp-info-cache
 *-cache
 *-backups

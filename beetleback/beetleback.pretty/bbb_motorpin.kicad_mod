@@ -1,12 +1,12 @@
 (footprint "bbb_motorpin" (version 20201116) (generator pcbnew) (layer "F.Cu")
-  (tedit 5FD8C044)
+  (tedit 5FDA66D1)
   (fp_text reference "REF**" (at -0.3 -2.1 unlocked) (layer "F.SilkS") hide
     (effects (font (size 1 1) (thickness 0.15)))
-    (tstamp 1d4b60a1-a435-4d88-90d0-b567977ce4c2)
+    (tstamp 55e040d8-1431-45aa-a7e2-41054335305f)
   )
   (fp_text value "bbb_motorpin" (at 0 1 unlocked) (layer "F.Fab") hide
     (effects (font (size 1 1) (thickness 0.15)))
-    (tstamp 9006a6c7-2927-4ea6-b614-c52d97818939)
+    (tstamp 183443e8-2cbd-49da-80c1-9012f3bba5a4)
   )
-  (pad "1" thru_hole circle (at 0 0) (size 2.6 2.6) (drill 2.1) (layers *.Cu *.Mask) (tstamp 98f62af5-1fb6-4f0b-a44e-52e226fb00ca))
+  (pad "1" thru_hole circle (at 0 0) (size 2.7 2.7) (drill 2.2) (layers *.Cu *.Mask) (tstamp 86b24a83-6f91-40c8-bda1-32e086747602))
 )
