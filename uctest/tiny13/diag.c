@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <avr/pgmspace.h>
 
 #define F_CPU 9600000
 #include <util/delay.h>
@@ -36,6 +37,11 @@ static void bitbang_char(unsigned char c)
     bitbang_wait();
 }
 
+void diag_putc(unsigned char c)
+{
+    bitbang_char(c);
+}
+
 void diag_puts(const char *s)
 {
     while (*s) {
@@ -43,6 +49,16 @@ void diag_puts(const char *s)
         s += 1;
     }
 }
+void diag_puts_progmem(const char *s)
+{
+    do {
+        char c = pgm_read_byte(s);
+        if (c != 0) bitbang_char(c);
+        else break;
+        ++s;
+    } while (1);
+}
+
 
 static char hexdigit(uint8_t n)
 {
@@ -69,7 +85,7 @@ void diag_printhex_16(uint16_t n)
 
 void diag_newline()
 {
-    diag_puts("\r\n");
+    diag_puts_progmem(PSTR("\r\n"));
 }
 
 void diag_init()

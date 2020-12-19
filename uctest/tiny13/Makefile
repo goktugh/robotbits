@@ -4,9 +4,9 @@
 #
 OBJDIR=obj
 
-OBJ_FILES=main.o diag.o
+OBJ_FILES=main.o diag.o timer.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
-HEADERS=diag.h
+HEADERS=diag.h timer.h
 
 MCU=attiny13
 
@@ -33,7 +33,7 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 	avr-gcc -c $(CFLAGS) -o $@ $<
 
 # add -v here for heaps of debug
-AVRDUDE_OPTS=-p t13 -c stk500v1 -P/dev/ttyUSB0 -b19200
+AVRDUDE_OPTS=-p t13 -c avrisp -P/dev/ttyUSB0 -b19200
 
 # All hi fuses are 1 by default. 
 # We want to enable the higher clock speed
