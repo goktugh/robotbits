@@ -14,7 +14,11 @@ ELF=$(OBJDIR)/main.elf
 HEX=$(OBJDIR)/main.hex
 BIN=$(OBJDIR)/main.bin
 
-LINKFLAGS=-Os
+# Flag(s) to enable link-time optimisation.
+# LTO seems to reduce the binary size slightly.
+LTO_FLAGS=-flto
+
+LINKFLAGS=-Os $(LTO_FLAGS)
 
 link: $(OBJECTS) $(HEADERS)
 	avr-gcc -mmcu=$(MCU) -o $(ELF) $(OBJECTS) $(LINKFLAGS)
@@ -27,7 +31,7 @@ link: $(OBJECTS) $(HEADERS)
 	avr-objcopy -j .text -j .data -j .rodata -O ihex $(ELF) $(HEX)
 	avr-objcopy -I ihex -O binary $(HEX) $(BIN)
 
-CFLAGS=-mmcu=$(MCU)  -Os -Wall
+CFLAGS=-mmcu=$(MCU)  -Os -Wall $(LTO_FLAGS)
 $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 	@mkdir -p $(OBJDIR)
 	avr-gcc -c $(CFLAGS) -o $@ $<
