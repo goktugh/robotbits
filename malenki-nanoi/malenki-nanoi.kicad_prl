@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 36,
+    "active_layer": 0,
     "active_layer_preset": "",
     "hidden_nets": [],
     "high_contrast_mode": 0,
@@ -59,7 +59,7 @@
       37,
       38
     ],
-    "visible_layers": "fffffff_7ffffff8"
+    "visible_layers": "ffd7fef_7ffffff9"
   },
   "meta": {
     "filename": "malenki-nanoi.kicad_prl",
