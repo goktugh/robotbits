@@ -279,7 +279,7 @@
   (symbol (lib_id "malenki-nano-rescue:GND-power") (at 122.555 111.125 0)
     (in_bom yes) (on_board yes)
     (uuid "2786a02b-c8cd-4cfe-81f8-efb6fd50b3f4")
-    (property "Reference" "#PWR08" (id 0) (at 122.555 117.475 0)
+    (property "Reference" "#PWR01" (id 0) (at 122.555 117.475 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 122.682 115.5192 0))
