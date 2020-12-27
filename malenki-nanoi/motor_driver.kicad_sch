@@ -292,7 +292,7 @@
   )
 
   (symbol (lib_id "malenki-nano-rescue:Conn_01x02_Male-Connector") (at 174.625 92.075 180)
-    (in_bom yes) (on_board yes)
+    (in_bom no) (on_board yes)
     (uuid "a3e9ee79-b022-4d38-91e0-e347c567daf7")
     (property "Reference" "J4" (id 0) (at 175.3362 89.0778 0)
       (effects (font (size 1.27 1.27)) (justify right))
