@@ -4,7 +4,7 @@
     (thickness 1.6)
   )
 
-  (paper "A4")
+  (paper "A4" portrait)
   (title_block
     (title "Malenki-nano XS")
     (date "2020-04-27")
@@ -237,7 +237,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 789dd1fb-7f37-42ce-b91e-f407ce82a903)
     )
-    (fp_text value "22pF" (at 0 1.16) (layer "F.Fab")
+    (fp_text value "10pF" (at 0 1.16) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp dbe735f5-0f59-4e5c-8096-2246f876b8eb)
     )
@@ -494,7 +494,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 676f59f7-44f4-4280-b0ad-435a1d7a2ca3)
     )
-    (fp_text value "22pF" (at 0 1.16 180) (layer "F.Fab")
+    (fp_text value "10pF" (at 0 1.16 180) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 599b5e9a-61e6-4042-adbe-6be257e5e689)
     )
@@ -769,8 +769,9 @@
     (tags "Through hole pin header THT 1x02 2.54mm single row")
     (property "Sheet file" "malenki-nanoi.kicad_sch")
     (property "Sheet name" "")
+    (property "exclude_from_bom" "")
     (path "/64bc901d-b945-4fc1-85d5-32333cf1f80f")
-    (attr through_hole)
+    (attr through_hole exclude_from_bom)
     (fp_text reference "J1" (at 0 -2.33) (layer "F.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 0adf26f2-cdee-47d2-886f-748ee7ec9837)
@@ -989,8 +990,9 @@
     (tags "Through hole pin header THT 1x02 2.54mm single row")
     (property "Sheet file" "motor_driver.kicad_sch")
     (property "Sheet name" "motor_driver_1_weapon")
+    (property "exclude_from_bom" "")
     (path "/b339fba4-a8e4-4c66-ad9c-610bd968ae93/a3e9ee79-b022-4d38-91e0-e347c567daf7")
-    (attr through_hole)
+    (attr through_hole exclude_from_bom)
     (fp_text reference "J4" (at 0 -2.33) (layer "F.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 8316179e-59e2-492e-9975-6e20c784d694)
@@ -1901,8 +1903,9 @@
     (tags "Through hole pin header THT 1x02 2.54mm single row")
     (property "Sheet file" "motor_driver.kicad_sch")
     (property "Sheet name" "motor_driver_3_right")
+    (property "exclude_from_bom" "")
     (path "/ed035ea4-687d-4ec6-a6e6-057c20ae2a22/a3e9ee79-b022-4d38-91e0-e347c567daf7")
-    (attr through_hole)
+    (attr through_hole exclude_from_bom)
     (fp_text reference "J6" (at 0 -2.33) (layer "F.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp e011d5fd-63fe-49aa-8c80-ea462d447de9)
@@ -1989,7 +1992,7 @@
     (at 95 62 180)
     (descr "SMD Crystal SERIES SMD2520/4 http://www.newxtal.com/UploadFiles/Images/2012-11-12-09-29-09-776.pdf, 2.5x2.0mm^2 package")
     (tags "SMD SMT crystal")
-    (property "LCSC" "C179632")
+    (property "LCSC" "C255947")
     (property "Sheet file" "radio.kicad_sch")
     (property "Sheet name" "radio")
     (path "/f8865f8d-c9c7-4324-8715-db444b940a42/c12d6cc5-bd28-4fbe-83e5-5429bd2d2fc7")
@@ -1998,7 +2001,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 22692415-ee11-47ca-8335-a7e54385d64e)
     )
-    (fp_text value "16 Mhz 20ppm" (at 0 2.2) (layer "F.Fab") hide
+    (fp_text value "16mhz Seiko Epson Q24FA20H0051200 " (at 0 2.2) (layer "F.Fab") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 1de46704-4366-4469-adbc-4463c680fce9)
     )
@@ -2092,8 +2095,9 @@
     (tags "Through hole pin header THT 1x02 2.54mm single row")
     (property "Sheet file" "motor_driver.kicad_sch")
     (property "Sheet name" "motor_driver_2_left")
+    (property "exclude_from_bom" "")
     (path "/159e78dd-19f3-45d1-a83d-5b1f96539c1f/a3e9ee79-b022-4d38-91e0-e347c567daf7")
-    (attr through_hole)
+    (attr through_hole exclude_from_bom)
     (fp_text reference "J5" (at 0 -2.33) (layer "F.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 4d7768df-dda0-4ef8-b3fe-dc007536e75a)
@@ -2349,8 +2353,9 @@
     (at 88.5 62 90)
     (property "Sheet file" "malenki-nanoi.kicad_sch")
     (property "Sheet name" "")
+    (property "exclude_from_bom" "")
     (path "/4fe643de-a227-4885-8156-8aa852206075")
-    (attr through_hole)
+    (attr through_hole exclude_from_bom)
     (fp_text reference "J2" (at 0 3.302 -90) (layer "B.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
       (tstamp c832fb86-a357-46b9-b367-d54d95f66e42)
@@ -2399,7 +2404,6 @@
 
   (gr_circle (center 98.5 74.5) (end 98.75 74.5) (layer "F.SilkS") (width 0.12) (fill solid) (tstamp 5e2cfad2-458f-4305-877b-7913c1bbb170))
   (gr_circle (center 93.2 66) (end 93.45 66) (layer "F.SilkS") (width 0.12) (fill solid) (tstamp 5f149907-486c-40f4-a1cd-6efe9a3f9c5f))
-  (gr_circle (center 96.5 59.8) (end 96.75 59.8) (layer "F.SilkS") (width 0.12) (fill solid) (tstamp 6dee0c74-bc19-4365-af42-c1764b999d66))
   (gr_circle (center 94.1 74.5) (end 94.35 74.5) (layer "F.SilkS") (width 0.12) (fill solid) (tstamp 8145ca3a-6487-462a-93ef-26b70fb01d0a))
   (gr_circle (center 89.6 74.5) (end 89.85 74.5) (layer "F.SilkS") (width 0.12) (fill solid) (tstamp 9cab313f-7d26-445f-9ea1-b03faadc9872))
   (gr_circle (center 104.2 59.6) (end 104.45 59.6) (layer "F.SilkS") (width 0.12) (fill solid) (tstamp e0f53b2e-b8af-46a1-b40d-237506f038fd))
