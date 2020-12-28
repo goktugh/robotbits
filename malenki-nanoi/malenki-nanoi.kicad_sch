@@ -608,11 +608,11 @@
   (junction (at 106.68 156.21) (diameter 1.016) (color 0 0 0 0))
   (junction (at 132.08 47.625) (diameter 1.016) (color 0 0 0 0))
 
-  (no_connect (at 111.76 114.3))
   (no_connect (at 127 52.705))
-  (no_connect (at 127 57.785))
-  (no_connect (at 127 45.085))
   (no_connect (at 142.24 116.84))
+  (no_connect (at 127 57.785))
+  (no_connect (at 111.76 114.3))
+  (no_connect (at 127 45.085))
 
   (wire (pts (xy 38.1 48.26) (xy 57.15 48.26))
     (stroke (width 0) (type solid) (color 0 0 0 0))
@@ -1627,7 +1627,7 @@
       (reference "U1") (unit 1) (value "A7105") (footprint "malenki-nano:a7105-QFN-20")
     )
     (path "/f8865f8d-c9c7-4324-8715-db444b940a42/c12d6cc5-bd28-4fbe-83e5-5429bd2d2fc7"
-      (reference "Y1") (unit 1) (value "16 Mhz 20ppm") (footprint "Crystal:Crystal_SMD_2520-4Pin_2.5x2.0mm")
+      (reference "Y1") (unit 1) (value "16 Mhz 20ppm ABM10-16.000MHZ-E20-T ") (footprint "Crystal:Crystal_SMD_2520-4Pin_2.5x2.0mm")
     )
     (path "/b339fba4-a8e4-4c66-ad9c-610bd968ae93/2786a02b-c8cd-4cfe-81f8-efb6fd50b3f4"
       (reference "#PWR01") (unit 1) (value "GND") (footprint "")
