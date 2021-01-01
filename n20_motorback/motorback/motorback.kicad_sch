@@ -1138,7 +1138,7 @@
     (property "Value" "ATtiny13V-10SSU" (id 1) (at 142.748 91.3193 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" (id 2) (at 156.21 90.17 0)
+    (property "Footprint" "motorback:SOIC-8_shortpin1" (id 2) (at 156.21 90.17 0)
       (effects (font (size 1.27 1.27) italic) hide)
     )
     (property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/doc8126.pdf" (id 3) (at 156.21 90.17 0)
@@ -1215,7 +1215,7 @@
       (reference "U1") (unit 1) (value "DRV8837DSGR") (footprint "motorback:drv8837_custom")
     )
     (path "/b27661b9-3bfb-4ac3-8d24-bfaa37326f5c"
-      (reference "U2") (unit 1) (value "ATtiny13V-10SSU") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+      (reference "U2") (unit 1) (value "ATtiny13V-10SSU") (footprint "motorback:SOIC-8_shortpin1")
     )
     (path "/28a3a09c-94bf-4dc1-a2bc-cc4a3444516d"
       (reference "U3") (unit 1) (value "AIC1734-33GUTR") (footprint "Package_TO_SOT_SMD:SOT-23")
