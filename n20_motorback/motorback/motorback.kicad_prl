@@ -59,7 +59,8 @@
       37,
       38
     ],
-    "visible_layers": "fffffff_ffffffff"
+    "visible_layers": "ffffeff_ffffffff",
+    "zone_display_mode": 0
   },
   "meta": {
     "filename": "motorback.kicad_prl",

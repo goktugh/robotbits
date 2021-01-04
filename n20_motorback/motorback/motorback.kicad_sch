@@ -712,6 +712,10 @@
     (at 99.06 83.82 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
+  (text "Western:  Diodes ZMR330FTA \nChinese: AIC1734-33GUTR"
+    (at 114.935 56.515 0)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+  )
   (text "3.3v - 1.6v = 1.7v\n1.7v/680 = 2.5mA" (at 133.985 151.765 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
@@ -1016,7 +1020,7 @@
     (property "Value" "1uF" (id 1) (at 84.8361 48.1393 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric" (id 2) (at 82.8802 50.8 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (id 2) (at 82.8802 50.8 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 81.915 46.99 0)
@@ -1036,7 +1040,7 @@
     (property "Value" "1uF" (id 1) (at 117.2211 48.1393 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric" (id 2) (at 115.2652 50.8 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (id 2) (at 115.2652 50.8 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 114.3 46.99 0)
@@ -1185,10 +1189,10 @@
       (reference "C1") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/4f655001-cda0-4dbf-9ff7-65a9a8eac189"
-      (reference "C2") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+      (reference "C2") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
     (path "/b0a3ef47-4e9d-4c0a-897e-8ea5dc1d59c4"
-      (reference "C3") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+      (reference "C3") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0402_1005Metric")
     )
     (path "/5ba091cf-da2a-456f-9323-0ee75faa2288"
       (reference "D1") (unit 1) (value "LED") (footprint "LED_SMD:LED_0603_1608Metric")
