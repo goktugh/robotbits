@@ -113,7 +113,7 @@
         "min_via_annular_width": 0.049999999999999996,
         "min_via_annulus": 0.049999999999999996,
         "min_via_diameter": 0.39999999999999997,
-        "solder_mask_clearance": 0.049999999999999996,
+        "solder_mask_clearance": 0.0,
         "solder_mask_min_width": 0.0,
         "solder_paste_clearance": 0.0,
         "solder_paste_margin_ratio": -0.0
@@ -411,7 +411,7 @@
   },
   "sheets": [
     [
-      "e990be72-5426-4889-814f-dfa06277b137",
+      "a29b9ff9-8b44-4b4d-9b57-fe8b45d86293",
       ""
     ]
   ],
