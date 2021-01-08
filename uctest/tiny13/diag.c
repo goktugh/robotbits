@@ -1,18 +1,28 @@
+#include "defs.h"
+#include "diag.h"
+
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 
-#define F_CPU 9600000
 #include <util/delay.h>
+#include <avr/cpufunc.h>
 
 // Port to send diagnostic (serial) data:
 #define PIN_DIAG 4
 
 // Bit bang at this baud rate:
-#define BIT_WAIT_TIME_MICROS ((1000L * 1000L) / 9600) 
+#define BAUD_RATE 19200
+#define BIT_WAIT_TIME_MICROS ((1000L * 1000L) / BAUD_RATE) 
 
 static void bitbang_wait()
 {
-    _delay_us(BIT_WAIT_TIME_MICROS);
+    // Need to wait a little bit less, to account
+    // for time taken doing other things.
+    // at 9.6mhz, -1
+    // at 4.8mhz, -2 and wait a little more.
+    _delay_us(BIT_WAIT_TIME_MICROS - 2);
+    _NOP();
+    
 }
 
 static void bitbang_char(unsigned char c)
@@ -22,6 +32,7 @@ static void bitbang_char(unsigned char c)
     const uint8_t diag_bit = 1 << PIN_DIAG;
     PORTB &= ~ diag_bit;
     bitbang_wait();
+    _NOP();
     // Loop through bits, lowest first.
     for (uint8_t i=0; i<8; i++) {
         if (c & 0x1) {
@@ -42,6 +53,8 @@ void diag_putc(unsigned char c)
     bitbang_char(c);
 }
 
+/*
+ * Should not need to call this - it's a waste of memory.
 void diag_puts(const char *s)
 {
     while (*s) {
@@ -49,6 +62,10 @@ void diag_puts(const char *s)
         s += 1;
     }
 }
+*/
+/*
+ * Put a string from progmem.
+ */
 void diag_puts_progmem(const char *s)
 {
     do {

@@ -6,7 +6,7 @@ OBJDIR=obj
 
 OBJ_FILES=main.o diag.o timer.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
-HEADERS=diag.h timer.h
+HEADERS=diag.h timer.h motor.h defs.h
 
 MCU=attiny13
 
@@ -37,8 +37,10 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 	avr-gcc -c $(CFLAGS) -o $@ $<
 
 # add -v here for heaps of debug
-AVRDUDE_OPTS=-p t13 -c avrisp -P/dev/ttyUSB0 -b19200
-
+# For avrisp (arduino-based programmer)
+# AVRDUDE_OPTS=-p t13 -c avrisp -P/dev/ttyUSB0 -b19200
+# For usbasp programmer:
+AVRDUDE_OPTS=-p t13 -c usbasp
 # All hi fuses are 1 by default. 
 # We want to enable the higher clock speed
 # High fuse - the brownout detector,

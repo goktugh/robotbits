@@ -8,11 +8,10 @@
  */
 #include "diag.h"
 #include "timer.h"
+#include "defs.h"
 
 #include <avr/io.h>
 
-// attiny13 maximum internal clock is nominally 9.6mhz
-#define F_CPU 9600000
 #include <util/delay.h>
 
 #include <avr/boot.h>
@@ -52,8 +51,19 @@ static void test_timer()
     diag_newline();
 }
 
+static void clock_init()
+{
+    // Program clock prescaler. This is initially set from a fuse
+    // but we can change it at runtime.
+    // 0x0 = 1 (no scaling) 0x1 = 2 (divide by 2)
+    CLKPR = (1 << CLKPCE); // We now have 4 cycles to write the value.
+    CLKPR = 0x1;  
+}
+
 int main()
 {
+    clock_init();
+    
     uint8_t blink_bit = 1 << 0;
     DDRB |= blink_bit; // Enable output on PB0 
     
@@ -65,7 +75,7 @@ int main()
 
     uint16_t counter = 0;
     while(1) {
-        diag_puts("Loop ");
+        diag_puts_progmem(PSTR("Loop "));
         diag_printhex_16(counter);
         diag_putc(' ');
         dump_current_time();

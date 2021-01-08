@@ -46,6 +46,8 @@ install:
 verify:
 	avrdude $(AVRDUDE_OPTS) -U flash:v:$(BIN):r
 
+reset:
+	avrdude $(AVRDUDE_OPTS) 
 
 clean:
 	rm -r obj/
