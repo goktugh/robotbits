@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 44,
+    "active_layer": 0,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_nets": [],
@@ -60,11 +60,11 @@
       37,
       38
     ],
-    "visible_layers": "0001000_00000001",
+    "visible_layers": "ffffffd_ffffffff",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "motorback_x1.kicad_prl",
+    "filename": "motorback_x2.kicad_prl",
     "version": 2
   },
   "project": {

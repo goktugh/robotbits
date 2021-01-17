@@ -319,7 +319,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "motorback_x1.kicad_pro",
+    "filename": "motorback_x2.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -411,7 +411,7 @@
   },
   "sheets": [
     [
-      "099d88e3-eb59-4645-a97f-d4f8eacceb70",
+      "302ca88e-5e18-419f-8c88-83bf55e234a0",
       ""
     ]
   ],
