@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name "motorback")(type "KiCad")(uri "${KIPRJMOD}/motorback.pretty")(options "")(descr ""))
-)
