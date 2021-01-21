@@ -621,7 +621,6 @@
   (junction (at 81.915 50.8) (diameter 1.016) (color 0 0 0 0))
   (junction (at 101.6 50.8) (diameter 1.016) (color 0 0 0 0))
   (junction (at 114.3 43.18) (diameter 1.016) (color 0 0 0 0))
-  (junction (at 178.435 90.17) (diameter 1.016) (color 0 0 0 0))
   (junction (at 200.66 63.5) (diameter 1.016) (color 0 0 0 0))
   (junction (at 224.155 58.42) (diameter 1.016) (color 0 0 0 0))
 
@@ -712,13 +711,7 @@
   (wire (pts (xy 171.45 87.63) (xy 186.055 87.63))
     (stroke (width 0) (type solid) (color 0 0 0 0))
   )
-  (wire (pts (xy 171.45 90.17) (xy 178.435 90.17))
-    (stroke (width 0) (type solid) (color 0 0 0 0))
-  )
-  (wire (pts (xy 178.435 90.17) (xy 178.435 92.71))
-    (stroke (width 0) (type solid) (color 0 0 0 0))
-  )
-  (wire (pts (xy 178.435 90.17) (xy 179.07 90.17))
+  (wire (pts (xy 171.45 90.17) (xy 179.07 90.17))
     (stroke (width 0) (type solid) (color 0 0 0 0))
   )
   (wire (pts (xy 180.975 81.28) (xy 180.975 82.55))
@@ -793,7 +786,8 @@
   (text "3.3v - 1.6v = 1.7v\n1.7v/680 = 2.5mA" (at 133.985 151.765 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
   )
-  (text "optional pull-down\nresistor" (at 181.61 98.425 0)
+  (text "Pull down resistor is not required.\nThis chip is tolerant of up to +12V on the\nRESET pin only, because that is its high\nvoltage programming pin."
+    (at 169.545 108.585 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
 
@@ -976,21 +970,6 @@
     )
   )
 
-  (symbol (lib_id "power:GND") (at 178.435 100.33 0) (unit 1)
-    (in_bom yes) (on_board yes)
-    (uuid "3e975427-3807-4942-ac98-53614081a972")
-    (property "Reference" "#PWR05" (id 0) (at 178.435 106.68 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "GND" (id 1) (at 178.5493 104.6544 0))
-    (property "Footprint" "" (id 2) (at 178.435 100.33 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (id 3) (at 178.435 100.33 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-  )
-
   (symbol (lib_id "power:GND") (at 217.17 93.98 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid "b3569f12-2572-4b28-9c8f-e5fd6b7db6ec")
@@ -1067,22 +1046,6 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "LCSC" "C23228" (id 4) (at 142.875 146.685 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-  )
-
-  (symbol (lib_id "Device:R") (at 178.435 96.52 0) (unit 1)
-    (in_bom yes) (on_board yes)
-    (uuid "93d99eee-a5c7-43b8-b1f4-12240ff5256b")
-    (property "Reference" "R3" (id 0) (at 178.5812 96.52 90))
-    (property "Value" "DNP" (id 1) (at 180.728 96.52 90))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric" (id 2) (at 176.657 96.52 90)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (id 3) (at 178.435 96.52 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "LCSC" "" (id 4) (at 178.435 96.52 0)
       (effects (font (size 1.27 1.27)) hide)
     )
   )
@@ -1285,9 +1248,6 @@
     (path "/3a874080-db88-4f8a-afbf-1549797a7fd3"
       (reference "#PWR04") (unit 1) (value "GND") (footprint "")
     )
-    (path "/3e975427-3807-4942-ac98-53614081a972"
-      (reference "#PWR05") (unit 1) (value "GND") (footprint "")
-    )
     (path "/6f1c6332-990d-4fb6-95f2-3c8294e6a89c"
       (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
     )
@@ -1326,9 +1286,6 @@
     )
     (path "/92a7a6ba-5e73-468d-b3fe-9c3572a32afb"
       (reference "R2") (unit 1) (value "680R") (footprint "Resistor_SMD:R_0603_1608Metric")
-    )
-    (path "/93d99eee-a5c7-43b8-b1f4-12240ff5256b"
-      (reference "R3") (unit 1) (value "DNP") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/17f044cf-d669-4296-9d52-0d1ba68a5a56"
       (reference "U1") (unit 1) (value "DRV8837DSGR") (footprint "motorback:drv8837_custom")
