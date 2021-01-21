@@ -1,4 +1,4 @@
-19021170359242416
+19059722171298416
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -69931,8 +69931,8 @@ SC-82AB
 4
 Package_TO_SOT_SMD
 SOT-23
-SOT-23, Standard
-SOT-23
+SOT, 3 Pin (https://www.jedec.org/system/files/docs/to-236h.pdf variant AB), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOT TO_SOT_SMD
 0
 3
 3
