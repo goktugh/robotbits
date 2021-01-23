@@ -8,7 +8,7 @@
 #include <avr/cpufunc.h>
 
 // Port to send diagnostic (serial) data:
-#define PIN_DIAG 4
+#define PIN_DIAG 1
 
 // Bit bang at this baud rate:
 #define BAUD_RATE 19200

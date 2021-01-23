@@ -64,7 +64,7 @@ int main()
 {
     clock_init();
     
-    uint8_t blink_bit = 1 << 0;
+    uint8_t blink_bit = 1 << 4;
     DDRB |= blink_bit; // Enable output on PB0 
     
     diag_init();

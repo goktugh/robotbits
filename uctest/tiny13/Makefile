@@ -40,7 +40,7 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 # For avrisp (arduino-based programmer)
 # AVRDUDE_OPTS=-p t13 -c avrisp -P/dev/ttyUSB0 -b19200
 # For usbasp programmer:
-AVRDUDE_OPTS=-p t13 -c usbasp
+AVRDUDE_OPTS=-p t13 -c usbasp -B 10khz
 # All hi fuses are 1 by default. 
 # We want to enable the higher clock speed
 # High fuse - the brownout detector,
