@@ -1,0 +1,34 @@
+The ATTINY13A microcontroller.
+
+It is very minimal !
+
+5 generally usable GPIOs - one reset pin
+
+1k of Flash for program memory
+64bytes ram
+Some more flash for eeprom (settings, fuses etc)
+
+NOTES:
+------
+
+1. Flash memory is not in the memory map for normal instructions;
+    there is no pointer which points at flash.
+
+    So any data which needs to have a pointer - including char *
+    - need to be copied to ram at startup by init code generated
+    from the compiler.
+    
+    Program memory can be read by special instructions, use 
+    pgm_read_byte etc, from avr/pgmspace.h
+    
+1. There is only one timer. It does not need to be explicitly
+    enabled as it's always active. It can be temporarily disabled, reset and
+    change some parameters including clock-divider.
+    
+1. Some peripherals - clock generator, brownout detector - cannot
+    be configured programmatically, only by programming fuses.
+    
+    There are two bytes of fuses, some of them can brick the
+    device so be careful.
+    
+
