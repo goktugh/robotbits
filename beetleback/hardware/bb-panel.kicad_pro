@@ -10,8 +10,8 @@
         "copper_text_thickness": 0.3,
         "copper_text_upright": false,
         "courtyard_line_width": 0.049999999999999996,
-        "dimension_precision": 1,
-        "dimension_units": 2,
+        "dimension_precision": 4,
+        "dimension_units": 3,
         "dimensions": {
           "arrow_length": 1270000,
           "extension_offset": 500000,
@@ -45,7 +45,7 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 0.25
+          "min_clearance": 0.508
         }
       },
       "diff_pair_dimensions": [
@@ -111,18 +111,14 @@
         "min_through_hole_diameter": 0.3,
         "min_track_width": 0.19999999999999998,
         "min_via_annular_width": 0.049999999999999996,
-        "min_via_annulus": 0.05,
         "min_via_diameter": 0.39999999999999997,
-        "solder_mask_clearance": 0.049999999999999996,
+        "solder_mask_clearance": 0.0,
         "solder_mask_min_width": 0.0,
         "solder_paste_clearance": 0.0,
         "solder_paste_margin_ratio": -0.0
       },
       "track_widths": [
-        0.0,
-        0.2,
-        0.3,
-        1.5
+        0.0
       ],
       "via_dimensions": [
         {
@@ -303,8 +299,8 @@
       "lib_symbol_issues": "warning",
       "multiple_net_names": "warning",
       "net_not_bus_member": "warning",
-      "no_connect_connected": "error",
-      "no_connect_dangling": "error",
+      "no_connect_connected": "warning",
+      "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
       "pin_to_pin": "warning",
@@ -319,7 +315,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "beetleback.kicad_pro",
+    "filename": "bb-panel.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -336,30 +332,7 @@
         "name": "Default",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.2,
-        "via_diameter": 0.8,
-        "via_drill": 0.4,
-        "wire_width": 6.0
-      },
-      {
-        "bus_width": 12.0,
-        "clearance": 0.2,
-        "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
-        "diff_pair_width": 0.2,
-        "line_style": 0,
-        "microvia_diameter": 0.3,
-        "microvia_drill": 0.1,
-        "name": "power",
-        "nets": [
-          "/MOTOR_PAD_1",
-          "/MOTOR_PAD_2",
-          "/VBAT",
-          "GND"
-        ],
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.8,
+        "track_width": 0.25,
         "via_diameter": 0.8,
         "via_drill": 0.4,
         "wire_width": 6.0
@@ -377,7 +350,6 @@
       "netlist": "",
       "specctra_dsn": "",
       "step": "",
-      "vmrl": "",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -411,11 +383,6 @@
     "subpart_first_id": 65,
     "subpart_id_separator": 0
   },
-  "sheets": [
-    [
-      "2ffbe924-9fec-42e4-8d7c-494b40a9393d",
-      ""
-    ]
-  ],
+  "sheets": [],
   "text_variables": {}
 }

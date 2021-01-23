@@ -2,6 +2,7 @@
   "board": {
     "active_layer": 43,
     "active_layer_preset": "",
+    "auto_track_width": true,
     "hidden_nets": [],
     "high_contrast_mode": 0,
     "net_color_mode": 1,
@@ -36,14 +37,11 @@
       8,
       9,
       10,
-      11,
       12,
       13,
       14,
       15,
       16,
-      17,
-      18,
       19,
       20,
       21,
@@ -60,7 +58,8 @@
       37,
       38
     ],
-    "visible_layers": "003ffff_80000007"
+    "visible_layers": "00290a0_00000000",
+    "zone_display_mode": 0
   },
   "meta": {
     "filename": "bb-panel.kicad_prl",
