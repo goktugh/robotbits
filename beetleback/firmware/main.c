@@ -1,10 +1,9 @@
 /*
- * Test program for the avr attiny13
+ * Beetleback ESC.
  * 
- * Newer attiny are much better, e.g. attiny402 has more of everything
- * and is just as cheap.
+ * For attiny13a.
  * 
- * But the attiny13 is widely available and jlc always have them in stock.
+ * The attiny13 is widely available and jlc always have them in stock.
  */
 #include "diag.h"
 #include "timer.h"
@@ -19,36 +18,16 @@
 
 static void dump_info()
 {
-    diag_puts_progmem(PSTR("fuse hi:"));
-    diag_printhex_8(boot_lock_fuse_bits_get(GET_HIGH_FUSE_BITS));
-    diag_newline();
-    diag_puts_progmem(PSTR("fuse lo:"));
-    diag_printhex_8(boot_lock_fuse_bits_get(GET_LOW_FUSE_BITS));
-    diag_newline();
-    
+    // We could print any info we want here.    
 }
 
-static const char greeting[] PROGMEM = "\r\nHello, world\r\n\r\n";
+static const char greeting[] PROGMEM = "\r\nBeetleback\r\n\r\n";
 
 static void dump_current_time()
 {
     uint32_t now = timer_read();
     diag_printhex_16(now >> 16);
     diag_printhex_16(now);
-}
-
-static void test_timer()
-{
-    diag_puts_progmem(PSTR("test_timer\r\n"));
-    for (uint8_t i=0; i<20; i++) {
-        dump_current_time();
-        diag_newline();    
-    }
-    for (uint8_t i=0; i<10; i++) {
-        timer_wait(10000);
-        diag_putc('0' + i);
-    }
-    diag_newline();
 }
 
 static void clock_init()
@@ -65,12 +44,11 @@ int main()
     clock_init();
     
     uint8_t blink_bit = 1 << 4;
-    DDRB |= blink_bit; // Enable output on PB0 
+    DDRB |= blink_bit; // Enable output on blinky led
     
     diag_init();
     diag_puts_progmem(greeting); 
     timer_init();
-    test_timer();
     dump_info();
 
     uint16_t counter = 0;

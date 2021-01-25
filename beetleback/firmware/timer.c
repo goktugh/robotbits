@@ -14,11 +14,11 @@ void timer_init()
     
     // The timer has no specific enable flag and it just runs all
     // the time. There are a few settings:
-    // Set prescaler = 64
-    // Prescaler = 9.6 / 64 = 6.66 microseconds period per clock
+    // Set divider = 8
+    // divier = 4.8 / 8 =  microseconds period per clock
 
-    // TCCR0B bottom 3 bits = Clock select. Value 011 = divide 64
-    TCCR0B = 0x03;
+    // TCCR0B bottom 3 bits = Clock select. Value 010 = divide 8
+    TCCR0B = 0x02;
     // Reset the prescaler:
     GTCCR = 0x1; // This bit auto-clears.
     // Reset the timer tick
