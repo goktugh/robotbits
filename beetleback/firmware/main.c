@@ -89,11 +89,14 @@ static void handle_good_pulse(uint32_t width)
         motor_set_brake();
     } else {
         // drive motor.
-        int16_t forward = (width - PULSE_WIDTH_CENTRE - PULSE_WIDTH_DEAD_ZONE);
-        int16_t back = PULSE_WIDTH_CENTRE - PULSE_WIDTH_DEAD_ZONE - width;
+        int16_t forward = width - (PULSE_WIDTH_CENTRE + PULSE_WIDTH_DEAD_ZONE);
+        int16_t back = width - (PULSE_WIDTH_CENTRE - PULSE_WIDTH_DEAD_ZONE);
         /*
          * scale_factor - how many we multiply the pulse ticks,
          * to give a value in the range 0..255 for the motor.
+         * 
+         * Ideally it should go slightly over 255 so we can guarantee
+         * to drive at maximum speed.
          */
         static const int16_t scale_factor = 8;
         if (forward >= 0) {
@@ -102,6 +105,11 @@ static void handle_good_pulse(uint32_t width)
             motor_set_speed_signed(back * scale_factor);            
         }
     }
+    /*
+    diag_puts_progmem(PSTR("pls:"));
+    diag_printhex_8((uint8_t) width);
+    diag_newline();
+    */
 }
 
 static void handle_turn_off(uint32_t now)
@@ -132,7 +140,7 @@ static void mainloop()
     while (1)
     {
         // Check input
-        uint8_t input = PORTB & input_bit;
+        uint8_t input = PINB & input_bit;
         // record time.
         uint32_t now = timer_read();
         // low-> high: record time, it's the start of a pulse,
@@ -171,8 +179,8 @@ int main()
     diag_init();
     diag_puts_progmem(greeting); 
     timer_init();
-    dump_info();
     motor_init();
+    dump_info();
     _delay_us(1000); // wait for the initial text to finish writing
     // and stop bits etc,
     led_off(); // keep led off at startup.

@@ -21,13 +21,17 @@ void timer_init()
     // TCCR0B bottom 3 bits = Clock select. Value 011 = divide 64
     TCCR0B = 0x03;
     // Reset the prescaler:
+    timer_reset();
+    // Timer wraps every 256 ticks
+}
+
+void timer_reset()
+{
     GTCCR = 0x1; // This bit auto-clears.
     // Reset the timer tick
     GTCCR = 0x80; // Enable TSM: Timer/counter sync - halt timer.
     TCNT0 = 0;
     GTCCR = 0; // Disable TSM: Start timer.
-    
-    // Timer wraps every 256 ticks, at about 292hz
 }
 
 /*

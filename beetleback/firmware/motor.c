@@ -7,6 +7,9 @@
 
 void motor_init()
 {
+    // Set data direction output
+    DDRB |= 0x01 | 0x02; // Enable output on PB0 and PB1
+
     // Timer must already be initialised.
     // We will assume that the timer is set to a reasonable speed
     // Use "Fast PWM" mode
@@ -22,18 +25,17 @@ void motor_init()
     OCR0B = 0xff;
     
     // Enable compare outputs:
-    // Set bit on compare match, clear at TOP,
-    // So COM0A0:COM0A1 must be 1:1 (bits 7&6)
+    // Set bit on compare match, clear at TOP ( 11)
+    // clear on compare match, set on top (10)
+    // So COM0A0:COM0A1  (bits 7&6)
     // And COM0B0:COM0B1 too. (bits 5&4)
     
-    TCCR0A |= (0x3 << 6) || (0x03 << 4);
+    TCCR0A |= (0x3 << 6) | (0x3 << 4);
     
+    diag_printhex_8(TCCR0A);
+    diag_newline();
     // Now we can program the OCR0A and OCR0B registers to enable
     // the output 
-
-    // Set data direction output
-    DDRB |= 0x01 | 0x02; // Enable output on PB0 and PB1
-
 }
 
 void motor_set_speed_signed(int16_t speed)
@@ -58,11 +60,17 @@ void motor_set_speed_signed(int16_t speed)
     }
     OCR0A = a;
     OCR0B = b;
+    diag_putc('=');
+    diag_printhex_8(a);
+    diag_printhex_8(b);
+    diag_newline();
 }
 
 void motor_set_brake()
 {
-    OCR0A = OCR0B = 0;    
+    OCR0A = OCR0B = 0;
+    diag_puts_progmem(PSTR("brk"));
+    diag_newline();
 }
 
 void motor_off()

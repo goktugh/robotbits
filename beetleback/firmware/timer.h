@@ -1,6 +1,7 @@
 #include <stdint.h>
 
 void timer_init();
+void timer_reset();
 uint32_t timer_read();
 void timer_wait(uint32_t ticks);
 
