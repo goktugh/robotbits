@@ -68,6 +68,9 @@ void diag_puts(const char *s)
  */
 void diag_puts_progmem(const char *s)
 {
+    // Wait long enough for the output to be high
+    // so the start bit can be detected.
+    bitbang_wait();
     do {
         char c = pgm_read_byte(s);
         if (c != 0) bitbang_char(c);

@@ -14,7 +14,7 @@ void motor_init()
     // Waveform mode 3 = Fast PWM, count to 0xff
     // WGM02 bit is in regB - but that needs to stay a 0 (default)
     // WGM00 and WGM01 bits are in regA 
-    TCRR0A |= 0x3;
+    TCCR0A |= 0x3;
     
     // Set the initial compare values to maximum 0xff
     // So that we do not get any high output immediately.
@@ -26,7 +26,7 @@ void motor_init()
     // So COM0A0:COM0A1 must be 1:1 (bits 7&6)
     // And COM0B0:COM0B1 too. (bits 5&4)
     
-    TCRR0A |= (0x3 << 6) || (0x03 << 4);
+    TCCR0A |= (0x3 << 6) || (0x03 << 4);
     
     // Now we can program the OCR0A and OCR0B registers to enable
     // the output 
@@ -36,3 +36,37 @@ void motor_init()
 
 }
 
+void motor_set_speed_signed(int16_t speed)
+{
+    uint8_t a,b;
+    if (speed > 0) {
+        // Forwards
+        b = 0xff;
+        if (speed < 0xff) {
+            a = 0xff - speed;
+        } else {
+            a = 0; // max
+        }
+    } else {
+        // Back
+        a = 0xff;
+        if (speed > - (0xff) ) {
+            b = 0xff + speed; // speed is negative
+        } else {
+            b = 0; // max
+        }
+    }
+    OCR0A = a;
+    OCR0B = b;
+}
+
+void motor_set_brake()
+{
+    OCR0A = OCR0B = 0;    
+}
+
+void motor_off()
+{
+    OCR0A = 0xff;
+    OCR0B = 0xff;    
+}

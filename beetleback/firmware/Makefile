@@ -4,7 +4,7 @@
 #
 OBJDIR=obj
 
-OBJ_FILES=main.o diag.o timer.o
+OBJ_FILES=main.o diag.o timer.o motor.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
 HEADERS=diag.h timer.h motor.h defs.h
 
@@ -18,20 +18,20 @@ BIN=$(OBJDIR)/main.bin
 # LTO seems to reduce the binary size slightly.
 LTO_FLAGS=-flto
 
-LINKFLAGS=-Os $(LTO_FLAGS)
+LINKFLAGS=-Os $(LTO_FLAGS) -g
 
 link: $(OBJECTS) $(HEADERS)
 	avr-gcc -mmcu=$(MCU) -o $(ELF) $(OBJECTS) $(LINKFLAGS)
 	# see how big it is
 	avr-size -A $(ELF)
 	# disassemble, so can see what the compiler did
-	avr-objdump -S $(ELF) > $(OBJDIR)/image.asm
+	avr-objdump --source -S $(ELF) > $(OBJDIR)/image.asm
 	avr-objdump -t $(ELF) > $(OBJDIR)/image.sym
 	avr-objdump -t $(ELF) |grep 00 |sort  > $(OBJDIR)/image-sorted.sym
 	avr-objcopy -j .text -j .data -j .rodata -O ihex $(ELF) $(HEX)
 	avr-objcopy -I ihex -O binary $(HEX) $(BIN)
 
-CFLAGS=-mmcu=$(MCU)  -Os -Wall $(LTO_FLAGS)
+CFLAGS=-mmcu=$(MCU) -Os -Wall $(LTO_FLAGS) -g
 $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 	@mkdir -p $(OBJDIR)
 	avr-gcc -c $(CFLAGS) -o $@ $<

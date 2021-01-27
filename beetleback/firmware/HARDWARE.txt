@@ -34,12 +34,12 @@ Main clock: 4.8mhz (nominal) internal osc
     with divide-by-2
 
 Timer clock: 
-Prescaler = 9.6 / 64 = 6.66 microseconds period per clock
-Period of  overflow = 256 ticks = ~ 1706 microseconds.
-    - This is shorter than a servo pulse (which can be 2500 us)
-    - But we can count the number of overflows.
+Prescaler = 4.8 / 64 = 13.3 microseconds period per clock
+Period of  overflow = 256 ticks = ~ 3.4 milliseconds.
+    - This is longer than a servo pulse (which can be 2500 us)
+    - We still need to count the number of overflows.
     
-PWM Frequency = ~580 hz - clearly audible
+PWM Frequency = ~293 hz - clearly audible
 
 Which PWM mode to use?
 "Fast PWM" - simplest mode,

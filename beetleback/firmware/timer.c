@@ -14,17 +14,20 @@ void timer_init()
     
     // The timer has no specific enable flag and it just runs all
     // the time. There are a few settings:
-    // Set divider = 8
-    // divier = 4.8 / 8 =  microseconds period per clock
-
-    // TCCR0B bottom 3 bits = Clock select. Value 010 = divide 8
-    TCCR0B = 0x02;
+    // Set divider = 64
+    // divider = 4.8 / 64 = approx 13.3 microseconds period per clock
+    // 75khz clock speed.
+    
+    // TCCR0B bottom 3 bits = Clock select. Value 011 = divide 64
+    TCCR0B = 0x03;
     // Reset the prescaler:
     GTCCR = 0x1; // This bit auto-clears.
     // Reset the timer tick
     GTCCR = 0x80; // Enable TSM: Timer/counter sync - halt timer.
     TCNT0 = 0;
     GTCCR = 0; // Disable TSM: Start timer.
+    
+    // Timer wraps every 256 ticks, at about 292hz
 }
 
 /*
