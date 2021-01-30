@@ -20,13 +20,6 @@
 
 static const char greeting[] PROGMEM = "\r\nBeetleback\r\n\r\n";
 
-static void dump_current_time()
-{
-    uint32_t now = timer_read();
-    diag_printhex_16(now >> 16);
-    diag_printhex_16(now);
-}
-
 static void clock_init()
 {
     // Program clock prescaler. This is initially set from a fuse
@@ -58,10 +51,22 @@ static const uint16_t PULSE_WIDTH_MIN = (uint16_t) (500.0 / timer_tick);
 static const uint16_t PULSE_WIDTH_MAX = (uint16_t) (2500.0 / timer_tick);
 // Nominal centre.
 static const uint16_t PULSE_WIDTH_CENTRE = (uint16_t) (1500.0 / timer_tick);
-static const uint16_t PULSE_WIDTH_DEAD_ZONE = ((uint16_t) (50.0 / timer_tick)) + 1;
+static const uint16_t PULSE_WIDTH_DEAD_ZONE = ((uint16_t) (80.0 / timer_tick)) + 1;
 
 // Time we turn of if no valid pulses...
 static const uint16_t TURN_OFF_TIME = (uint16_t) (100000.0 / timer_tick);
+
+/*
+ * Before we start the motor - wait for a number of successive good
+ * pulses - each which must occur within TURN_OFF_TIME of the previous.
+ * 
+ * This is to avoid running the motor when we receive electrical noise
+ * or something, which just happens to look like a servo pulse.
+ */
+// Number of pulses to wait before we start up.
+static const uint8_t GOOD_PULSES_STARTUP_COUNT = 5;
+
+static uint8_t good_pulses_count;
 
 static void dump_info()
 {
@@ -78,6 +83,10 @@ static void dump_info()
 
 static void handle_good_pulse(uint32_t width)
 {
+    if (good_pulses_count < GOOD_PULSES_STARTUP_COUNT) {
+        good_pulses_count += 1;
+        return; // DO not start yet!
+    }
     led_on();
     // Check if the pulse is in the dead zone
     if (
@@ -123,6 +132,8 @@ static void handle_turn_off(uint32_t now)
     else {
         led_off();
     }
+    // Reset the number of pulses we must receive before startup.
+    good_pulses_count = 0;
 }
 
 /*
