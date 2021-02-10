@@ -125,6 +125,8 @@ static uint8_t flash_count;
  * 1=high
  */
 static uint8_t previous_input_state;
+// Count of good pulses we received since the last overflow / gap
+static uint8_t good_pulse_count;
 
 /*
  * Timer (16-bit) overflow, called about every
@@ -149,52 +151,64 @@ static void handle_timer_overflow()
             led_on();
         else
             led_off();
+        good_pulse_count = 0;
     }
 }
 
 #define FULL_ON 1023
 
 #define PULSE_CENTRE 1500
-#define DEADZONE 60
+#define DEADZONE 50
+#define GOOD_PULSE_STARTUP_COUNT 5
 
 static int16_t scale_int16(int16_t n)
 {
     /* Input range - 0..500
      * Output range: 0..1024 with some margin
      * 
-     * We multiply by 9/4
+     * We multiply by 17/8
      */
     /* scale up by a fixed factor without using multiply. */
-    int16_t fivetimes = (n << 3) + n;
-    return fivetimes >> 2;
+    int16_t result = (n*2) + (n >>3) ;
+    return result;
 }
 
+/*
+ * Called for valid-width pulses.
+ */
 static void handle_pulse(uint16_t width)
 {
-    // Motor settings, 1024=max
-    uint16_t m0=0, m1=0;
-    // determine if we're in dead zone...
-    if ((width > (PULSE_CENTRE - DEADZONE)) && (width < (PULSE_CENTRE + DEADZONE)))
-    {
-        // Centre braking.
-        m0 = m1 = FULL_ON;
+    if (good_pulse_count < GOOD_PULSE_STARTUP_COUNT) {
+        // Ignore the first few pulses, in case it's spurious noise.
+        good_pulse_count += 1;
     } else {
-        int16_t pulse_signed = ((int16_t) width) - PULSE_CENTRE;
-        // Scale pulse so that it goes to > 500 
-        int16_t pulse_scaled = scale_int16(abs(pulse_signed));
-        // Cap this at the ceiling
-        if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
-        if (pulse_signed < 0) {
-            m1 = pulse_scaled;
+        // Enough good pulses received, let's go.
+        // Motor settings, 1024=max
+        uint16_t m0=0, m1=0;
+        // determine if we're in dead zone...
+        if ((width > (PULSE_CENTRE - DEADZONE)) && (width < (PULSE_CENTRE + DEADZONE)))
+        {
+            // Centre braking.
+            m0 = m1 = FULL_ON;
         } else {
-            m0 = pulse_scaled;
+            int16_t pulse_signed = ((int16_t) width) - PULSE_CENTRE;
+            // Scale pulse so that it goes to > 500 
+            int16_t pulse_scaled = scale_int16(abs(pulse_signed));
+            // Cap this at the ceiling
+            if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
+            if (pulse_signed < 0) {
+                m1 = pulse_scaled;
+            } else {
+                m0 = pulse_scaled;
+            }
         }
+        // Set motor speed forward, reverse or brake
+        OCR0A = m0;
+        OCR0B = m1;
+        led_on();
     }
-    // Set motor speed forward, reverse or brake
-    OCR0A = m0;
-    OCR0B = m1;
+    // Do this anyway to prevent timeout happening
     timer_overflow_count_since_pulse = 0;
-    led_on();
 }
 
 static void check_input(uint16_t ticks_now)

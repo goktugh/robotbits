@@ -42,7 +42,7 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 
 AVRDUDE_OPTS=-p t4 -c usbasp
 
-install:
+install: link
 	avrdude $(AVRDUDE_OPTS) -U flash:w:$(BIN):r
 
 verify:
