@@ -1,0 +1,35 @@
+HARDWARE used in the n20 motorback ESC microcontroller
+
+IO PORTS:
+
+0,1 = Outputs to drive H-Bridge driver chip inputs.
+
+Low,Low = hi-z, everything off
+High,Low = Drive in direction
+High,High = Braking active
+
+2 = LED, active high
+
+3 = PWM input, also the reset pin.
+    To activate it we must enable the RSTDISBL flag in the configuration byte 0
+
+CLOCK:
+Use the internal 8mhz clock generator.
+Divide by 2 using the clock prescaler.
+System clock should be 4mhz
+    
+TIMER:
+
+Use divide-by-8 function.
+So it should tick every 2 microseconds.
+
+Timer is in 10bit mode, counts up to 512 then wraps.
+
+This generates PWM and is also used to measure input pulse widths.
+
+
+
+timer 512 * 2 microseconds
+
+blink cycle (idle mode) 
+64 ms? 

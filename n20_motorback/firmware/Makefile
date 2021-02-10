@@ -4,7 +4,7 @@
 #
 OBJDIR=obj
 
-OBJ_FILES=main.o
+OBJ_FILES=main.o startup.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
 HEADERS=defs.h
 
@@ -18,7 +18,9 @@ BIN=$(OBJDIR)/main.bin
 # LTO seems to reduce the binary size slightly.
 LTO_FLAGS=-flto
 
-LINKFLAGS=-Os $(LTO_FLAGS) -g
+# -nostartfiles 
+
+LINKFLAGS=-Os $(LTO_FLAGS) -g -nostartfiles -nostdlib
 
 link: $(OBJECTS) $(HEADERS)
 	avr-gcc -mmcu=$(MCU) -o $(ELF) $(OBJECTS) $(LINKFLAGS)
@@ -45,6 +47,15 @@ install:
 
 verify:
 	avrdude $(AVRDUDE_OPTS) -U flash:v:$(BIN):r
+
+# Bit 0 of the configuration is RSTDISBL, we need that to be 0
+# All other bits 1 by default and we leave them.
+writefuse:
+	avrdude $(AVRDUDE_OPTS) -U fuse:w:0xfe:m
+
+# Reset the fuse bits - to do this we need to put +12v on the reset pin.
+# resetfuse:
+# 	avrdude $(AVRDUDE_OPTS) -U fuse:w:0xff:m
 
 reset:
 	avrdude $(AVRDUDE_OPTS) 

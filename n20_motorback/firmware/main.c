@@ -78,8 +78,8 @@ static void init_timer()
     // one tick every 2 microseconds, so if the system clock
     // is 4mhz, with divider=8
     //
-    // Total period will be 1024 ticks, so 2048 us
-    // Or about 488hz pwm
+    // Total period will be 1024 us
+    // Or about 980hz pwm
     
     // set TCRR0A
     uint8_t waveform_mode = 0x7; // fast pwm, 10bit
@@ -100,14 +100,17 @@ static void init_timer()
     GTCCR = 0x1; // Assert the prescaler reset; self-clears.
     
     // To set a low duty cycle, we set a low value (0=off)
-    // To set a high duty cycle, we set a high value (512=max)
+    // To set a high duty cycle, we set a high value (1024=max)
 }
 
 static void init_motor()
 {
     // Set the two ports to output
     motor_off();
-    DDRB |= 0x3; // 0 and 1
+    // gpio 0and1 outputs
+    // Set the outputs - including blink
+    DDRB = 0x3 | BLINK_BIT; 
+    
 }
 
 // Number of times the timer has overflowed since last
@@ -141,7 +144,7 @@ static void handle_timer_overflow()
         motor_off();
         // Blink led with low duty so the user knows we're still powered on but
         // no signal.
-        flash_count = (flash_count + 1) & 0x3f; 
+        flash_count = (flash_count + 1); // allow to overflow.
         if (flash_count < 4)
             led_on();
         else
@@ -149,35 +152,42 @@ static void handle_timer_overflow()
     }
 }
 
+#define FULL_ON 1023
+
 #define PULSE_CENTRE 1500
-#define DEADZONE 100
+#define DEADZONE 60
 
 static int16_t scale_int16(int16_t n)
 {
+    /* Input range - 0..500
+     * Output range: 0..1024 with some margin
+     * 
+     * We multiply by 9/4
+     */
     /* scale up by a fixed factor without using multiply. */
-    int16_t fivetimes = (n << 2) + n;
+    int16_t fivetimes = (n << 3) + n;
     return fivetimes >> 2;
 }
 
 static void handle_pulse(uint16_t width)
 {
-    // Motor settings, 512=max
+    // Motor settings, 1024=max
     uint16_t m0=0, m1=0;
     // determine if we're in dead zone...
     if ((width > (PULSE_CENTRE - DEADZONE)) && (width < (PULSE_CENTRE + DEADZONE)))
     {
         // Centre braking.
-        m0 = m1 = 512;
+        m0 = m1 = FULL_ON;
     } else {
         int16_t pulse_signed = ((int16_t) width) - PULSE_CENTRE;
         // Scale pulse so that it goes to > 500 
         int16_t pulse_scaled = scale_int16(abs(pulse_signed));
         // Cap this at the ceiling
-        if (pulse_scaled > 512) pulse_scaled = 512;
-        if (pulse_signed > 0) {
-            m0 = pulse_scaled;
-        } else {
+        if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
+        if (pulse_signed < 0) {
             m1 = pulse_scaled;
+        } else {
+            m0 = pulse_scaled;
         }
     }
     // Set motor speed forward, reverse or brake
@@ -189,7 +199,7 @@ static void handle_pulse(uint16_t width)
 
 static void check_input(uint16_t ticks_now)
 {
-    uint8_t input = DDRB & INPUT_BIT;
+    uint8_t input = PINB & INPUT_BIT;
     if (input && (! previous_input_state)) {
         // Positive edge.
         timer_overflow_count_since_positive_edge = 0;
@@ -200,8 +210,8 @@ static void check_input(uint16_t ticks_now)
         // Measure pulse width:
         // (could be negative)
         int32_t width = ((int32_t) ticks_now - ticks_at_positive_edge);
-        // Add number of overflows
-        width += (((int32_t) timer_overflow_count_since_positive_edge) << 16);
+        // Add number of overflows, 10-bit counter.
+        width += (((int32_t) timer_overflow_count_since_positive_edge) << 10);
         // width is in timer ticks
         // Timer ticks are 2us
         width *= 2; // width is now in microseconds
@@ -230,12 +240,13 @@ static void mainloop()
     }
 }
 
+
 int main()
 {
     init_clock();
     init_timer();
     init_motor();
-    DDRB |= BLINK_BIT; // Enable output on PB0 
 
     mainloop();
 }
+
