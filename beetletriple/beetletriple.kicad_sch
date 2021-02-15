@@ -273,7 +273,7 @@
       (reference "F1") (unit 1) (value "20mmx5 fuse holder") (footprint "Fuse:Fuseholder_Cylinder-5x20mm_Schurter_0031_8201_Horizontal_Open")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/867e4d9b-1a41-4ccb-b503-ce8c72df462b"
-      (reference "L1") (unit 1) (value "68uH") (footprint "Inductor_SMD:L_12x12mm_H4.5mm")
+      (reference "L1") (unit 1) (value "10uH") (footprint "Inductor_SMD:L_12x12mm_H4.5mm")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/45182a35-df35-47b1-9644-aafb1c99faf7"
       (reference "R1") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0805_2012Metric")
@@ -305,6 +305,9 @@
     (path "/359c4f89-e272-46e6-af92-d7488b619549/10361663-7888-4ad7-bced-125edb99bd47"
       (reference "#PWR018") (unit 1) (value "GND") (footprint "")
     )
+    (path "/359c4f89-e272-46e6-af92-d7488b619549/16aef4d4-f4c4-46a0-8572-e8b902e2e276"
+      (reference "#PWR020") (unit 1) (value "GND") (footprint "")
+    )
     (path "/359c4f89-e272-46e6-af92-d7488b619549/82b555bc-a09b-411a-893f-14e49a986f31"
       (reference "C16") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
     )
@@ -325,6 +328,12 @@
     )
     (path "/359c4f89-e272-46e6-af92-d7488b619549/ef653ff3-c314-4bd6-8718-941a8061d9e9"
       (reference "J7") (unit 1) (value "input_c3") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical")
+    )
+    (path "/359c4f89-e272-46e6-af92-d7488b619549/1d46553e-e69a-430b-bd51-fa2a7adab90b"
+      (reference "J8") (unit 1) (value "output_c4") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical")
+    )
+    (path "/359c4f89-e272-46e6-af92-d7488b619549/78a29527-613b-471e-ade7-947206f3bd6c"
+      (reference "J9") (unit 1) (value "output_c5") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical")
     )
     (path "/359c4f89-e272-46e6-af92-d7488b619549/cff2603c-754d-4068-b499-5093490cd8c7"
       (reference "R10") (unit 1) (value "1.5k") (footprint "Resistor_SMD:R_0805_2012Metric")
