@@ -157,7 +157,7 @@
     (uuid 9e85b9a1-64a3-43d7-a600-53fc362386e6)
     (property "Reference" "J1" (id 0) (at 27.4574 47.7582 0))
     (property "Value" "Power IN" (id 1) (at 27.4574 50.0569 0))
-    (property "Footprint" "TerminalBlock:TerminalBlock_Wuerth_691311400102_P7.62mm" (id 2) (at 24.765 55.88 0)
+    (property "Footprint" "beetletriple:beetlepower" (id 2) (at 24.765 55.88 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 24.765 55.88 0)
@@ -215,7 +215,7 @@
       (reference "#PWR01") (unit 1) (value "GND") (footprint "")
     )
     (path "/9e85b9a1-64a3-43d7-a600-53fc362386e6"
-      (reference "J1") (unit 1) (value "Power IN") (footprint "TerminalBlock:TerminalBlock_Wuerth_691311400102_P7.62mm")
+      (reference "J1") (unit 1) (value "Power IN") (footprint "beetletriple:beetlepower")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/22d9c911-bea7-4fc4-93b7-a8a13fd1aa13"
       (reference "#FLG0101") (unit 1) (value "PWR_FLAG") (footprint "")
