@@ -118,6 +118,11 @@
     (uuid 623a2969-79f7-4aea-9f02-4275260b01f2)
   )
 
+  (text "TODO: change MCU footprint for handsolder\nTODO: UPDI ISP interface soicbite\nReduce clearance on zones\nadd power vias "
+    (at 109.22 43.815 0)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid a535a97a-fca8-4520-9f09-6730e4c78457)
+  )
   (text "Beetleweight triple ESC" (at 154.305 29.845 180)
     (effects (font (size 2.5 2.5)) (justify right bottom))
     (uuid 26b850d6-ca1c-4af6-9c25-c3d9ef780772)
@@ -211,6 +216,15 @@
     )
     (path "/9e85b9a1-64a3-43d7-a600-53fc362386e6"
       (reference "J1") (unit 1) (value "Power IN") (footprint "TerminalBlock:TerminalBlock_Wuerth_691311400102_P7.62mm")
+    )
+    (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/22d9c911-bea7-4fc4-93b7-a8a13fd1aa13"
+      (reference "#FLG0101") (unit 1) (value "PWR_FLAG") (footprint "")
+    )
+    (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/75b3d201-a388-4172-8517-0aab374793dc"
+      (reference "#FLG0102") (unit 1) (value "PWR_FLAG") (footprint "")
+    )
+    (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/b538e895-f3c3-446e-9001-2df4142c87bf"
+      (reference "#FLG?") (unit 1) (value "PWR_FLAG") (footprint "")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/60cf72a3-da49-4391-a543-e025e0f19f60"
       (reference "#PWR02") (unit 1) (value "GND") (footprint "")

@@ -510,6 +510,7 @@
     )
   )
 
+
   (junction (at 45.72 24.765) (diameter 0.9144) (color 0 0 0 0))
   (junction (at 48.895 114.3) (diameter 0.9144) (color 0 0 0 0))
   (junction (at 60.96 24.765) (diameter 0.9144) (color 0 0 0 0))
@@ -1270,7 +1271,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid ddf6c19e-3b9c-49b0-b210-7ce435ecb256)
   )
-  (label "H3S1" (at 90.17 163.195 180)
+  (label "M3S1" (at 90.17 163.195 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 13d38a13-2191-446b-837a-bdb00fc24a7d)
   )
