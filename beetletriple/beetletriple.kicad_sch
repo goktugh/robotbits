@@ -118,9 +118,9 @@
     (uuid 623a2969-79f7-4aea-9f02-4275260b01f2)
   )
 
-  (text "TODO: change MCU footprint for handsolder\nTODO: UPDI ISP interface soicbite\nReduce clearance on zones\nadd power vias "
-    (at 109.22 43.815 0)
-    (effects (font (size 1.27 1.27)) (justify right bottom))
+  (text "TODO: change MCU footprint for handsolder\nReduce clearance on zones\n"
+    (at 76.835 40.005 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid a535a97a-fca8-4520-9f09-6730e4c78457)
   )
   (text "Beetleweight triple ESC" (at 154.305 29.845 180)
@@ -284,7 +284,7 @@
       (reference "D1") (unit 1) (value "B340A-13-F") (footprint "Diode_SMD:D_SMA_Handsoldering")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/f69d8565-9cce-4269-8146-6fce66bbe553"
-      (reference "F1") (unit 1) (value "20mmx5 fuse holder") (footprint "Fuse:Fuseholder_Cylinder-5x20mm_Schurter_0031_8201_Horizontal_Open")
+      (reference "F1") (unit 1) (value "20mmx5 fuse holder") (footprint "beetletriple:fuseholder_flexible")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/867e4d9b-1a41-4ccb-b503-ce8c72df462b"
       (reference "L1") (unit 1) (value "10uH") (footprint "Inductor_SMD:L_12x12mm_H4.5mm")
@@ -376,14 +376,8 @@
     (path "/359c4f89-e272-46e6-af92-d7488b619549/448811ca-761a-435c-b830-f8dc07e8a775"
       (reference "U3") (unit 1) (value "ATtiny1617-M") (footprint "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm")
     )
-    (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/e804135f-e8f0-42d8-b72d-8d477eea7a6a"
-      (reference "#PWR08") (unit 1) (value "GND") (footprint "")
-    )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/ab274dd8-db81-4ae2-8ed3-2c7949792599"
       (reference "#PWR09") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/8070a27d-6474-4b23-9f06-b70c2cbe7c4c"
-      (reference "#PWR010") (unit 1) (value "GND") (footprint "")
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/8dbc2066-8818-450a-aceb-6c7ded2cdcb6"
       (reference "#PWR011") (unit 1) (value "GND") (footprint "")
@@ -501,6 +495,15 @@
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/c6bb5973-2e76-4d2a-9cf4-86e715c37f9d"
       (reference "R9") (unit 1) (value "4.7R") (footprint "Resistor_SMD:R_0805_2012Metric")
+    )
+    (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/796335aa-e3db-4898-a68a-1d6c311d3e51"
+      (reference "R16") (unit 1) (value "0.01R shunt") (footprint "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder")
+    )
+    (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/e1ca83c5-e194-4d52-9886-f3b449d8949e"
+      (reference "R17") (unit 1) (value "0.01R shunt") (footprint "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder")
+    )
+    (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/7fed0b49-b4ef-4fd7-a32f-53cd92b161a3"
+      (reference "R18") (unit 1) (value "1.5k") (footprint "Resistor_SMD:R_0805_2012Metric")
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/2b35b0a5-5087-4576-935a-95c4340d99d1"
       (reference "U11") (unit 1) (value "FAN7388MX") (footprint "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm")
