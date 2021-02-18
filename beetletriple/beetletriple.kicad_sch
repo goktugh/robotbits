@@ -434,13 +434,13 @@
       (reference "D7") (unit 1) (value "1N4148W") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/6822e8a2-2ed5-4f16-8819-9a097f935873"
-      (reference "J2") (unit 1) (value "motor_out") (footprint "TerminalBlock:TerminalBlock_Wuerth_691311400102_P7.62mm")
+      (reference "J2") (unit 1) (value "motor_out") (footprint "beetletriple:TerminalBlock_motor")
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/e04381ac-f198-4ead-95e5-cd07ef7c6135"
-      (reference "J3") (unit 1) (value "motor_out") (footprint "TerminalBlock:TerminalBlock_Wuerth_691311400102_P7.62mm")
+      (reference "J3") (unit 1) (value "motor_out") (footprint "beetletriple:TerminalBlock_motor")
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/9de0aec7-1613-4075-bc93-1cebddc543a5"
-      (reference "J4") (unit 1) (value "motor_out") (footprint "TerminalBlock:TerminalBlock_Wuerth_691311400102_P7.62mm")
+      (reference "J4") (unit 1) (value "motor_out") (footprint "beetletriple:TerminalBlock_motor")
     )
     (path "/88009e22-8327-4e67-a142-0e1ef6c68b73/b239e505-8024-4018-ae89-114fe0f95bad"
       (reference "Q1") (unit 1) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
