@@ -707,6 +707,9 @@
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/a5380546-1c12-44f0-b1f3-ef1edc8c9cd5"
       (reference "C14") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
     )
+    (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/6c81ed90-1aab-401b-accb-94af9d9d68a1"
+      (reference "C15") (unit 1) (value "10uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/a668cc01-6ea3-42fc-b195-bee1576d7e42"
       (reference "C17") (unit 1) (value "10nF") (footprint "Capacitor_SMD:C_1206_3216Metric")
     )
@@ -718,9 +721,6 @@
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/1f47f0b2-dfef-4826-8c83-587f45365440"
       (reference "C22") (unit 1) (value "DNP") (footprint "Capacitor_SMD:C_1206_3216Metric")
-    )
-    (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/6c81ed90-1aab-401b-accb-94af9d9d68a1"
-      (reference "C?") (unit 1) (value "10uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/f25ce49b-41d1-4aa9-8d87-86ed60ba4a42"
       (reference "D1") (unit 1) (value "B340A-13-F") (footprint "Diode_SMD:D_SMA_Handsoldering")
