@@ -726,7 +726,7 @@
       (reference "D1") (unit 1) (value "B340A-13-F") (footprint "Diode_SMD:D_SMA_Handsoldering")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/f69d8565-9cce-4269-8146-6fce66bbe553"
-      (reference "F1") (unit 1) (value "20mmx5 fuse holder") (footprint "beetletriple:fuseholder_flexible")
+      (reference "F1") (unit 1) (value "20mmx5 fuse holder") (footprint "beetletriple:fuseholder_bs1363")
     )
     (path "/6d93a432-011d-4d1d-9c43-a648615a7ea3/867e4d9b-1a41-4ccb-b503-ce8c72df462b"
       (reference "L1") (unit 1) (value "10uH") (footprint "Inductor_SMD:L_12x12mm_H4.5mm")

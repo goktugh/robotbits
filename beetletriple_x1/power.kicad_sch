@@ -1331,7 +1331,7 @@
     (uuid f69d8565-9cce-4269-8146-6fce66bbe553)
     (property "Reference" "F1" (id 0) (at 36.83 33.7628 90))
     (property "Value" "20mmx5 fuse holder" (id 1) (at 36.83 36.061 90))
-    (property "Footprint" "beetletriple:fuseholder_flexible" (id 2) (at 36.83 40.513 90)
+    (property "Footprint" "beetletriple:fuseholder_bs1363" (id 2) (at 36.83 40.513 90)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 36.83 38.735 0)
