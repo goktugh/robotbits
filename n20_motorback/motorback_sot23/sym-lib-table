@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name "motorback")(type "KiCad")(uri "${KIPRJMOD}/motorback.kicad_sym")(options "")(descr ""))
-)
