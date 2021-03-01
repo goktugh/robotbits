@@ -40,7 +40,7 @@ $(OBJDIR)/%.o: %.c Makefile $(HEADERS)
 	avr-gcc -c $(CFLAGS) -o $@ $<
 	
 
-AVRDUDE_OPTS=-p t4 -c usbasp
+AVRDUDE_OPTS=-p t4 -c usbasp -B 100khz
 
 install: link
 	avrdude $(AVRDUDE_OPTS) -U flash:w:$(BIN):r

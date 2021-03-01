@@ -158,7 +158,10 @@ static void handle_timer_overflow()
 #define FULL_ON 1023
 
 #define PULSE_CENTRE 1500
-#define DEADZONE 50
+// Width (each side) of the zone where we apply the brakes
+#define BRAKEZONE 75
+// Width (each side) of the zone with zero throttle
+#define DEADZONE 125
 #define GOOD_PULSE_STARTUP_COUNT 5
 
 static int16_t scale_int16(int16_t n)
@@ -186,21 +189,24 @@ static void handle_pulse(uint16_t width)
         // Motor settings, 1024=max
         uint16_t m0=0, m1=0;
         // determine if we're in dead zone...
-        if ((width > (PULSE_CENTRE - DEADZONE)) && (width < (PULSE_CENTRE + DEADZONE)))
-        {
+        int16_t pulse_signed = ((int16_t) width) - PULSE_CENTRE;
+        // Scale pulse so that it goes to > 500 
+        int16_t pulse_abs = abs(pulse_signed);
+        if (pulse_abs < BRAKEZONE) {
+            // Brakes on.
             // Centre braking.
             m0 = m1 = FULL_ON;
         } else {
-            int16_t pulse_signed = ((int16_t) width) - PULSE_CENTRE;
-            // Scale pulse so that it goes to > 500 
-            int16_t pulse_scaled = scale_int16(abs(pulse_signed));
-            // Cap this at the ceiling
-            if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
-            if (pulse_signed < 0) {
-                m1 = pulse_scaled;
-            } else {
-                m0 = pulse_scaled;
-            }
+            if (pulse_abs > DEADZONE) {
+                int16_t pulse_scaled = scale_int16(pulse_abs - DEADZONE);
+                // Cap this at the ceiling
+                if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
+                if (pulse_signed < 0) {
+                    m1 = pulse_scaled;
+                } else {
+                    m0 = pulse_scaled;
+                }
+            } // Otherwise fall through, and set zero throttle.
         }
         // Set motor speed forward, reverse or brake
         OCR0A = m0;
