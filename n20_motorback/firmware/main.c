@@ -159,20 +159,22 @@ static void handle_timer_overflow()
 
 #define PULSE_CENTRE 1500
 // Width (each side) of the zone where we apply the brakes
-#define BRAKEZONE 75
+#define BRAKEZONE 50
 // Width (each side) of the zone with zero throttle
-#define DEADZONE 125
+#define DEADZONE 100
 #define GOOD_PULSE_STARTUP_COUNT 5
 
 static int16_t scale_int16(int16_t n)
 {
-    /* Input range - 0..500
+    /* Input range - 0..500 - DEADZONE
      * Output range: 0..1024 with some margin
      * 
-     * We multiply by 17/8
+     * We multiply by 3
      */
+    /* NOTE: There is no multiply instruction and no space
+     * for multiplication library */
     /* scale up by a fixed factor without using multiply. */
-    int16_t result = (n*2) + (n >>3) ;
+    int16_t result = (n << 1) + n;
     return result;
 }
 
