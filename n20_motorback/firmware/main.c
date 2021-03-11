@@ -125,8 +125,11 @@ static uint8_t flash_count;
  * 1=high
  */
 static uint8_t previous_input_state;
-// Count of good pulses we received since the last overflow / gap
-static uint8_t good_pulse_count;
+
+// Set this flag as soon as we see a plausible
+// Centre pulse, which we adopt as the new centre.
+static uint8_t seen_centre_pulse;
+static uint16_t pulse_centre; // Set at runtime on first pulse.
 
 /*
  * Timer (16-bit) overflow, called about every
@@ -151,18 +154,18 @@ static void handle_timer_overflow()
             led_on();
         else
             led_off();
-        good_pulse_count = 0;
     }
 }
 
 #define FULL_ON 1023
 
-#define PULSE_CENTRE 1500
+#define PULSE_CENTRE_MIN 1380
+#define PULSE_CENTRE_MAX 1620
+
 // Width (each side) of the zone where we apply the brakes
 #define BRAKEZONE 50
 // Width (each side) of the zone with zero throttle
-#define DEADZONE 100
-#define GOOD_PULSE_STARTUP_COUNT 5
+#define DEADZONE 70
 
 static int16_t scale_int16(int16_t n)
 {
@@ -183,40 +186,50 @@ static int16_t scale_int16(int16_t n)
  */
 static void handle_pulse(uint16_t width)
 {
-    if (good_pulse_count < GOOD_PULSE_STARTUP_COUNT) {
-        // Ignore the first few pulses, in case it's spurious noise.
-        good_pulse_count += 1;
-    } else {
-        // Enough good pulses received, let's go.
-        // Motor settings, 1024=max
-        uint16_t m0=0, m1=0;
-        // determine if we're in dead zone...
-        int16_t pulse_signed = ((int16_t) width) - PULSE_CENTRE;
-        // Scale pulse so that it goes to > 500 
-        int16_t pulse_abs = abs(pulse_signed);
-        if (pulse_abs < BRAKEZONE) {
-            // Brakes on.
-            // Centre braking.
-            m0 = m1 = FULL_ON;
-        } else {
-            if (pulse_abs > DEADZONE) {
-                int16_t pulse_scaled = scale_int16(pulse_abs - DEADZONE);
-                // Cap this at the ceiling
-                if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
-                if (pulse_signed < 0) {
-                    m1 = pulse_scaled;
-                } else {
-                    m0 = pulse_scaled;
-                }
-            } // Otherwise fall through, and set zero throttle.
-        }
-        // Set motor speed forward, reverse or brake
-        OCR0A = m0;
-        OCR0B = m1;
-        led_on();
-    }
-    // Do this anyway to prevent timeout happening
+    // Do this always to prevent timeout happening
     timer_overflow_count_since_pulse = 0;
+
+    /*
+     * Auto-centre detection
+     */
+    if (! seen_centre_pulse) {
+        if ((width > PULSE_CENTRE_MIN) && (width < PULSE_CENTRE_MAX))
+        {
+            // Adopt this value as the centre 
+            pulse_centre = width;
+            seen_centre_pulse = 1;
+        } // otherwise out of range. ignore
+        return;
+    }
+    
+    // Drive motor ...
+    // Motor settings, 1024=max
+    uint16_t m0=0, m1=0;
+    
+    // determine if we're in dead zone...
+    int16_t pulse_signed = ((int16_t) width) - pulse_centre;
+    // Scale pulse so that it goes to > 500 
+    int16_t pulse_abs = abs(pulse_signed);
+    if (pulse_abs < BRAKEZONE) {
+        // Brakes on.
+        // Centre braking.
+        m0 = m1 = FULL_ON;
+    } else {
+        if (pulse_abs > DEADZONE) {
+            int16_t pulse_scaled = scale_int16(pulse_abs - DEADZONE);
+            // Cap this at the ceiling
+            if (pulse_scaled > FULL_ON) pulse_scaled = FULL_ON;
+            if (pulse_signed < 0) {
+                m1 = pulse_scaled;
+            } else {
+                m0 = pulse_scaled;
+            }
+        } // Otherwise fall through, and set zero throttle.
+    }
+    // Set motor speed forward, reverse or brake
+    OCR0A = m0;
+    OCR0B = m1;
+    led_on();
 }
 
 static void check_input(uint16_t ticks_now)
@@ -231,9 +244,9 @@ static void check_input(uint16_t ticks_now)
         // Negative edge
         // Measure pulse width:
         // (could be negative)
-        int32_t width = ((int32_t) ticks_now - ticks_at_positive_edge);
+        int16_t width = (ticks_now - ticks_at_positive_edge);
         // Add number of overflows, 10-bit counter.
-        width += (((int32_t) timer_overflow_count_since_positive_edge) << 10);
+        width += (((int16_t) timer_overflow_count_since_positive_edge) << 10);
         // width is in timer ticks
         // Timer ticks are 2us
         width *= 2; // width is now in microseconds
