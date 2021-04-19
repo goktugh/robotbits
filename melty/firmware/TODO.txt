@@ -7,7 +7,7 @@ TODO things
     
 1. Get esc telemetry received 
     decipher esc telemetry.
-    PARTIALLY done
+    OK Done.
     
 1. Motors module should check telemetry is working during initialisation,
     on both ESCs.
@@ -19,7 +19,69 @@ on.
 Also disarm the ESC by waiting some time (1 sec?) with no commands
     sent, there is no other way to disarm that I know
     
-1. Try higher speed DSHOT, maybe 600 khz
+1. Dshot working 600k
+
+
+---
+
+1. Controller and wifi interface should set some values in a
+    global struct - for 
+    struct controller_inputs {
+        int16_t spin_throttle; // -1000 ... 1000
+        int16_t drive_throttle;
+        int16_t steering; // -1000 .. 1000
+        // other controls as necessary?
+        // Flash lights, beep?
+    }
+    
+    If spin_throttle is 0, then we go into "driving" mode.
+    
+1. ESC Telemetry data and input data - 
+    store them in a log array and write to files.
+    
+    * When we start spinning -orwhen we get a spin throttle signal,
+    start recording telemetry
+    
+    * When we stop spinning - zero rpm and no throttle signal - 
+    stop recording telemetry and save the file.
+
+1. Record more frequent telemetry
+    - Calculate how often we can request telemetry ?
+        - Request telemetry more often.
+    - Store more samples
+
+1. Calculate, from telemetry, spin speed dynamically:
+    - Use the values from both esc
+    - Do some kind of averaging to smooth out bumps
+    - Take into account the wheel diameter and wheel track diameter
+        (ratio)
+1. Main melty routine:
+    - From spin speed, approximate the "current heading" of the robot
+        relative to the "virtual front"
+    - Flash the led when it is close to the virtual front
+        - LED offset from the "physical front" of the robot
+    - Determine the virtual / physical offset of the motors
+        
+1. Translation
+    Melty algorithm: based on the translation, throttle motors
+        based on their angle to the virtual heading.
+        - Must not send dshot commands too often so that the previous
+            command isn't finished
+        - Must send the dshot commands early to account for dshot
+            latency - which is low, but exists
+        - How much do we throttle the (virtual) left / right motors?
+        
+        - "Prograde" motor - needs to have HIGHER throttle
+        - "Retrograde" motor - needs to have lower throttle, or brake
+            - Maybe 0
+        - When the motors are neither prograde or retro, do they
+            have the "standard throttle setting"
+        - Take into account the drive stick position, so we can
+            go "forward" or "back" ?!?
+            
+            
+
+    
 
 
     

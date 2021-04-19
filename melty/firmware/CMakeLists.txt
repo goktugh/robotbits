@@ -3,4 +3,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+# This magical incantation is required to make the GAP_ConnOpen etc, functions appear
+# in the IDF library.
+add_definitions(-DGAP_CONN_INCLUDED=TRUE)
 project(melty)

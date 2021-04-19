@@ -158,8 +158,8 @@ static void udp_server_task(void *pvParameters)
             ESP_LOGE(SERVER_TAG, "recv: errno %d", errno);
         } else {
             // Ok
-            ESP_LOGI(SERVER_TAG, "Got packet length %d", packetlen);
-            ESP_LOGI(SERVER_TAG, "Got packet from %s", inet_ntoa(source_addr.sin_addr));
+            // ESP_LOGI(SERVER_TAG, "Got packet length %d", packetlen);
+            // ESP_LOGI(SERVER_TAG, "Got packet from %s", inet_ntoa(source_addr.sin_addr));
             if ((packetlen > 0) && (packetlen < sizeof(packet)) && (packet[0] != '#')) {
                 uint8_t packetout[201];
                 // Send reply.

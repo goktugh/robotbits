@@ -91,15 +91,23 @@ void fs_init()
             }
         }
     }
+    /*
+    */
+}
+
+FILE * open_numeric_log_file()
+{
     int highest_id = find_highest_numeric_file(FLASH_PATH);
     char fnbuf[200];
     snprintf(fnbuf, sizeof(fnbuf), FLASH_PATH "/%04d.log", highest_id + 1);
-    FILE * f2 = fopen(fnbuf, "w");
-    if (f2 != NULL) {
-        fclose(f2);
+    ESP_LOGI(TAG, "Opening log %s", fnbuf);
+    FILE * f = fopen(fnbuf, "w");
+    if (f != NULL) {
+        // Ok
     } else {
         ESP_LOGE(TAG, "Failed to open log file");
     }
+    return f; 
 }
 
 static char chunk_buf[4096];
