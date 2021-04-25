@@ -86,7 +86,7 @@ static void telem_log_loop()
             if ((now - telem_log_ts) > TELEM_LOG_INTERVAL)
             {
                 telem_log[telem_log_pos].time = now;
-                telem_log[telem_log_pos].cmd_speed = comms_state.motor_speed;
+                telem_log[telem_log_pos].cmd_speed = controller_state.spin_throttle;
                 memcpy(telem_log[telem_log_pos].rpm, motor_telemetry_rpm, sizeof(motor_telemetry_rpm));
                 telem_log_pos += 1;
                 // Set time of next sample
@@ -94,16 +94,12 @@ static void telem_log_loop()
             }
         }
         // If we have stopped, stop the telemetry.
-        if ((comms_state.motor_speed == 0) && ( motor_telemetry_rpm[0] == 0))
+        if ((controller_state.spin_throttle == 0) && ( motor_telemetry_rpm[0] == 0))
         {
             telem_log_stop();
         }
     } else {
         // Telemetry inactive.
-        // Should we start the telemetry log?
-        if (comms_state.motor_speed > 0) {
-            telem_log_start();
-        } 
     }
 }
 
@@ -117,25 +113,25 @@ static void main_loop()
         printf("Loop %d...\n", i);
         fflush(stdout);
         // vTaskDelay(1000 / portTICK_PERIOD_MS);
+        int motor_speed=0;
         for (int j=0; j<250; j++) {
             busy_sleep(2 * 1000);
-            int cmd = comms_state.pending_command;
-            if (cmd != 0) {
-                // Send the command
-                motor_send_dshot_command(0, cmd);
-                comms_state.pending_command = 0;
-            } else {
-                motor_set_speed_signed(0, comms_state.motor_speed);
-                motor_set_speed_signed(1, - comms_state.motor_speed);
-            }
+            motor_speed = (controller_state.spin_throttle * 10);
+            motor_set_speed_signed(0, motor_speed);
+            motor_set_speed_signed(1, - motor_speed);
             motor_poll_telemetry();
             telem_log_loop();
         }
         esp_task_wdt_reset();
         i += 1;
-        gpio_set_level(WHITE_GPIO, (i == 2));
+        gpio_set_level(WHITE_GPIO, (i == 2) || controller_state.led_test);
         // Enable the signal LED.
-        gpio_set_level(SIGNAL_GPIO, comms_state.got_signal);
+        gpio_set_level(SIGNAL_GPIO, controller_state.got_signal);
+        
+        if (controller_state.led_test && ! telem_log_active) {
+            telem_log_start();
+        }
+        printf("Motor speed %d\n", motor_speed);
     }    
 }
 

@@ -105,32 +105,10 @@ static void wifi_init_sta()
 #define SERVER_TAG "udp_server_task"
 #define PORT 4200
 
-static int parse_packet_param(const uint8_t *packet, size_t len)
-{
-    char buf[50];
-    if (len >= sizeof(buf)) { return 0; }
-    memcpy(buf, packet+1, len-1);
-    buf[len] = '\0'; // null terminate the string.
-    return atoi(buf);
-}
 
-static void process_packet(const uint8_t *packet, size_t len)
+static void maybe_send_telemetry(int sock, struct sockaddr_in *telem_receiver_addr)
 {
-    if (len < 3) {
-        return;
-    }
-    // First character = command
-    uint8_t cmd = packet[0];
-    switch(cmd) {
-        case 'M':
-            comms_state.motor_speed = parse_packet_param(packet, len);
-            printf("Setting motor speed to %d\n", comms_state.motor_speed);
-            break;
-        case 'C':
-            comms_state.pending_command = parse_packet_param(packet, len);
-            printf("Sending dshot command %d\n", comms_state.pending_command);
-            break;
-    }
+    
 }
 
 static void udp_server_task(void *pvParameters)
@@ -144,7 +122,24 @@ static void udp_server_task(void *pvParameters)
     if (bind(sock, (struct sockaddr *) & bind_addr, sizeof(bind_addr)) != 0) {
         ESP_LOGE(SERVER_TAG, "Socket unable to bind: errno %d", errno);
     }
+    
+    struct timeval timeout_option = { tv_sec:0, tv_usec: 50000 };
+    
+    int res = setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, 
+        &timeout_option, sizeof(timeout_option));
+    
+    if (res != 0) {
+        ESP_LOGE(SERVER_TAG, "Failed setsockopt SO_RCVTIMEO %d", errno);
+    }
+    /*
+     * Get packets, with regular timeouts. On timeout, send telemetry
+     * packets.
+     */
    
+   
+    struct sockaddr_in telem_receiver_addr;
+    memset(&telem_receiver_addr, 0, sizeof(telem_receiver_addr));
+    
     while (1) {
         uint8_t packet[200];
         ssize_t packetlen;
@@ -155,19 +150,19 @@ static void udp_server_task(void *pvParameters)
         packetlen = recvfrom(sock, packet, sizeof(packet), flags,
             (struct sockaddr *) &source_addr, &addrlen);
         if (packetlen == -1) {
-            ESP_LOGE(SERVER_TAG, "recv: errno %d", errno);
+            // Is it a read timeout?
+            if (errno == EWOULDBLOCK) {
+                maybe_send_telemetry(sock, &telem_receiver_addr);
+            }
         } else {
             // Ok
             // ESP_LOGI(SERVER_TAG, "Got packet length %d", packetlen);
             // ESP_LOGI(SERVER_TAG, "Got packet from %s", inet_ntoa(source_addr.sin_addr));
             if ((packetlen > 0) && (packetlen < sizeof(packet)) && (packet[0] != '#')) {
-                uint8_t packetout[201];
-                // Send reply.
-                packetout[0] = '#';
-                memcpy(packetout + 1, packet, packetlen);
-                sendto(sock, packetout, packetlen+1, 0,
-                    (struct sockaddr *) &source_addr, addrlen);
-                process_packet(packet, packetlen);
+                if (packet[0] == '9') {
+                    // Use this address for telemetry.
+                    memcpy(&telem_receiver_addr, &source_addr, addrlen);
+                }
             }
         }
     }
