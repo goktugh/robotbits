@@ -36,73 +36,6 @@ static void init_misc()
     
 }
 
-#define TELEM_LOG_SAMPLES 1500
-// Interval in microseconds
-#define TELEM_LOG_INTERVAL 10000  
-typedef struct {
-    uint16_t rpm[2];
-    int cmd_speed;
-    int64_t time; // Microseconds    
-} telem_log_t;
-
-
-static telem_log_t telem_log[TELEM_LOG_SAMPLES];
-static int telem_log_pos; // position in the log.
-static bool telem_log_active;
-static int64_t telem_log_ts;
-
-static void telem_log_start()
-{
-    memset(telem_log, 0, sizeof(telem_log));
-    telem_log_pos = 0;
-    telem_log_active = 1;
-    telem_log_ts = esp_timer_get_time();
-    printf("Telemetry log start\n");
-}
-
-static void telem_log_stop() {
-    printf("Telemetry log stop\n");
-    telem_log_active = 0;
-    FILE * f = open_numeric_log_file();
-    if (f != NULL) {
-        for (int i=0; i< TELEM_LOG_SAMPLES; i++) {
-            fprintf(f, "%lld %d %d %d\n",
-                telem_log[i].time,
-                telem_log[i].cmd_speed,                
-                telem_log[i].rpm[0],
-                telem_log[i].rpm[1]);
-        }
-        fclose(f);
-    }
-}
-
-static void telem_log_loop()
-{
-    if (telem_log_active) {
-        // If log is not full...
-        if (telem_log_pos < TELEM_LOG_SAMPLES) {
-            // Is it time for a new sample?
-            int64_t now = esp_timer_get_time();
-            if ((now - telem_log_ts) > TELEM_LOG_INTERVAL)
-            {
-                telem_log[telem_log_pos].time = now;
-                telem_log[telem_log_pos].cmd_speed = controller_state.spin_throttle;
-                memcpy(telem_log[telem_log_pos].rpm, motor_telemetry_rpm, sizeof(motor_telemetry_rpm));
-                telem_log_pos += 1;
-                // Set time of next sample
-                telem_log_ts += TELEM_LOG_INTERVAL;
-            }
-        }
-        // If we have stopped, stop the telemetry.
-        if ((controller_state.spin_throttle == 0) && ( motor_telemetry_rpm[0] == 0))
-        {
-            telem_log_stop();
-        }
-    } else {
-        // Telemetry inactive.
-    }
-}
-
 static void main_loop()
 {
     // Add current task to watchdog.
@@ -120,7 +53,6 @@ static void main_loop()
             motor_set_speed_signed(0, motor_speed);
             motor_set_speed_signed(1, - motor_speed);
             motor_poll_telemetry();
-            telem_log_loop();
         }
         esp_task_wdt_reset();
         i += 1;
@@ -128,9 +60,6 @@ static void main_loop()
         // Enable the signal LED.
         gpio_set_level(SIGNAL_GPIO, controller_state.got_signal);
         
-        if (controller_state.led_test && ! telem_log_active) {
-            telem_log_start();
-        }
         printf("Motor speed %d\n", motor_speed);
     }    
 }
