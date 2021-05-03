@@ -1120,7 +1120,7 @@
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 2b366422-32fa-4f73-959b-86b0b041808d)
   )
-  (wire (pts (xy 195.58 138.43) (xy 204.47 138.43))
+  (wire (pts (xy 195.58 138.43) (xy 210.185 138.43))
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 09a16af3-a682-41cd-813a-051fc4f392c0)
   )
@@ -1132,15 +1132,15 @@
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 9cf884e7-1b15-4b4a-a853-c0858b7ee584)
   )
-  (wire (pts (xy 204.47 138.43) (xy 204.47 139.7))
+  (wire (pts (xy 210.185 138.43) (xy 210.185 139.7))
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 09a16af3-a682-41cd-813a-051fc4f392c0)
   )
-  (wire (pts (xy 204.47 147.32) (xy 204.47 149.86))
+  (wire (pts (xy 210.185 147.32) (xy 210.185 149.86))
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 7d334adf-6c0c-4b9f-806a-36862b118df9)
   )
-  (wire (pts (xy 204.47 149.86) (xy 195.58 149.86))
+  (wire (pts (xy 210.185 149.86) (xy 195.58 149.86))
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 7d334adf-6c0c-4b9f-806a-36862b118df9)
   )
@@ -1895,19 +1895,19 @@
     (pin "2" (uuid 40342143-4fcd-41b3-bbbd-84a4e6c2946b))
   )
 
-  (symbol (lib_id "Device:R") (at 204.47 143.51 180) (unit 1)
+  (symbol (lib_id "Device:R") (at 210.185 143.51 180) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid f7bd7615-3de0-4776-aa17-4ec5209d7dbc)
-    (property "Reference" "R12" (id 0) (at 207.01 142.8749 0)
+    (property "Reference" "R12" (id 0) (at 212.725 142.8749 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "0.01 ohm" (id 1) (at 207.01 145.4149 0)
+    (property "Value" "0.01 ohm" (id 1) (at 212.725 145.4149 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder" (id 2) (at 206.248 143.51 90)
+    (property "Footprint" "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder" (id 2) (at 211.963 143.51 90)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "~" (id 3) (at 204.47 143.51 0)
+    (property "Datasheet" "~" (id 3) (at 210.185 143.51 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 1888b6a3-0f91-44cc-894f-765d100f27a2))
@@ -2406,17 +2406,17 @@
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/8550bf63-6bc2-479c-bddc-082389ddbc28"
       (reference "J4") (unit 1) (value "motor_out") (footprint "Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/b1a06d2a-a007-41d4-9e0c-37fd31a792da"
-      (reference "Q1") (unit 1) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/91401f80-e11e-4dcd-8127-cf1209ae9c95"
+      (reference "Q1") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/453e55ff-63c7-4e45-b1a7-07e090e6dab9"
-      (reference "Q1") (unit 2) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/78f7d384-c1e8-43be-9cf5-ea0b8e5ee852"
+      (reference "Q1") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/3e33f540-466e-4b3e-a64f-d1be0667f819"
-      (reference "Q2") (unit 1) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/e735ae3b-e647-4157-bf24-522fcab1aa8b"
+      (reference "Q2") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/f58403f9-1add-43f1-814c-ff493d5d1e52"
-      (reference "Q2") (unit 2) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/a45d94ed-e4aa-467a-8892-f6d35332ba60"
+      (reference "Q2") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/fad7411d-71dd-41a2-9e10-172d90ee0b89"
       (reference "R1") (unit 1) (value "10R") (footprint "Resistor_SMD:R_0603_1608Metric")
@@ -2457,17 +2457,17 @@
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/8550bf63-6bc2-479c-bddc-082389ddbc28"
       (reference "J5") (unit 1) (value "motor_out") (footprint "Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/b1a06d2a-a007-41d4-9e0c-37fd31a792da"
-      (reference "Q3") (unit 1) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/91401f80-e11e-4dcd-8127-cf1209ae9c95"
+      (reference "Q3") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/453e55ff-63c7-4e45-b1a7-07e090e6dab9"
-      (reference "Q3") (unit 2) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/78f7d384-c1e8-43be-9cf5-ea0b8e5ee852"
+      (reference "Q3") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/3e33f540-466e-4b3e-a64f-d1be0667f819"
-      (reference "Q4") (unit 1) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/e735ae3b-e647-4157-bf24-522fcab1aa8b"
+      (reference "Q4") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/f58403f9-1add-43f1-814c-ff493d5d1e52"
-      (reference "Q4") (unit 2) (value "IRF8313PBF ") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm")
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/a45d94ed-e4aa-467a-8892-f6d35332ba60"
+      (reference "Q4") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/fad7411d-71dd-41a2-9e10-172d90ee0b89"
       (reference "R5") (unit 1) (value "10R") (footprint "Resistor_SMD:R_0603_1608Metric")

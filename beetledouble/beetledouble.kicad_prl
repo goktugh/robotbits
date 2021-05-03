@@ -14,17 +14,17 @@
     },
     "ratsnest_display_mode": 0,
     "selection_filter": {
-      "dimensions": false,
+      "dimensions": true,
       "footprints": true,
-      "graphics": false,
-      "keepouts": false,
+      "graphics": true,
+      "keepouts": true,
       "lockedItems": false,
-      "otherItems": false,
-      "pads": false,
-      "text": false,
+      "otherItems": true,
+      "pads": true,
+      "text": true,
       "tracks": true,
       "vias": true,
-      "zones": false
+      "zones": true
     },
     "visible_items": [
       0,
@@ -43,6 +43,7 @@
       14,
       15,
       16,
+      17,
       18,
       19,
       20,
@@ -62,7 +63,7 @@
       35,
       36
     ],
-    "visible_layers": "00290aa_00000001",
+    "visible_layers": "00290a0_00000001",
     "zone_display_mode": 0
   },
   "meta": {
