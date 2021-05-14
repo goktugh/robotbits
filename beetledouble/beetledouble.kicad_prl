@@ -15,13 +15,13 @@
     "ratsnest_display_mode": 0,
     "selection_filter": {
       "dimensions": false,
-      "footprints": false,
+      "footprints": true,
       "graphics": false,
       "keepouts": false,
       "lockedItems": false,
       "otherItems": false,
       "pads": false,
-      "text": true,
+      "text": false,
       "tracks": false,
       "vias": false,
       "zones": false
@@ -62,7 +62,7 @@
       35,
       36
     ],
-    "visible_layers": "00290a0_00000000",
+    "visible_layers": "00290b0_00000001",
     "zone_display_mode": 0
   },
   "meta": {
