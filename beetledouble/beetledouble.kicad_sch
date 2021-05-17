@@ -2082,7 +2082,7 @@
     (property "Reference" "C10" (id 0) (at 122.301 86.481 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "2.2uF" (id 1) (at 122.3011 88.7793 0)
+    (property "Value" "2.2uF 50V" (id 1) (at 122.3011 88.7793 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Capacitor_SMD:C_0603_1608Metric" (id 2) (at 120.3452 91.44 0)
@@ -2091,7 +2091,7 @@
     (property "Datasheet" "~" (id 3) (at 119.38 87.63 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC" "" (id 4) (at 119.38 87.63 0)
+    (property "LCSC" "C50254" (id 4) (at 119.38 87.63 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid d713a20b-8cfa-49b2-b74c-228fd69ca10b))
@@ -2366,7 +2366,7 @@
       (reference "C9") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/ec931dfe-fcd6-43aa-a942-f11aa5bf6441"
-      (reference "C10") (unit 1) (value "2.2uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+      (reference "C10") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/c473e51e-eda3-4e25-b100-c0ce34b1e3be"
       (reference "D1") (unit 1) (value "LED") (footprint "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder")
@@ -2446,26 +2446,32 @@
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/d2eda80c-6ded-4cc9-82b6-e73539d2ba88"
       (reference "#PWR09") (unit 1) (value "GND") (footprint "")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/88333258-cec2-4c47-95fd-16fbcefc9469"
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/349a753b-3547-4ca7-ac39-04fbb7832ae1"
       (reference "C3") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/349a753b-3547-4ca7-ac39-04fbb7832ae1"
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/88333258-cec2-4c47-95fd-16fbcefc9469"
       (reference "C4") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/e0439b6c-59c5-4831-b158-7336fb8aeef6"
+      (reference "D3") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
+    )
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/e793d2f4-d15d-4c68-aa28-2d98997ea5fe"
+      (reference "D4") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/8550bf63-6bc2-479c-bddc-082389ddbc28"
       (reference "J4") (unit 1) (value "motor_out") (footprint "Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/91401f80-e11e-4dcd-8127-cf1209ae9c95"
-      (reference "Q1") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q1") (unit 1) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/78f7d384-c1e8-43be-9cf5-ea0b8e5ee852"
-      (reference "Q1") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q1") (unit 2) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/e735ae3b-e647-4157-bf24-522fcab1aa8b"
-      (reference "Q2") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q2") (unit 1) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/a45d94ed-e4aa-467a-8892-f6d35332ba60"
-      (reference "Q2") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q2") (unit 2) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/fad7411d-71dd-41a2-9e10-172d90ee0b89"
       (reference "R1") (unit 1) (value "10R") (footprint "Resistor_SMD:R_0603_1608Metric")
@@ -2479,11 +2485,11 @@
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/d6c4919d-347f-41e3-9fd7-0145b8f706b2"
       (reference "R4") (unit 1) (value "10R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/95483e26-d500-422a-bbff-b6400f3d51be"
-      (reference "U4") (unit 1) (value "NCP81155MNTXG") (footprint "beetledouble:DFN-8-3x3mm_hand1")
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/074b7fbd-db44-4cf2-a152-10215821aa61"
+      (reference "U4") (unit 1) (value "ADP3110A") (footprint "beetledouble:DFN-8-3x3mm_hand1")
     )
-    (path "/04625774-148a-4b57-bc94-9367edc01ebb/7e2cc32c-9391-4594-89cf-8d65ae70b10c"
-      (reference "U5") (unit 1) (value "NCP81155MNTXG") (footprint "beetledouble:DFN-8-3x3mm_hand1")
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/9ede5968-a869-4148-88dc-1a510a7e3341"
+      (reference "U5") (unit 1) (value "ADP3110A") (footprint "beetledouble:DFN-8-3x3mm_hand1")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/5beb08dd-33fb-4b19-bec1-9311e4c1305f"
       (reference "#PWR010") (unit 1) (value "+12V") (footprint "")
@@ -2497,26 +2503,32 @@
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/d2eda80c-6ded-4cc9-82b6-e73539d2ba88"
       (reference "#PWR013") (unit 1) (value "GND") (footprint "")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/88333258-cec2-4c47-95fd-16fbcefc9469"
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/349a753b-3547-4ca7-ac39-04fbb7832ae1"
       (reference "C5") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/349a753b-3547-4ca7-ac39-04fbb7832ae1"
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/88333258-cec2-4c47-95fd-16fbcefc9469"
       (reference "C6") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/e0439b6c-59c5-4831-b158-7336fb8aeef6"
+      (reference "D5") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
+    )
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/e793d2f4-d15d-4c68-aa28-2d98997ea5fe"
+      (reference "D6") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/8550bf63-6bc2-479c-bddc-082389ddbc28"
       (reference "J5") (unit 1) (value "motor_out") (footprint "Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/91401f80-e11e-4dcd-8127-cf1209ae9c95"
-      (reference "Q3") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q3") (unit 1) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/78f7d384-c1e8-43be-9cf5-ea0b8e5ee852"
-      (reference "Q3") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q3") (unit 2) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/e735ae3b-e647-4157-bf24-522fcab1aa8b"
-      (reference "Q4") (unit 1) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q4") (unit 1) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/a45d94ed-e4aa-467a-8892-f6d35332ba60"
-      (reference "Q4") (unit 2) (value "IPG20N04S4-12") (footprint "beetledouble:Infineon-PG-TDSON")
+      (reference "Q4") (unit 2) (value "AON6884") (footprint "beetledouble:Infineon-PG-TDSON")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/fad7411d-71dd-41a2-9e10-172d90ee0b89"
       (reference "R5") (unit 1) (value "10R") (footprint "Resistor_SMD:R_0603_1608Metric")
@@ -2530,11 +2542,11 @@
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/d6c4919d-347f-41e3-9fd7-0145b8f706b2"
       (reference "R8") (unit 1) (value "10R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/95483e26-d500-422a-bbff-b6400f3d51be"
-      (reference "U6") (unit 1) (value "NCP81155MNTXG") (footprint "beetledouble:DFN-8-3x3mm_hand1")
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/074b7fbd-db44-4cf2-a152-10215821aa61"
+      (reference "U6") (unit 1) (value "ADP3110A") (footprint "beetledouble:DFN-8-3x3mm_hand1")
     )
-    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/7e2cc32c-9391-4594-89cf-8d65ae70b10c"
-      (reference "U7") (unit 1) (value "NCP81155MNTXG") (footprint "beetledouble:DFN-8-3x3mm_hand1")
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/9ede5968-a869-4148-88dc-1a510a7e3341"
+      (reference "U7") (unit 1) (value "ADP3110A") (footprint "beetledouble:DFN-8-3x3mm_hand1")
     )
   )
 )
