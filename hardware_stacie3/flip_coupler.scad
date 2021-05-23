@@ -12,18 +12,18 @@ side_radius = 2.75;
 bracketlen = 36;
 
 module outside() {
-    thick = 1.5;
+    thick = 2.5;
     panel_offset = 2.0; // Extra distance for panel
     union() {
         // Centre part
-        hull() {
+        color("green") hull() {
             cylinder(r=RADIUS,h=main_height, center=true);
-            translate([RADIUS + panel_offset, 2, - (main_height / 2)])
-            cube([thick, 2.5, main_height]);
+            translate([RADIUS + panel_offset, -0.5, - (main_height / 2)])
+            cube([thick, 5.0, main_height]);
         }
             
         // top-bottom
-        mirror_z() {
+        color("pink") mirror_z() {
             translate([0,0,main_height/2]) cylinder(r=side_radius,h=side_height);
         }
         /* translate([0, -RADIUS/2, - (main_height /2)])
@@ -65,10 +65,10 @@ module flip_coupler() {
         // hole
         translate([0,0,-20]) {
             difference() {
-                shaft_hole_radius = 1.5 + 0.2;
+                shaft_hole_radius = 1.5 + 0.05;
                 cylinder(r=shaft_hole_radius, h=100);
                 // Flat side
-                translate([-6.0,-3,0])
+                translate([-6.1,-3,0])
                     cube([5,5,100]);
             }
         }
