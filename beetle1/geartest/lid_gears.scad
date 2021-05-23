@@ -26,7 +26,7 @@ module motorgear() {
         // Need a ~ 0.5mm flat which does not go all the way.
         linear_extrude(gears_thickness - 3.0) {
             translate([1.5,-5]) {
-                square([10,10]);
+                square([3,10]);
             }
         }
     }

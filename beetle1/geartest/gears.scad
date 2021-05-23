@@ -313,9 +313,11 @@ module spur_gear(modul, tooth_number, width, bore, pressure_angle = 20, helix_an
         }
         // without Material Savings
         else {
-            linear_extrude(height = width){
+            color("red") linear_extrude(height = width){
                 difference(){
-                    circle(r = rm+r_hole*1.51);
+                    // Increased outer circle slightly to compensate
+                    // for errors
+                    circle(r = rm+r_hole*1.51 + 0.2);
                     circle(r = bore/2);
                 }
             }
