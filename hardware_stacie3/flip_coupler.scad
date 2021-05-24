@@ -8,7 +8,7 @@ $fa = 4; // degrees
 main_height = 11.0; // Centre part
 side_height = 4.5; 
 RADIUS = 4.0;
-side_radius = 2.75;
+side_radius = 3.0;
 bracketlen = 36;
 
 module outside() {
