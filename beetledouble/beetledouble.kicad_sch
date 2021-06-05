@@ -2452,6 +2452,18 @@
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/88333258-cec2-4c47-95fd-16fbcefc9469"
       (reference "C4") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/0b9719e2-8e5a-40ac-8a15-d42a94b6a2e2"
+      (reference "C11") (unit 1) (value "10uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/9ea8bf48-65bd-4c05-93d7-456abbf7b665"
+      (reference "C12") (unit 1) (value "10uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/2184af11-e0e2-4a42-8cc3-48d22a34589b"
+      (reference "C13") (unit 1) (value "DNP") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
+    (path "/04625774-148a-4b57-bc94-9367edc01ebb/f0f6b380-0d09-4fe5-b2f0-dd20a0755f9c"
+      (reference "C17") (unit 1) (value "DNP") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
     (path "/04625774-148a-4b57-bc94-9367edc01ebb/e0439b6c-59c5-4831-b158-7336fb8aeef6"
       (reference "D3") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
     )
@@ -2508,6 +2520,18 @@
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/88333258-cec2-4c47-95fd-16fbcefc9469"
       (reference "C6") (unit 1) (value "2.2uF 50V") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/0b9719e2-8e5a-40ac-8a15-d42a94b6a2e2"
+      (reference "C14") (unit 1) (value "10uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/9ea8bf48-65bd-4c05-93d7-456abbf7b665"
+      (reference "C15") (unit 1) (value "10uF 50V") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/2184af11-e0e2-4a42-8cc3-48d22a34589b"
+      (reference "C16") (unit 1) (value "DNP") (footprint "Capacitor_SMD:C_1206_3216Metric")
+    )
+    (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/f0f6b380-0d09-4fe5-b2f0-dd20a0755f9c"
+      (reference "C18") (unit 1) (value "DNP") (footprint "Capacitor_SMD:C_1206_3216Metric")
     )
     (path "/4bcd2397-838c-4768-a766-b8196d1dcd9f/e0439b6c-59c5-4831-b158-7336fb8aeef6"
       (reference "D5") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
