@@ -1,5 +1,5 @@
 (footprint "QFN-40-A8105-longpads" (version 20210424) (generator pcbnew) (layer "F.Cu")
-  (tedit 60AA5062)
+  (tedit 60BAAC8D)
   (descr "QFN, 40 Pin (http://ww1.microchip.com/downloads/en/PackagingSpec/00000049BQ.pdf#page=297), generated with kicad-footprint-generator ipc_noLead_generator.py")
   (tags "QFN NoLead")
   (attr smd)
@@ -72,7 +72,7 @@
   (pad "38" smd roundrect locked (at -1 -2.6375) (size 0.25 1.225) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25) (tstamp 65b78bc7-58c7-4a64-b1b9-1349d3db2e75))
   (pad "39" smd roundrect locked (at -1.4 -2.6375) (size 0.25 1.225) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25) (tstamp 5b04b084-5d7a-495d-a83c-561fb3eb2d51))
   (pad "40" smd roundrect locked (at -1.8 -2.6375) (size 0.25 1.225) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.25) (tstamp 02c4ac41-cac8-4b92-bfe8-d8d66fe23fb7))
-  (pad "41" smd roundrect locked (at 0 0) (size 3.2 3.2) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.125) (tstamp d67ba53a-0aec-4abc-81c4-a81105df6ae9))
+  (pad "41" smd roundrect locked (at 0 0) (size 3 3) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.125) (tstamp d67ba53a-0aec-4abc-81c4-a81105df6ae9))
   (model "${KICAD6_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-40-1EP_5x5mm_P0.4mm_EP3.6x3.6mm.wrl"
     (offset (xyz 0 0 0))
     (scale (xyz 1 1 1))
