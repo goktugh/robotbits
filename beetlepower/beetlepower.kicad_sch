@@ -788,7 +788,7 @@
     (property "Value" "R" (id 1) (at 139.7 83.8199 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" (id 2) (at 135.382 81.915 90)
+    (property "Footprint" "beetlepower-xt30:Resistor-pth-and-smd" (id 2) (at 135.382 81.915 90)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 137.16 81.915 0)
@@ -903,7 +903,7 @@
     (property "Value" "C" (id 1) (at 190.5 78.7399 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Capacitor_THT:C_Disc_D7.0mm_W2.5mm_P5.00mm" (id 2) (at 187.6552 80.645 0)
+    (property "Footprint" "beetlepower-xt30:C-pth-and-smd" (id 2) (at 187.6552 80.645 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 186.69 76.835 0)
@@ -938,7 +938,7 @@
       (reference "#PWR01") (unit 1) (value "+5V") (footprint "")
     )
     (path "/e185f8e6-3657-4e72-8333-bee9105cbce1"
-      (reference "C1") (unit 1) (value "C") (footprint "Capacitor_THT:C_Disc_D7.0mm_W2.5mm_P5.00mm")
+      (reference "C1") (unit 1) (value "C") (footprint "beetlepower-xt30:C-pth-and-smd")
     )
     (path "/bb80ddbd-1c56-4016-90b2-e3035e5a6227"
       (reference "D1") (unit 1) (value "LED") (footprint "LED_THT:LED_D5.0mm")
@@ -974,7 +974,7 @@
       (reference "J5") (unit 1) (value "Conn_01x03_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical")
     )
     (path "/41ea4b02-622d-4689-9b91-59bb0aaceccc"
-      (reference "R1") (unit 1) (value "R") (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+      (reference "R1") (unit 1) (value "R") (footprint "beetlepower-xt30:Resistor-pth-and-smd")
     )
     (path "/c3c1864a-2ff6-40d5-b620-ea0426ce4ee0"
       (reference "U1") (unit 1) (value "MC7805") (footprint "Package_TO_SOT_SMD:TO-252-3_TabPin2")
