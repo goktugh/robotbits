@@ -636,6 +636,12 @@
     (uuid a4a6b18b-4d73-416a-9aac-09355071b47f)
   )
 
+  (text "Assuming we use a white or blue LED,\nVF= 3.0\n\na 4S pack at apprx 16V,\n\nwe need to drop 13V across a resistor and have 10mA\nso 1.5k is good."
+    (at 129.54 55.88 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 522eab01-457c-4230-b284-7297a26bfadf)
+  )
+
   (label "B+IN" (at 78.105 71.755 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 1ed627ca-542c-44e5-bb4d-748d110b4f87)
@@ -785,10 +791,10 @@
     (property "Reference" "R1" (id 0) (at 139.7 81.2799 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "R" (id 1) (at 139.7 83.8199 0)
+    (property "Value" "1.5k" (id 1) (at 139.7 83.8199 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "beetlepower-xt30:Resistor-pth-and-smd" (id 2) (at 135.382 81.915 90)
+    (property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" (id 2) (at 135.382 81.915 90)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 137.16 81.915 0)
@@ -900,10 +906,10 @@
     (property "Reference" "C1" (id 0) (at 190.5 76.1999 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "C" (id 1) (at 190.5 78.7399 0)
+    (property "Value" "2.2uf" (id 1) (at 190.5 78.7399 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "beetlepower-xt30:C-pth-and-smd" (id 2) (at 187.6552 80.645 0)
+    (property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" (id 2) (at 187.6552 80.645 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 186.69 76.835 0)
@@ -924,6 +930,9 @@
     (property "Datasheet" "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b3/b0/12/d4/47/88/CD00000444.pdf/files/CD00000444.pdf/jcr:content/translations/en.CD00000444.pdf" (id 3) (at 173.99 71.755 0)
       (effects (font (size 1.27 1.27)) hide)
     )
+    (property "LCSC" "C54285" (id 4) (at 173.99 70.485 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
     (pin "1" (uuid 4cfb0c50-892c-41ab-a9f2-0aa164023ef4))
     (pin "2" (uuid 4932b40c-7687-45a5-bd75-705ad078243b))
     (pin "3" (uuid b0d0a367-6fcb-4efd-a7ca-d2804f1765e4))
@@ -938,7 +947,7 @@
       (reference "#PWR01") (unit 1) (value "+5V") (footprint "")
     )
     (path "/e185f8e6-3657-4e72-8333-bee9105cbce1"
-      (reference "C1") (unit 1) (value "C") (footprint "beetlepower-xt30:C-pth-and-smd")
+      (reference "C1") (unit 1) (value "2.2uf") (footprint "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder")
     )
     (path "/bb80ddbd-1c56-4016-90b2-e3035e5a6227"
       (reference "D1") (unit 1) (value "LED") (footprint "LED_THT:LED_D5.0mm")
@@ -974,7 +983,7 @@
       (reference "J5") (unit 1) (value "Conn_01x03_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical")
     )
     (path "/41ea4b02-622d-4689-9b91-59bb0aaceccc"
-      (reference "R1") (unit 1) (value "R") (footprint "beetlepower-xt30:Resistor-pth-and-smd")
+      (reference "R1") (unit 1) (value "1.5k") (footprint "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder")
     )
     (path "/c3c1864a-2ff6-40d5-b620-ea0426ce4ee0"
       (reference "U1") (unit 1) (value "MC7805") (footprint "Package_TO_SOT_SMD:TO-252-3_TabPin2")
