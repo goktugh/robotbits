@@ -113,7 +113,8 @@
         "min_via_annular_width": 0.049999999999999996,
         "min_via_diameter": 0.39999999999999997,
         "solder_mask_clearance": 0.0,
-        "solder_mask_min_width": 0.0
+        "solder_mask_min_width": 0.0,
+        "use_height_for_length_calcs": true
       },
       "track_widths": [
         0.0
@@ -342,7 +343,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "beetlepower.kicad_pro",
+    "filename": "beetlepower-ra.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -359,9 +360,9 @@
         "name": "Default",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.3,
-        "via_diameter": 0.8,
-        "via_drill": 0.4,
+        "track_width": 0.5,
+        "via_diameter": 1.0,
+        "via_drill": 0.5,
         "wire_width": 6.0
       }
     ],
@@ -408,7 +409,8 @@
       "meta": {
         "version": 0
       },
-      "model_mode": 0
+      "model_mode": 0,
+      "workbook_filename": ""
     },
     "page_layout_descr_file": "",
     "plot_directory": "",
