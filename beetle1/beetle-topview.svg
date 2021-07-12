@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="686.20242"
-     inkscape:cy="365.74007"
+     inkscape:cx="485.54138"
+     inkscape:cy="430.9096"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -36,7 +36,8 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-nodes="false" />
+     inkscape:snap-nodes="false"
+     showguides="false" />
   <metadata
      id="metadata835">
     <rdf:RDF>
@@ -50,61 +51,92 @@
     </rdf:RDF>
   </metadata>
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="bg"
+     style="display:inline">
+    <rect
+       style="opacity:0.75;fill:#b3b3b3;stroke:#ff8080;stroke-width:0.22822802;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3731"
+       width="180"
+       height="175"
+       x="34.006966"
+       y="13.063514" />
+    <g
+       id="g8223"
+       transform="translate(-21.922619,0.53453905)">
+      <rect
+         y="32.473194"
+         x="137.05002"
+         height="119.71194"
+         width="19.961946"
+         id="rect8190"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.28805402;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         transform="rotate(-90)"
+         id="text8194"
+         y="148.68927"
+         x="-99.597023"
+         style="font-style:normal;font-weight:normal;font-size:4.23333311px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="148.68927"
+           x="-99.597023"
+           id="tspan8192"
+           sodipodi:role="line">Rack gear</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.795, 0.265;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 25.600891,145.48921 H 266.14347"
+       id="path8201"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g8215"
+       transform="translate(-21.38808)">
+      <rect
+         y="32.533035"
+         x="136.57472"
+         height="35"
+         width="20"
+         id="rect8203"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:0.79499999, 0.265;stroke-dashoffset:0" />
+      <text
+         id="text8207"
+         y="45.0947"
+         x="141.38557"
+         style="font-style:normal;font-weight:normal;font-size:4.23333311px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.26458332"
+           y="45.0947"
+           x="141.38557"
+           id="tspan8205"
+           sodipodi:role="line">Pinon</tspan><tspan
+           id="tspan8209"
+           style="stroke-width:0.26458332"
+           y="50.386368"
+           x="141.38557"
+           sodipodi:role="line">Gear</tspan></text>
+    </g>
+  </g>
+  <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-87)">
-    <rect
-       style="opacity:0.95999995;fill:none;stroke:#ff00ff;stroke-width:10;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect1402"
-       width="210"
-       height="160"
-       x="51.026779"
-       y="123.09756"
-       rx="20"
-       ry="20" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="160.63989"
-       y="98.184525"
+       x="146.13136"
+       y="97.169174"
        id="text1406"><tspan
          sodipodi:role="line"
          id="tspan1404"
-         x="160.63989"
-         y="98.184525"
+         x="146.13136"
+         y="97.169174"
          style="stroke-width:0.26458332">Front</tspan></text>
     <g
-       id="g1420"
-       transform="translate(107.69174,1.1070665)">
-      <rect
-         y="242.57143"
-         x="65.011902"
-         height="22"
-         width="49"
-         id="rect1408"
-         style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:0.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
-      <rect
-         y="251.57143"
-         x="114.1488"
-         height="4"
-         width="15"
-         id="rect1410"
-         style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:0.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
-      <text
-         id="text1414"
-         y="252.77678"
-         x="82.209816"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-         xml:space="preserve"><tspan
-           style="font-size:3.52777767px;stroke-width:0.26458332"
-           y="252.77678"
-           x="82.209816"
-           id="tspan1412"
-           sodipodi:role="line">bbb 22mm</tspan></text>
-    </g>
-    <g
-       transform="rotate(180,102.84401,254.6595)"
+       transform="rotate(180,86.753155,258.13009)"
        id="g1430">
       <rect
          style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:0.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
@@ -134,7 +166,7 @@
     </g>
     <g
        id="g1441"
-       transform="translate(10.456497,-0.0113365)">
+       transform="translate(-20.537551,-17.776218)">
       <rect
          y="210.06548"
          x="83.532738"
@@ -155,7 +187,7 @@
            sodipodi:role="line">lipo</tspan></text>
     </g>
     <g
-       transform="translate(86.719615,-0.16791944)"
+       transform="translate(59.883305,-16.798871)"
        id="g1449">
       <rect
          style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
@@ -177,128 +209,186 @@
            style="stroke-width:0.26458332">lipo</tspan></text>
     </g>
     <g
-       id="g1472"
-       transform="translate(-35.814117,11.22532)">
+       transform="translate(-278.6042,-19.335119)"
+       id="g870">
       <g
-         id="g1460">
+         id="g3071"
+         transform="translate(48.758928,81.26488)">
         <rect
-           style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-           id="rect1451"
-           width="31"
-           height="25"
-           x="123.03125"
-           y="154.50298" />
-        <rect
-           y="154.50298"
-           x="154.03125"
-           height="25"
-           width="21"
-           id="rect1453"
-           style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
-        <rect
-           style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-           id="rect1455"
-           width="12"
-           height="4"
-           x="175.00298"
-           y="165.00298" />
+           y="165.75897"
+           x="272.46103"
+           height="70"
+           width="15"
+           id="rect864"
+           style="opacity:0.95999995;fill:#c8b7b7;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+        <text
+           transform="rotate(-90)"
+           id="text868"
+           y="284.3385"
+           x="-233.8056"
+           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           xml:space="preserve"><tspan
+             id="tspan3064"
+             style="stroke-width:0.26458332"
+             y="284.3385"
+             x="-233.8056"
+             sodipodi:role="line">70mm wheel</tspan></text>
       </g>
+    </g>
+    <g
+       id="g3686"
+       transform="translate(73.398131,8.7393242)">
+      <rect
+         y="242.57143"
+         x="65.011902"
+         height="22"
+         width="49"
+         id="rect3678"
+         style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:0.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         y="251.57143"
+         x="114.1488"
+         height="4"
+         width="15"
+         id="rect3680"
+         style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:0.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
       <text
-         id="text1464"
-         y="167.64156"
-         x="129.89299"
+         id="text3684"
+         y="252.77678"
+         x="82.209816"
          style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
          xml:space="preserve"><tspan
            style="font-size:3.52777767px;stroke-width:0.26458332"
-           y="167.64156"
-           x="129.89299"
-           id="tspan1462"
-           sodipodi:role="line">ali 25mm</tspan></text>
-    </g>
-    <rect
-       style="opacity:0.95999995;fill:#000000;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect1474"
-       width="80"
-       height="10"
-       x="118.66767"
-       y="268.66943" />
-    <rect
-       y="158.01984"
-       x="56.126602"
-       height="90"
-       width="10"
-       id="rect1476"
-       style="opacity:0.95999995;fill:#000000;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
-    <rect
-       style="opacity:0.95999995;fill:#000000;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect851"
-       width="10"
-       height="90"
-       x="244.81889"
-       y="159.62346" />
-    <g
-       id="g862"
-       transform="translate(-101.56242,-20.312484)">
-      <rect
-         y="236.06255"
-         x="324.99973"
-         height="80"
-         width="15"
-         id="rect853"
-         style="opacity:0.95999995;fill:#c8b7b7;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
-      <text
-         transform="rotate(-90)"
-         id="text857"
-         y="335.74326"
-         x="-306.755"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-         xml:space="preserve"><tspan
-           style="stroke-width:0.26458332"
-           y="335.74326"
-           x="-306.755"
-           id="tspan855"
-           sodipodi:role="line">80mm wheel</tspan></text>
+           y="252.77678"
+           x="82.209816"
+           id="tspan3682"
+           sodipodi:role="line">bbb 22mm</tspan></text>
     </g>
     <g
-       transform="translate(-251.76789,-20.847023)"
-       id="g870">
-      <rect
-         style="opacity:0.95999995;fill:#c8b7b7;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
-         id="rect864"
-         width="15"
-         height="80"
-         x="324.99973"
-         y="236.06255" />
+       id="g3696"
+       transform="rotate(-180,262.75433,272.16731)">
+      <g
+         transform="translate(48.758928,81.26488)"
+         id="g3694">
+        <rect
+           style="opacity:0.95999995;fill:#c8b7b7;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3688"
+           width="15"
+           height="70"
+           x="272.46103"
+           y="165.75897" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+           x="-233.8056"
+           y="284.3385"
+           id="text3692"
+           transform="rotate(-90)"><tspan
+             sodipodi:role="line"
+             x="-233.8056"
+             y="284.3385"
+             style="stroke-width:0.26458332"
+             id="tspan3690">70mm wheel</tspan></text>
+      </g>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:9.96312809;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 29.878555,289.06255 29.085731,99.100075"
+       id="path3729"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3733"
+       d="M 219.59766,289.44053 218.80482,99.478055"
+       style="fill:none;stroke:#000000;stroke-width:9.96312714;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+       transform="rotate(180,157.09463,152.31333)"
+       id="g3749">
+      <g
+         id="g3743">
+        <rect
+           y="154.50298"
+           x="123.03125"
+           height="25"
+           width="31"
+           id="rect3737"
+           style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+        <rect
+           style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+           id="rect3739"
+           width="21"
+           height="25"
+           x="154.03125"
+           y="154.50298" />
+        <rect
+           y="165.00298"
+           x="175.00298"
+           height="4"
+           width="12"
+           id="rect3741"
+           style="opacity:0.95999995;fill:none;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+      </g>
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-         x="-306.755"
-         y="335.74326"
-         id="text868"
+         x="129.89299"
+         y="167.64156"
+         id="text3747"><tspan
+           sodipodi:role="line"
+           id="tspan3745"
+           x="129.89299"
+           y="167.64156"
+           style="font-size:3.52777767px;stroke-width:0.26458332">ali 25mm</tspan></text>
+    </g>
+    <g
+       id="g3766"
+       transform="translate(16.630952,2.6458333)"
+       style="stroke:#000000">
+      <rect
+         y="112.54761"
+         x="19.276785"
+         height="100"
+         width="21"
+         id="rect3751"
+         style="opacity:1;fill:#cccccc;stroke:#000000;stroke-width:0.25;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         transform="rotate(-90)"
+         id="text3755"
+         y="33.778343"
+         x="-184.94606"
+         style="font-style:normal;font-weight:normal;font-size:4.23333311px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="stroke:#000000;stroke-width:0.26458332"
+           y="33.778343"
+           x="-184.94606"
+           id="tspan3753"
+           sodipodi:role="line">20mm ali angle</tspan></text>
+    </g>
+    <g
+       style="stroke:#000000"
+       transform="translate(173.49107,3.4017857)"
+       id="g6754">
+      <rect
+         style="opacity:1;fill:#cccccc;stroke:#000000;stroke-width:0.25;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect6748"
+         width="21"
+         height="100"
+         x="19.276785"
+         y="112.54761" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.23333311px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.26458332"
+         x="-184.94606"
+         y="33.778343"
+         id="text6752"
          transform="rotate(-90)"><tspan
            sodipodi:role="line"
-           id="tspan866"
-           x="-306.755"
-           y="335.74326"
-           style="stroke-width:0.26458332">80mm wheel</tspan></text>
+           id="tspan6750"
+           x="-184.94606"
+           y="33.778343"
+           style="stroke:#000000;stroke-width:0.26458332">20mm ali angle</tspan></text>
     </g>
-    <rect
-       y="104.56595"
-       x="24.588799"
-       height="10"
-       width="40"
-       id="rect872"
-       style="opacity:0.95999995;fill:#000000;stroke:#666666;stroke-width:1;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="24.054258"
-       y="100.82417"
-       id="text876"><tspan
-         sodipodi:role="line"
-         id="tspan874"
-         x="24.054258"
-         y="100.82417"
-         style="stroke-width:0.26458332">nut strip</tspan></text>
   </g>
 </svg>
