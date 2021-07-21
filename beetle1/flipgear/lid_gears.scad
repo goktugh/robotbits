@@ -33,14 +33,18 @@ module motorgear() {
 }
 
 
+lidgear_teeth = 79;
 lidgear_angle = 100;
+lidgear_thickness_offset = 22; // mm centre is above the lid, hinge + thickness.
+lidgear_width_offset = 15; // distance from hinge
 
 module lidgear() {
-    num_teeth = 65;
+    num_teeth = lidgear_teeth;
     bore = 24.0; // Diameter of bore (not radius)
 
     difference() {        
         intersection() {
+            translate([lidgear_thickness_offset,-lidgear_width_offset,0])
             herringbone_gear (tooth_modulus, num_teeth, gears_thickness, bore, 
                 pressure_angle=pressure_angle, helix_angle=-helix_angle,
                 optimized=false);
@@ -52,26 +56,32 @@ module lidgear() {
                 translate([-100,0,0]) cube([200,200,200], center=true);
         }
         // Screw holes....
-        for (n=[20,40,60]) {
-            translate([0,n,gears_thickness/2])
-                rotate([0,90,0])
-                    cylinder(r=lid_hole_radius, h=40, center=true);
-        }
-        
-        lid_hole_radius = 2.5;
-        translate([0,0,-1])
-        linear_extrude(100) {
-            intersection() {
-                circle(r=60);                
-                translate([-15,15])
-                    mirror([1,0])
-                    square([100,100]);
-            };
+        lid_hole_radius = 2.75;
+        translate([0, -(lidgear_width_offset/2), 0])
+        {
+            for (n=[20,40,60]) {
+                translate([0,n,gears_thickness/2])
+                    rotate([0,90,0])
+                        cylinder(r=lid_hole_radius, h=40, center=true);
+            }
+            // Indicator hole
+            translate([0,40,0])
+                cylinder(r=0.5, h=40, center=true);
+            // Cutout for general weight-saving
+            translate([0,0,-1])
+            linear_extrude(100) {
+                intersection() {
+                    circle(r=60);                
+                    translate([-15,15])
+                        mirror([1,0])
+                        square([100,100]);
+                };
+            }
         }
     }
 }
 
-centre_distances = 93.0;
+centre_distances = 96.0;
 
 module main() {
     translate([-centre_distances,0,0]) motorgear();
