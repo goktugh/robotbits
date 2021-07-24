@@ -5,6 +5,7 @@ pressure_angle = 20;
 helix_angle = 30;
 
 gears_thickness = 20.0;
+lidgear_thickness = 12.0;
 
 module motorgear() {
     num_teeth = 12;
@@ -44,8 +45,8 @@ module lidgear() {
 
     difference() {        
         intersection() {
-            translate([lidgear_thickness_offset,-lidgear_width_offset,0])
-            herringbone_gear (tooth_modulus, num_teeth, gears_thickness, bore, 
+            translate([lidgear_thickness_offset,-lidgear_width_offset,(gears_thickness-lidgear_thickness) /2])
+            herringbone_gear (tooth_modulus, num_teeth, lidgear_thickness, bore, 
                 pressure_angle=pressure_angle, helix_angle=-helix_angle,
                 optimized=false);
             a1 = 90 - (lidgear_angle/2);
