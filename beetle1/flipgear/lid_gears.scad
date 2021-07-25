@@ -1,4 +1,5 @@
 use <gears.scad>;
+use <chamferlib.scad>;
 
 tooth_modulus = 2.4;
 pressure_angle = 20;
@@ -10,7 +11,6 @@ lidgear_thickness = 12.0;
 module motorgear() {
     num_teeth = 12;
     splodgefactor = 0.25; // Diam.
-    bore = 4 + splodgefactor; // Diameter (not radius) of centre hole
     /* Herringbone_gear; uses the module "spur_gear"
     modul = Height of the Tooth Tip beyond the Pitch Circle
     tooth_number = Number of Gear Teeth
@@ -20,16 +20,17 @@ module motorgear() {
     helix_angle = Helix Angle to the Axis of Rotation, Standard = 0° (Spur Teeth)
     optimized = Holes for Material-/Weight-Saving */
 
-    union() {
+    bore = 0; // Diameter (not radius) of centre hole
+    difference() {
         herringbone_gear (tooth_modulus, num_teeth, gears_thickness, bore, 
             pressure_angle=pressure_angle, helix_angle=helix_angle);
-        // For d-shaft.
-        // Need a ~ 0.5mm flat which does not go all the way.
-        linear_extrude(gears_thickness - 3.0) {
-            translate([1.5,-5]) {
-                square([3,10]);
-            }
-        }
+        // Hex cutout - 8mm across flat
+        across_flat = 8.6; // Allow for splodge
+        cos_30 = 0.866;
+        across_edge = across_flat / cos_30; 
+        translate([0,0,-1]) cylinder($fn=6, r=(across_edge/2), h=30);
+        // Cutout for set-screw
+        translate([-3,0,14]) chamferredbox(size=[6,20,20], radius=2.0);
     }
 }
 
@@ -63,7 +64,10 @@ module lidgear() {
             for (n=[20,40,60]) {
                 translate([0,n,gears_thickness/2])
                     rotate([0,90,0])
-                        cylinder(r=lid_hole_radius, h=40, center=true);
+                        union() {
+                            cylinder(r=lid_hole_radius, h=40, center=true);
+                            cylinder(r1=lid_hole_radius, r2=lid_hole_radius+2, h=2, center=true);
+                        }
             }
             // Indicator hole
             translate([0,40,0])
