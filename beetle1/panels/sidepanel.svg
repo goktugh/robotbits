@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="552.10571"
-     inkscape:cy="150.68804"
+     inkscape:cx="653.71227"
+     inkscape:cy="359.87655"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -91,6 +91,30 @@
        cx="174"
        id="circle2303"
        style="opacity:1;fill:none;stroke:#008000;stroke-width:0.25;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none" />
+    <circle
+       style="opacity:1;fill:#000000;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path1802"
+       cx="86"
+       cy="177"
+       r="1" />
+    <circle
+       style="opacity:1;fill:#000000;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path1802-2"
+       cx="110"
+       cy="177"
+       r="1" />
+    <circle
+       style="opacity:1;fill:#000000;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path1802-28"
+       cx="174"
+       cy="241"
+       r="1" />
+    <circle
+       style="opacity:1;fill:#000000;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path1802-9"
+       cx="224"
+       cy="241"
+       r="1" />
   </g>
   <g
      inkscape:groupmode="layer"
