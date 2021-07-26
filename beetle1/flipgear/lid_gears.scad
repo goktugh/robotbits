@@ -30,7 +30,7 @@ module motorgear() {
         across_edge = across_flat / cos_30; 
         translate([0,0,-1]) cylinder($fn=6, r=(across_edge/2), h=30);
         // Cutout for set-screw
-        translate([-3,0,14]) chamferredbox(size=[6,20,20], radius=2.0);
+        translate([-3,0,-14]) chamferredbox(size=[6,20,20], radius=2.0);
     }
 }
 
