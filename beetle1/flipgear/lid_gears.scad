@@ -35,15 +35,19 @@ module motorgear() {
 }
 
 
-lidgear_teeth = 79;
+lidgear_teeth = 73;
 lidgear_angle = 100;
-lidgear_thickness_offset = 22; // mm centre is above the lid, hinge + thickness.
+lidgear_thickness_offset = 12; // mm centre is above the lid, hinge + thickness.
 lidgear_width_offset = 15; // distance from hinge
 
 module lidgear() {
     num_teeth = lidgear_teeth;
     bore = 24.0; // Diameter of bore (not radius)
 
+    // color("green") translate([lidgear_thickness_offset,-lidgear_width_offset,0] ) {
+    //     cylinder(r=1, h=30);
+    // }
+    
     difference() {        
         intersection() {
             translate([lidgear_thickness_offset,-lidgear_width_offset,(gears_thickness-lidgear_thickness) /2])
@@ -81,6 +85,16 @@ module lidgear() {
                         mirror([1,0])
                         square([100,100]);
                 };
+            }
+        }
+        
+        // Indicator grooves.
+        translate([lidgear_thickness_offset,-lidgear_width_offset,
+                (gears_thickness+lidgear_thickness)/2 + 0.3]) {
+            for (n=[15,30,45,60,75]) {
+                rotate([0,0,n]) 
+                    rotate([90,0,0]) 
+                        cylinder($fn=4, r=1, h=200, center=true);
             }
         }
     }
