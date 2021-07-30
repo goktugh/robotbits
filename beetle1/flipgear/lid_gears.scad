@@ -9,7 +9,7 @@ gears_thickness = 20.0;
 lidgear_thickness = 12.0;
 
 module motorgear() {
-    num_teeth = 12;
+    num_teeth = 17;
     splodgefactor = 0.25; // Diam.
     /* Herringbone_gear; uses the module "spur_gear"
     modul = Height of the Tooth Tip beyond the Pitch Circle
@@ -30,13 +30,13 @@ module motorgear() {
         across_edge = across_flat / cos_30; 
         translate([0,0,-1]) cylinder($fn=6, r=(across_edge/2), h=30);
         // Cutout for set-screw
-        translate([-3,0,-14]) chamferredbox(size=[6,20,20], radius=2.0);
+        translate([-3,0,-14]) chamferredbox(size=[6,40,20], radius=2.0);
     }
 }
 
 
-lidgear_teeth = 73;
-lidgear_angle = 100;
+lidgear_teeth = 55;
+lidgear_angle = 120;
 lidgear_thickness_offset = 12; // mm centre is above the lid, hinge + thickness.
 lidgear_width_offset = 15; // distance from hinge
 
@@ -65,11 +65,11 @@ module lidgear() {
         lid_hole_radius = 2.75;
         translate([0, -(lidgear_width_offset/2), 0])
         {
-            for (n=[20,40,60]) {
+            for (n=[20,40]) {
                 translate([0,n,gears_thickness/2])
                     rotate([0,90,0])
                         union() {
-                            cylinder(r=lid_hole_radius, h=40, center=true);
+                            cylinder(r=lid_hole_radius, h=35, center=true);
                             cylinder(r1=lid_hole_radius, r2=lid_hole_radius+2, h=2, center=true);
                         }
             }
@@ -80,8 +80,8 @@ module lidgear() {
             translate([0,0,-1])
             linear_extrude(100) {
                 intersection() {
-                    circle(r=60);                
-                    translate([-15,15])
+                    circle(r=40);                
+                    translate([-10,10])
                         mirror([1,0])
                         square([100,100]);
                 };
