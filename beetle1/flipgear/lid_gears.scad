@@ -9,7 +9,7 @@ gears_thickness = 20.0;
 lidgear_thickness = 12.0;
 
 module motorgear() {
-    num_teeth = 17;
+    num_teeth = 13;
     splodgefactor = 0.25; // Diam.
     /* Herringbone_gear; uses the module "spur_gear"
     modul = Height of the Tooth Tip beyond the Pitch Circle
