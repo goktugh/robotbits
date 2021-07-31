@@ -6,7 +6,7 @@ pressure_angle = 20;
 helix_angle = 30;
 
 gears_thickness = 20.0;
-lidgear_thickness = 12.0;
+lidgear_thickness = 16.0;
 
 module motorgear() {
     num_teeth = 13;
@@ -48,35 +48,46 @@ module lidgear() {
     //     cylinder(r=1, h=30);
     // }
     
-    difference() {        
-        intersection() {
-            translate([lidgear_thickness_offset,-lidgear_width_offset,(gears_thickness-lidgear_thickness) /2])
-            herringbone_gear (tooth_modulus, num_teeth, lidgear_thickness, bore, 
-                pressure_angle=pressure_angle, helix_angle=-helix_angle,
-                optimized=false);
-            a1 = 90 - (lidgear_angle/2);
-            // Cut off the parts we do not need.
-            rotate([0,0,0]) 
-                translate([-100,0,0]) cube([200,200,200], center=true);
-            rotate([0,0,-a1*2]) 
-                translate([-100,0,0]) cube([200,200,200], center=true);
+    centre_z = (gears_thickness /2);
+    
+    difference() {
+        union() {            
+            intersection() {
+                translate([lidgear_thickness_offset,-lidgear_width_offset,(gears_thickness-lidgear_thickness) /2])
+                herringbone_gear (tooth_modulus, num_teeth, lidgear_thickness, bore, 
+                    pressure_angle=pressure_angle, helix_angle=-helix_angle,
+                    optimized=false);
+                a1 = 90 - (lidgear_angle/2);
+                // Cut off the parts we do not need.
+                rotate([0,0,0]) 
+                    translate([-100,0,0]) cube([200,200,200], center=true);
+                rotate([0,0,-a1*2]) 
+                    translate([-100,0,0]) cube([200,200,200], center=true);
+            }
+            // Side panels
+            panel_y_size = 36;
+            panel_z_size = 60;
+            translate([-10,5,centre_z-(panel_z_size/2)]) {
+                chamferredbox(size=[10,panel_y_size,panel_z_size], radius = 2.0);
+            }
         }
         // Screw holes....
-        lid_hole_radius = 2.75;
         translate([0, -(lidgear_width_offset/2), 0])
         {
             for (n=[20,40]) {
                 translate([0,n,gears_thickness/2])
-                    rotate([0,90,0])
-                        union() {
-                            cylinder(r=lid_hole_radius, h=35, center=true);
-                            cylinder(r1=lid_hole_radius, r2=lid_hole_radius+2, h=2, center=true);
-                        }
+                thread_insert_cutout();
+            }
+            // Cutouts at the side, -z and +z
+            for (z=[-20,20]) {
+                translate([0,40,gears_thickness/2 + z])
+                thread_insert_cutout();
             }
             // Indicator hole
             translate([0,40,0])
-                cylinder(r=0.5, h=40, center=true);
+                cylinder(r=0.5, h=80, center=true);
             // Cutout for general weight-saving
+            /*
             translate([0,0,-1])
             linear_extrude(100) {
                 intersection() {
@@ -86,9 +97,11 @@ module lidgear() {
                         square([100,100]);
                 };
             }
+            */
         }
         
         // Indicator grooves.
+        /*
         translate([lidgear_thickness_offset,-lidgear_width_offset,
                 (gears_thickness+lidgear_thickness)/2 + 0.3]) {
             for (n=[15,30,45,60,75]) {
@@ -97,7 +110,26 @@ module lidgear() {
                         cylinder($fn=4, r=1, h=200, center=true);
             }
         }
+        */
+        // Cutouts to improve strength
+        // NB this piece is in the -X direction of the axis.
+        translate([lidgear_thickness_offset,-lidgear_width_offset])
+        for (n=[0,20,40]) {
+            rotate([0,0,n+120])
+            translate([30,0]) cube([30,1,gears_thickness]);
+        }
     }
+}
+
+module thread_insert_cutout()
+{
+    lid_hole_radius = 2.75;
+    chamfer = 2.5;
+    rotate([0,90,0])
+        union() {
+            cylinder(r=lid_hole_radius, h=35, center=true);
+            cylinder(r1=lid_hole_radius, r2=lid_hole_radius+chamfer, h=chamfer, center=true);
+        }
 }
 
 centre_distances = 96.0;
