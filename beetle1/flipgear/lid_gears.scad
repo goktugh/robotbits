@@ -6,7 +6,7 @@ pressure_angle = 20;
 helix_angle = 30;
 
 gears_thickness = 20.0;
-lidgear_thickness = 16.0;
+lidgear_thickness = 14.0;
 
 module motorgear() {
     num_teeth = 13;
@@ -65,9 +65,9 @@ module lidgear() {
                     translate([-100,0,0]) cube([200,200,200], center=true);
             }
             // Side panels
-            panel_y_size = 36;
-            panel_z_size = 60;
-            translate([-10,5,centre_z-(panel_z_size/2)]) {
+            panel_y_size = 17;
+            panel_z_size = 56;
+            translate([-10,24,centre_z-(panel_z_size/2)]) {
                 chamferredbox(size=[10,panel_y_size,panel_z_size], radius = 2.0);
             }
         }
@@ -84,8 +84,8 @@ module lidgear() {
                 thread_insert_cutout();
             }
             // Indicator hole
-            translate([0,40,0])
-                cylinder(r=0.5, h=80, center=true);
+            // translate([0,40,0])
+            //      cylinder(r=0.5, h=80, center=true);
             // Cutout for general weight-saving
             /*
             translate([0,0,-1])
@@ -114,7 +114,9 @@ module lidgear() {
         // Cutouts to improve strength
         // NB this piece is in the -X direction of the axis.
         translate([lidgear_thickness_offset,-lidgear_width_offset])
-        for (n=[0,20,40]) {
+        
+        // Was 0,20,40
+        for (n=[20]) {
             rotate([0,0,n+120])
             translate([30,0]) cube([30,1,gears_thickness]);
         }
@@ -123,12 +125,12 @@ module lidgear() {
 
 module thread_insert_cutout()
 {
-    lid_hole_radius = 2.75;
+    lid_hole_radius = 3.0;
     chamfer = 2.5;
     rotate([0,90,0])
         union() {
             cylinder(r=lid_hole_radius, h=35, center=true);
-            cylinder(r1=lid_hole_radius, r2=lid_hole_radius+chamfer, h=chamfer, center=true);
+            cylinder(r1=lid_hole_radius, r2=lid_hole_radius+chamfer, h=chamfer*2, center=true);
         }
 }
 
