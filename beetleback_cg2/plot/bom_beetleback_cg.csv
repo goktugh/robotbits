@@ -1,0 +1,16 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"C1,C2,C4,C9,C3,C8";"C_0402_1005Metric";6;"2.2uF 50V";;;
+2;"J4";"bbb_motorpin";1;"motor_pad_2";;;
+3;"D1,D3";"D_SOD-123";2;"B5819W";;;
+4;"R1,R4";"R_0402_1005Metric";2;"1k";;;
+5;"C5,C6,C7";"C_1206_3216Metric";3;"22uF 25v";;;
+6;"R5,R6,R3,R2";"R_0402_1005Metric";4;"10R";;;
+7;"Q2,Q1";"SOIC-8_3.9x4.9mm_P1.27mm";2;"IRF8313PBF";;;
+8;"U1";"SOIC-8_3.9x4.9mm_P1.27mm";1;"ATtiny13A-SS";;;
+9;"D2";"LED_0603_1608Metric";1;"Red LED";;;
+10;"J2";"SolderWire-1sqmm_1x02_P5.4mm_D1.4mm_OD2.7mm";1;"powerin";;;
+11;"U3";"SOT-23-5";1;"HT7550-2";;;
+12;"J1";"PinHeader_1x03_P2.54mm_Vertical";1;"signalin";;;
+13;"U2,U4";"SOIC-8_3.9x4.9mm_P1.27mm";2;"ADP3110A";;;
+14;"J3";"bbb_motorpin";1;"motor_pad_1";;;
+15;"U5";"SOT-23-5";1;"HT75C0-2";;;
