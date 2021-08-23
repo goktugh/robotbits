@@ -24,8 +24,9 @@ module motorgear() {
     difference() {
         herringbone_gear (tooth_modulus, num_teeth, gears_thickness, bore, 
             pressure_angle=pressure_angle, helix_angle=helix_angle);
-        // Hex cutout - 8mm across flat
-        across_flat = 8.6; // Allow for splodge
+        // Hex cutout - *WAS* 8mm across flat
+        // Now 12.7 across flat.
+        across_flat = 12.7 + 0.4; // Allow for splodge
         cos_30 = 0.866;
         across_edge = across_flat / cos_30; 
         translate([0,0,-1]) cylinder($fn=6, r=(across_edge/2), h=30);
