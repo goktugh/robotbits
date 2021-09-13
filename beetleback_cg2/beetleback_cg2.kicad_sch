@@ -2483,7 +2483,7 @@
     (uuid 0e9c9460-869c-49ce-8575-fbed689c08a1)
     (property "Reference" "J1" (id 0) (at 23.0124 35.56 0))
     (property "Value" "signalin" (id 1) (at 23.0124 38.1 0))
-    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" (id 2) (at 20.32 43.815 0)
+    (property "Footprint" "beetleback:rx_pins" (id 2) (at 20.32 43.815 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 20.32 43.815 0)
@@ -3033,7 +3033,7 @@
       (reference "D3") (unit 1) (value "B5819W") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/0e9c9460-869c-49ce-8575-fbed689c08a1"
-      (reference "J1") (unit 1) (value "signalin") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical")
+      (reference "J1") (unit 1) (value "signalin") (footprint "beetleback:rx_pins")
     )
     (path "/62bde10e-00a3-4c9f-8511-9b691a7797c4"
       (reference "J2") (unit 1) (value "powerin") (footprint "beetleback:beetlepower_in")
