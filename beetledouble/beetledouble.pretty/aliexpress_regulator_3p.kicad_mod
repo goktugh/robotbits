@@ -1,5 +1,5 @@
-(footprint "aliexpress_regulator_3p" (version 20210424) (generator pcbnew) (layer "F.Cu")
-  (tedit 608E874C)
+(footprint "aliexpress_regulator_3p" (version 20210824) (generator pcbnew) (layer "F.Cu")
+  (tedit 614CAB6E)
   (descr "Through hole straight pin header, 1x03, 2.54mm pitch, single row")
   (tags "Through hole pin header THT 1x03 2.54mm single row")
   (attr through_hole)
@@ -45,9 +45,9 @@
   (pad "1" thru_hole rect locked (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) (tstamp cf54eb8b-eddd-4469-8d5c-3e33cf6b3b15))
   (pad "2" thru_hole oval locked (at 0 2.54) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) (tstamp b15fdf78-4ec1-4398-b312-e4a9ad16cc4e))
   (pad "3" thru_hole oval locked (at 0 5.08) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) (tstamp 5e381b19-de2c-4f00-8eb4-4e78ff24bf07))
-  (model "${KICAD6_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x03_P2.54mm_Vertical.wrl"
-    (offset (xyz 0 0 0))
+  (model "${KICAD6_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-220-3_Horizontal_TabDown.wrl"
+    (offset (xyz 0 0 2))
     (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
+    (rotate (xyz 0 0 90))
   )
 )
