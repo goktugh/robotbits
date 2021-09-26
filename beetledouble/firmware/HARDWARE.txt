@@ -1,0 +1,67 @@
+mcu is attiny1614
+
+MISC:
+
+PA0 - UPDI (only)
+PA1 - TXDEBUG
+PA2 - CONFIG1 - shorted low for CONFIG1 option (default not shorted)
+
+INPUTS:
+
+PA3 - PWMIN1
+PB3 - PWMIN2
+
+Can use TCB0 and TCB1 to measure the width of the pulses. The events
+can use any gpio pin for input.
+
+We can trigger an irq on the event OR
+just poll the registers in the main loop.
+
+
+PB2 - GNDSHUNT - use ADC. Senses current.
+    connected to a 0.005 ohm sense resistor with a Res/Cap for low pass
+    
+
+MOTORS:
+
+Motor enable pins can be driven by TCA0 outputs. 
+
+Alternatively the pins can be driven directly by programmed IO in the
+main loop. That might be easier; leave TCA to run free and just use
+it as a time reference.
+
+PB0 - MOTOR_ENABLE_1 - Active high enables the gates on M1
+    Also connected to LED.
+PA4 - MOTORF_1 - drives side 1 of M1 high
+PA5 - MOTORR_1 - drives side 2 of M2 high
+
+
+
+PB1 - MOTOR_ENABLE_2 - Active high enables the gates on M2
+PA6 - MOTORF_2
+PA7 - MOTORR_2
+
+
+--- LOOPING
+Suppose we have a PWM frequency of 200hz,
+PWM period 5ms
+If clock freq is 10mhz,
+Divide by 16 so TCA period is 1.6us
+
+Run Timer A up to 62500 then we will have a timer restart exactly 100ms
+
+We can use this timer for general timing as well as PWM output.
+
+Duty cycle:
+    Run MOTOR1 and MOTOR2 at the required duty cycle on their ENABLE pins
+    BUT always turn both sides low for a short time e.g. 1%
+        to allow bootstrap capacitors to recharge.
+        
+
+Assuming 5mohm
+
+    P = I^2R
+
+at 20 amps P = 400* 0.005 = 2 watts
+at 25 amps P = 625 * 0.005 = 3.125 watts - approx max continuous
+
