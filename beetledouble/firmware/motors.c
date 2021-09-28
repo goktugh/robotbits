@@ -58,11 +58,12 @@ PA7 - MOTORR_2
  * the mosfet high sides on fully, which could cause troubel.
  */
 
-#define TCA_PERIOD (62500)
+#define TCA_PERIOD (32768)
 
 // PWM_PERIOD should be a divisor of TCA_PERIOD.
 // this is the period of our duty cycle pulses.
-#define PWM_PERIOD (3125)
+// Could be a power of two for faster divide
+#define PWM_PERIOD (4096)
 
 static void motors_init_timer()
 {
@@ -107,7 +108,7 @@ void motors_init()
 
 static void handle_timer_overflow()
 {
-	diag_puts("x\r\n");
+	// diag_puts("x\r\n");
 	overflow_count += 1;
 }
 
@@ -118,15 +119,20 @@ static void set_motor_outputs(uint8_t index,
 	bool enable=0;
 	bool drivef=0, driver=0;
 	// Recharge capacitors:
-	if (pwm_offset< 30) {
+	if (pwm_offset< 80) {
 		enable=1;
 		drivef=0; driver=0;
 	} else {
 		// Generate signal.
 		// TODO: Run duty cycle / direction
-		enable = (overflow_count & 0x10);
-		drivef = 1;
-		driver = 0;
+		enable = (overflow_count & 0x40);
+		if (overflow_count & 0x100) {
+			drivef = 1;
+			driver = 0;
+		} else {			
+			drivef = 0;
+			driver = 1;
+		}
 	}
 	
 	PORT_t * port_enable;

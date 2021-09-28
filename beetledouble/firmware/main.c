@@ -10,6 +10,7 @@
 
 #include "diag.h"
 #include "motors.h"
+#include "rxin.h"
 
 static void init_clock()
 {
@@ -46,8 +47,10 @@ int main(void)
     init_serial();
     diag_puts("\n\nBeetledouble ESC starting\r\n");
     motors_init();
+    rxin_init();
     PORTB.DIRSET = 1 << 0; // PB0 (motor_enable_1 led)
     while(1) {
         motors_loop();
+        rxin_loop();
     }
 }

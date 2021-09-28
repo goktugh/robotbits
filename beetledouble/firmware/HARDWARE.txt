@@ -8,8 +8,8 @@ PA2 - CONFIG1 - shorted low for CONFIG1 option (default not shorted)
 
 INPUTS:
 
-PA3 - PWMIN1
-PB3 - PWMIN2
+PB3 - PWMIN1
+PA3 - PWMIN2
 
 Can use TCB0 and TCB1 to measure the width of the pulses. The events
 can use any gpio pin for input.

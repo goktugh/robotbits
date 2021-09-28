@@ -3,17 +3,19 @@
 #
 OBJDIR=obj_$(MCU)
 
-OBJ_FILES=main.o diag.o motors.o
+OBJ_FILES=main.o diag.o motors.o rxin.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
-HEADERS=diag.h
+HEADERS=diag.h motors.h rxin.h
 
 MAKEFILES=Makefile common.mk
 
 ELF=$(OBJDIR)/main.elf
 HEX=$(OBJDIR)/main.hex
 
-LTOFLAGS=-flto
+LTOFLAGS=
+# LTOFLAGS=-flto
 # -flto is link-time optimisation and must be used for compile and link.
+
 LINKFLAGS=-Os $(LTOFLAGS)
 
 link: $(OBJECTS) $(HEADERS)
