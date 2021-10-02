@@ -12,8 +12,8 @@ MAKEFILES=Makefile common.mk
 ELF=$(OBJDIR)/main.elf
 HEX=$(OBJDIR)/main.hex
 
-LTOFLAGS=
-# LTOFLAGS=-flto
+# LTOFLAGS=
+LTOFLAGS=-flto
 # -flto is link-time optimisation and must be used for compile and link.
 
 LINKFLAGS=-Os $(LTOFLAGS)

@@ -2,10 +2,13 @@
 #include <stdbool.h>
 #include <avr/io.h>
 
-#define F_CPU 10000000 /* 10MHz / prescale=2 */
+#define F_CPU 20000000 /* 10MHz / prescale=2 */
 #include <util/delay.h>
 
 #include "diag.h"
+#include "motors.h"
+
+motor_command_t motors_commands[MOTORS_COUNT];
 
 static uint16_t overflow_count;
 
@@ -60,10 +63,12 @@ PA7 - MOTORR_2
 
 #define TCA_PERIOD (32768)
 
+#define RECHARGE_TIME_US (40)
+
 // PWM_PERIOD should be a divisor of TCA_PERIOD.
 // this is the period of our duty cycle pulses.
 // Could be a power of two for faster divide
-#define PWM_PERIOD (4096)
+#define PWM_PERIOD (2048)
 
 static void motors_init_timer()
 {
@@ -71,9 +76,9 @@ static void motors_init_timer()
 	 * We use TCA in the simplest mode possible with no output generation
 	 * and no interrupts, just poll its counts.
 	 */
-	// TCA - divide by 16 diving a period of 1.6us
-	// Count up to 62500 giving a wraparound time of
-	// 100000 us or 100ms
+	// TCA - divide by 16 diving a period of 0.8us
+	// Count up to TCA_PERIOD giving a wraparound time of
+	// about 26ms
 	// Clock selector: divide by 16.
 	TCA0.SINGLE.PER = TCA_PERIOD;	
 	TCA0.SINGLE.CTRLA = (0x04 << 1) |
@@ -112,19 +117,25 @@ static void handle_timer_overflow()
 	overflow_count += 1;
 }
 
+// Previous tick data:
+static uint16_t last_pwm_offset[2];
+
 static void set_motor_outputs(uint8_t index,
 	uint16_t pwm_offset)
 {
 	// pwm_offset is a time signal from 0... PWM_PERIOD
 	bool enable=0;
 	bool drivef=0, driver=0;
-	// Recharge capacitors:
-	if (pwm_offset< 80) {
+	bool recharge = 0;
+	if (pwm_offset < last_pwm_offset[index]) {
+		// Recharge capacitors:
 		enable=1;
 		drivef=0; driver=0;
+		recharge=1;
 	} else {
 		// Generate signal.
 		// TODO: Run duty cycle / direction
+		/* DEMO auto mode:
 		enable = (overflow_count & 0x40);
 		if (overflow_count & 0x100) {
 			drivef = 1;
@@ -132,6 +143,20 @@ static void set_motor_outputs(uint8_t index,
 		} else {			
 			drivef = 0;
 			driver = 1;
+		}
+		*/
+		if (motors_commands[index].brake) {
+			// braking, turn on both low sides.
+			enable = 1; drivef = 0; driver = 0;
+		} else {
+			// Scale this into the range 0..255
+			uint8_t count8 = pwm_offset / 8;
+			enable = (count8 <= motors_commands[index].duty);
+			if (motors_commands[index].direction) {
+				driver = 1; drivef = 0; // reverse
+			} else {
+				driver = 0; drivef = 1; // forward
+			}
 		}
 	}
 	
@@ -167,6 +192,12 @@ static void set_motor_outputs(uint8_t index,
 		PORT_MOTOR.OUTSET = 1 << pin_reverse;
 	else
 		PORT_MOTOR.OUTCLR = 1 << pin_reverse;
+	last_pwm_offset[index] = pwm_offset;
+	if (recharge) {
+		// Do not try to do anything else while
+		// recharging the caps.
+		_delay_us(RECHARGE_TIME_US);
+	}
 }
 
 void motors_loop()

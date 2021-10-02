@@ -1,6 +1,6 @@
 #include <avr/io.h>
 
-#define F_CPU 10000000 /* 10MHz / prescale=2 */
+#define F_CPU 20000000 /* 20MHz / prescale=1 */
 #include <util/delay.h>
 
 #include <string.h>
@@ -15,7 +15,8 @@
 static void init_clock()
 {
     // This is where we change the cpu clock if required.
-    uint8_t val = CLKCTRL_PDIV_2X_gc | 0x1;  // 0x1 = PEN enable prescaler.
+    // uint8_t val = CLKCTRL_PDIV_2X_gc | 0x1;  // 0x1 = PEN enable prescaler.
+    uint8_t val = 0;  // 0 = no prescaler, full speed.
     _PROTECTED_WRITE(CLKCTRL.MCLKCTRLB, val);
     _delay_ms(10);
 }
@@ -48,7 +49,6 @@ int main(void)
     diag_puts("\n\nBeetledouble ESC starting\r\n");
     motors_init();
     rxin_init();
-    PORTB.DIRSET = 1 << 0; // PB0 (motor_enable_1 led)
     while(1) {
         motors_loop();
         rxin_loop();
