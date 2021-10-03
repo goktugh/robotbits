@@ -50,7 +50,30 @@ int main(void)
     motors_init();
     rxin_init();
     while(1) {
-        motors_loop();
+        bool timer_overflow = motors_loop();
         rxin_loop();
+        if (timer_overflow)
+			rxin_timer_overflow();
     }
 }
+
+/*
+
+TODO 
+1. Implement dead zone and centre braking (DONE)
+1. Implement failsafe / rx timeout which will set motor ot zero
+	zero power if no signal for a while (DONE)
+1. Implement over current protection using the ADC and shunt
+	- Overcurrent should cut out the motors (both) for a time
+	- Regardless of inputs, overcurrent should override.
+
+TESTING:
+1. Test dead zone / failsafe
+1. Test pulses too long / too short should not activate motor.
+1. MOAR CURRENT testing
+1. Check that the adc working by putting some current through
+	the shunt.
+1. Full test of overcurrent limit
+
+ 
+ */

@@ -33,7 +33,7 @@ void rxin_init()
     void init_tcb(TCB_t *tcb) {
         // Clock: divide the system clock by 2,
         // So it's counting in 20mhz / 2 100ns ticks
-        // So it wraps after (65536 / 10) milliseconds 
+        // So it wraps after (65536 / 10) microseconds 
         tcb->CTRLA = (0x1 << 1); // CLKSEL CLK_PER/2
         // Set count-mode
         tcb->CTRLB = 0x4; // Pulse-width measurement
@@ -55,6 +55,15 @@ static bool timer_has_overflowed[CHANNEL_COUNT];
 // Number of ticks - minimum length of valid pulse.
 #define COUNT_MIN 4000
 
+// The distance, in microseconds that we apply brake and don't drive.
+#define DEAD_ZONE_US 60
+
+// Number of timer loops since the last pulse on each channel.
+static uint8_t ticks_since_last_pulse[CHANNEL_COUNT];
+
+#define GOOD_PULSE_MIN 5
+static uint8_t good_pulse_count[CHANNEL_COUNT];
+
 void rxin_loop()
 {
     void check_timer(TCB_t *tcb, uint8_t index) {
@@ -69,6 +78,11 @@ void rxin_loop()
                 // Ignore.
                 return;
             }
+            // Do not turn the motors on until we receive GOOD_PULSE_MIN pulses.
+            if (good_pulse_count[index] < GOOD_PULSE_MIN) {
+                good_pulse_count[index] += 1;
+                return; // Do not activate.
+            }
             
             // This is in units of 100ns,
             // we need to divide by 10 to get microseconds,
@@ -82,14 +96,24 @@ void rxin_loop()
             pulsewidth_signed -= 15000; 
             // Now in the range approx -5000 to 5000
             uint16_t pulsewidth_abs = abs(pulsewidth_signed);
-            // scale
+            // scale to units of 16 ticks or about 1.6us 
             uint16_t pulsewidth_scaled = pulsewidth_abs / 16;
             // It is now in the range 0..312 (approx)
-            // clamp
-            if (pulsewidth_scaled > 255) pulsewidth_scaled = 255;
-            motors_commands[index].duty = (uint8_t) pulsewidth_scaled;
-            motors_commands[index].direction = (pulsewidth_signed > 0);
-            // TODO: centre brake 
+            // Calculate brake zone on the same scale
+            uint16_t brake_zone_scaled = ((DEAD_ZONE_US * 10) / 16);
+            int16_t drive_amount = pulsewidth_scaled - brake_zone_scaled;
+            uint8_t brake = (drive_amount < 0);
+            // clamp at max speed
+            if (drive_amount > 255) drive_amount = 255;
+            motors_commands[index].brake = brake;
+            if (brake) {
+                motors_commands[index].duty = 0;
+                motors_commands[index].direction = 0;
+            } else {
+                motors_commands[index].duty = (uint8_t) drive_amount;
+                motors_commands[index].direction = (pulsewidth_signed > 0);
+            }
+            ticks_since_last_pulse[index] = 0;
         } else {
             // Get signal
             uint8_t pin;
@@ -109,4 +133,30 @@ void rxin_loop()
     
     check_timer(&TCB1, 0);
     check_timer(&TCB0, 1);
+}
+
+/*
+ * Stop motors if channel is idle (no pulses)
+ * TCA wraps in about 26 ms,
+ * 
+ * Most receivers send pulses approximately every 20ms,
+ * We give them a lot of grace time before we shut off.
+ */
+#define IDLE_TICKS 8
+
+// Called when TCA overflows.
+void rxin_timer_overflow()
+{
+    for (uint8_t i=0; i<CHANNEL_COUNT; i++) {
+        ticks_since_last_pulse[i] += 1;
+        if (ticks_since_last_pulse[i] >= IDLE_TICKS) {
+            // Idle timeout this channel.
+            motors_commands[i].duty = 0;
+            motors_commands[i].brake = 0;
+            ticks_since_last_pulse[i] = 0;
+            // Reset the good pulse counter, so we need to receive
+            // several good pulses before the motors turn on.
+            good_pulse_count[i] = 0;
+        }
+    }
 }

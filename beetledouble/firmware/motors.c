@@ -128,35 +128,32 @@ static void set_motor_outputs(uint8_t index,
 	bool drivef=0, driver=0;
 	bool recharge = 0;
 	if (pwm_offset < last_pwm_offset[index]) {
-		// Recharge capacitors:
-		enable=1;
-		drivef=0; driver=0;
-		recharge=1;
+		// Recharge capacitors when pwm_offset wraps
+		recharge = 1;
+	}
+	// Calculate pwm
+	// Generate signal.
+	/* DEMO auto mode:
+	enable = (overflow_count & 0x40);
+	if (overflow_count & 0x100) {
+		drivef = 1;
+		driver = 0;
+	} else {			
+		drivef = 0;
+		driver = 1;
+	}
+	*/
+	if (motors_commands[index].brake) {
+		// braking, turn on both low sides.
+		enable = 1; drivef = 0; driver = 0;
 	} else {
-		// Generate signal.
-		// TODO: Run duty cycle / direction
-		/* DEMO auto mode:
-		enable = (overflow_count & 0x40);
-		if (overflow_count & 0x100) {
-			drivef = 1;
-			driver = 0;
-		} else {			
-			drivef = 0;
-			driver = 1;
-		}
-		*/
-		if (motors_commands[index].brake) {
-			// braking, turn on both low sides.
-			enable = 1; drivef = 0; driver = 0;
+		// Scale this into the range 0..255
+		uint8_t count8 = pwm_offset / 8;
+		enable = (count8 <= motors_commands[index].duty);
+		if (motors_commands[index].direction) {
+			driver = 1; drivef = 0; // reverse
 		} else {
-			// Scale this into the range 0..255
-			uint8_t count8 = pwm_offset / 8;
-			enable = (count8 <= motors_commands[index].duty);
-			if (motors_commands[index].direction) {
-				driver = 1; drivef = 0; // reverse
-			} else {
-				driver = 0; drivef = 1; // forward
-			}
+			driver = 0; drivef = 1; // forward
 		}
 	}
 	
@@ -177,35 +174,47 @@ static void set_motor_outputs(uint8_t index,
 		pin_reverse = PIN_MOTOR2R;
 		
 	}
-	// Set enable pin
-	if (enable) {
-		port_enable->OUTSET = 1 << pin_enable;
-	} else {
-		port_enable->OUTCLR = 1 << pin_enable;		
-	}
-	// Set drive
-	if (drivef) 
-		PORT_MOTOR.OUTSET = 1 << pin_forward;
-	else
-		PORT_MOTOR.OUTCLR = 1 << pin_forward;
-	if (driver)
-		PORT_MOTOR.OUTSET = 1 << pin_reverse;
-	else
-		PORT_MOTOR.OUTCLR = 1 << pin_reverse;
-	last_pwm_offset[index] = pwm_offset;
+
+	uint8_t bm_forward = 1 << pin_forward;
+	uint8_t bm_reverse = 1 << pin_reverse;
+	uint8_t bm_enable = 1 << pin_enable;
+
 	if (recharge) {
+		//Recharge then reactivate motor normally.
+		PORT_MOTOR.OUTCLR = bm_forward | bm_reverse;
+		port_enable->OUTSET = bm_enable;
 		// Do not try to do anything else while
 		// recharging the caps.
 		_delay_us(RECHARGE_TIME_US);
+		// Now fall through to set motor to desired speed
 	}
+
+	// Set enable pin
+	if (enable) {
+		port_enable->OUTSET = bm_enable;
+	} else {
+		port_enable->OUTCLR = bm_enable;		
+	}
+	// Set drive
+	if (drivef) 
+		PORT_MOTOR.OUTSET = bm_forward;
+	else
+		PORT_MOTOR.OUTCLR = bm_forward;
+	if (driver)
+		PORT_MOTOR.OUTSET = bm_reverse;
+	else
+		PORT_MOTOR.OUTCLR = bm_reverse;
+	last_pwm_offset[index] = pwm_offset;
 }
 
-void motors_loop()
+bool motors_loop()
 {
+	bool overflow=0;
 	if (TCA0.SINGLE.INTFLAGS & 0x1) {
 		// Overflow
 		TCA0.SINGLE.INTFLAGS = 0x1; // Clears the flag
 		handle_timer_overflow();
+		overflow = 1;
 	}
 	uint16_t p1, p2; // Motor pwm cycle positions
 	// range 0.. PWM_PERIOD
@@ -217,4 +226,5 @@ void motors_loop()
 			0, p1);
 	set_motor_outputs(
 			1, p2);
+	return overflow;
 }

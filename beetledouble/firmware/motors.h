@@ -14,4 +14,5 @@ extern motor_command_t motors_commands[MOTORS_COUNT];
 
 void motors_init();
 
-void motors_loop();
+// Returns true on timer overflow
+bool motors_loop();
