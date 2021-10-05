@@ -134,7 +134,7 @@ fi
 #   svn checkout 'http://svn.savannah.gnu.org/viewvc/avr-libc/trunk/avr-libc/'
 # 2. Patch it with the patch here:
 #   https://savannah.nongnu.org/patch/?9543#comment0
-#   An attachment: https://savannah.nongnu.org/patch/download.php?file_id=45738
+#   An attachment: https://savannah.nongnu.org/patch/download.php?file_id=48974
 #  patch with -p0
 #
 # 3. Enter the directory, run ./bootstrap (requires autoconf)
@@ -154,7 +154,7 @@ else
         rm -rf avr-libc
         svn checkout -r 2548 svn://svn.savannah.nongnu.org/avr-libc/trunk/avr-libc
         cd avr-libc
-        bzcat ../../avr-xmega3.patch.bz | patch -p0
+        xzcat ../../avrxmega3-v10.diff.xz | patch -p0
         ./bootstrap # requires autoconf
         ./configure --prefix=$PREFIX --build=`./config.guess` --host=avr
         make
