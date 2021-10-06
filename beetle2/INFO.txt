@@ -1,0 +1,54 @@
+Beetle2 gubbins
+
+Dimensions
+
+Width - approx 260mm
+
+Height - very short (<100mm)
+
+---
+
+Six panels running front-back made of 10mm hdpe. The outermost ones
+will work as wheel guards, the others anchor the motors and other gubbins.
+
+Four wheel drive, front wheels driven directly, rear wheels via belt.
+
+Use Polyurethane drive belts (green) which can be cut to length and
+welded together with a hot air gun.
+
+Wheel diameter: ideally big enough that we can get a lot of drive
+	Maybe ~ 70mm and that is the highest part of the robot
+	
+Six panels are all the same outline shape but with some different holes drilled.
+
+2x 22mm drive motors
+2x 25mm weapon motors (25mm hi torque)
+	
+---
+
+Lifter weapon
+
+Direct drive from 2x hi torque double gear 25mm motors.
+Use higher ratio / slower motors 
+
+194rpm motors, give 27kgcm of stall torque at nominal 12volts. 
+Opponent COM will be about 200mm from the pivot.
+so 1.5kg * 20cm = 30kgcm 
+BUT we have 2 motors and run them on 4S (16volt) so expect enough.
+
+No-load speed 194rpm = 3 revs/sec which is plenty!
+Could use slower motors (= higher ratio) but may cause gearboxes to fail
+
+Structural
+----------
+
+How do we attach the panels?
+Can use a thin base plate (3mm or less)
+This needs to be shaped so that it won't foul the drive.
+
+Threaded rods - structural.
+M8 Threaded rod + nuts, washers. Cut to length and add nuts as necessary.
+Available in wickes. 
+
+ 
+	
