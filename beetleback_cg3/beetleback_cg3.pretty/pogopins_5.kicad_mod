@@ -1,0 +1,18 @@
+(footprint "pogopins_5" (version 20210722) (generator pcbnew) (layer "F.Cu")
+  (tedit 5FF5D375)
+  (property "Sheetfile" "motorback_x2.kicad_sch")
+  (property "Sheetname" "")
+  (fp_text reference "J4" (at 0.5 -2.5 180 unlocked) (layer "F.SilkS") hide
+    (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp e81e4264-1dce-44bc-afbd-ec749624eed4)
+  )
+  (fp_text value "prog_pins" (at 0 2 180 unlocked) (layer "F.Fab") hide
+    (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp b608a527-fa0a-4987-90b2-08eea74e1a96)
+  )
+  (pad "1" smd rect (at -4 0) (size 1.5 2.5) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 10fb732b-8cad-4906-954e-8d2255336b8a))
+  (pad "2" smd rect (at -2 0) (size 1.5 2.5) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 9ce51f13-55b5-48d4-91ef-c95f1324a328))
+  (pad "3" smd rect (at 0 0) (size 1.5 2.5) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 819117ec-4ae9-47ab-a6d6-d77ea3058770))
+  (pad "4" smd rect (at 2 0) (size 1.5 2.5) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp b236727f-de10-453f-a21d-f799d1c5f067))
+  (pad "5" smd rect (at 4 0) (size 1.5 2.5) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp aaa50102-47b0-4f2f-a50a-6a0febd3a818))
+)
