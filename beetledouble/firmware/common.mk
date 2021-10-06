@@ -3,9 +3,9 @@
 #
 OBJDIR=obj_$(MCU)
 
-OBJ_FILES=main.o diag.o motors.o rxin.o
+OBJ_FILES=main.o diag.o motors.o rxin.o isense.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
-HEADERS=diag.h motors.h rxin.h
+HEADERS=diag.h motors.h rxin.h isense.h
 
 MAKEFILES=Makefile common.mk
 

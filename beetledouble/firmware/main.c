@@ -11,6 +11,7 @@
 #include "diag.h"
 #include "motors.h"
 #include "rxin.h"
+#include "isense.h"
 
 static void init_clock()
 {
@@ -49,6 +50,7 @@ int main(void)
     diag_puts("\n\nBeetledouble ESC starting\r\n");
     motors_init();
     rxin_init();
+    isense_init();
     while(1) {
         bool timer_overflow = motors_loop();
         rxin_loop();
