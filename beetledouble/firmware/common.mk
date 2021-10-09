@@ -48,5 +48,9 @@ installpymcu: link
 	pymcuprog $(PYMCUPROG_OPTS) -f $(HEX) -v info write 
 	pymcuprog $(PYMCUPROG_OPTS) -f $(HEX) verify
 
+reset:
+	pymcuprog $(PYMCUPROG_OPTS) reset
+
+
 clean:
 	rm -rf $(OBJDIR)

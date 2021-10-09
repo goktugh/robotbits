@@ -47,7 +47,7 @@ int main(void)
 {
     init_clock();
     init_serial();
-    diag_puts("\n\nBeetledouble ESC starting\r\n");
+    diag_puts("\r\n\nBeetledouble ESC starting\r\n");
     motors_init();
     rxin_init();
     isense_init();

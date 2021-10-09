@@ -94,12 +94,7 @@ void motors_init()
 	PORT_MOTOR_ENABLE_2.DIRSET = (1<< PIN_MOTOR_ENABLE_2);
 	
 	// Make the gate drive pins outputs.
-	PORT_MOTOR.DIRSET = (
-		(1<< PIN_MOTOR1F) | 
-		(1<< PIN_MOTOR1R) | 
-		(1<< PIN_MOTOR2F) | 
-		(1<< PIN_MOTOR2R)
-		);
+	PORT_MOTOR.DIRSET = BITMAP_ALL_MOTORS;
 	// Initially charge the bst caps:
 	PORT_MOTOR.OUTCLR = BITMAP_ALL_MOTORS;
 	PORT_MOTOR_ENABLE_1.OUTSET = (1<< PIN_MOTOR_ENABLE_1);
@@ -108,7 +103,6 @@ void motors_init()
 	_delay_ms(10);
 	PORT_MOTOR_ENABLE_1.OUTCLR = (1<< PIN_MOTOR_ENABLE_1);
 	PORT_MOTOR_ENABLE_2.OUTCLR = (1<< PIN_MOTOR_ENABLE_2);
-	
 }
 
 static void handle_timer_overflow()
@@ -133,16 +127,6 @@ static void set_motor_outputs(uint8_t index,
 	}
 	// Calculate pwm
 	// Generate signal.
-	/* DEMO auto mode:
-	enable = (overflow_count & 0x40);
-	if (overflow_count & 0x100) {
-		drivef = 1;
-		driver = 0;
-	} else {			
-		drivef = 0;
-		driver = 1;
-	}
-	*/
 	if (motors_commands[index].brake) {
 		// braking, turn on both low sides.
 		enable = 1; drivef = 0; driver = 0;
@@ -172,7 +156,6 @@ static void set_motor_outputs(uint8_t index,
 		pin_enable = PIN_MOTOR_ENABLE_2;
 		pin_forward = PIN_MOTOR2F;
 		pin_reverse = PIN_MOTOR2R;
-		
 	}
 
 	uint8_t bm_forward = 1 << pin_forward;
@@ -220,7 +203,7 @@ bool motors_loop()
 	// range 0.. PWM_PERIOD
 	p1 = TCA0.SINGLE.CNT % PWM_PERIOD;
 	p2 = p1 + 1000; // Offset
-	if (p2 > PWM_PERIOD) p2 -= PWM_PERIOD;
+	if (p2 >= PWM_PERIOD) p2 -= PWM_PERIOD;
 	
 	set_motor_outputs(
 			0, p1);

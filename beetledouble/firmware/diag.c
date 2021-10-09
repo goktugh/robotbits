@@ -19,6 +19,13 @@ void diag_puts(const char *str)
 	}
 }
 
+void diag_putc(char c)
+{
+    // don't wait
+    USART0.TXDATAL = c;
+}
+
+
 #define DIAG_BUFSIZE 80
 
 #ifdef ENABLE_DIAG
@@ -51,3 +58,15 @@ void diag_puts(const char *str)
     void diag_print(const char * fmt, ...) {}
 
 #endif 
+
+void epic_fail(const char *msg) 
+{
+    diag_puts(msg);
+    diag_puts("\r\n");
+    // Ultra low power 32k internal oscilator
+    uint8_t val = 0x1; // OSCULP32K
+    _PROTECTED_WRITE(CLKCTRL.MCLKCTRLA, val);
+    // Forever loop
+    for ( ;; );
+    
+}
