@@ -4,7 +4,18 @@ MISC:
 
 PA0 - UPDI (only)
 PA1 - TXDEBUG
-PA2 - CONFIG1 - shorted low for CONFIG1 option (default not shorted)
+     - shorted low with a 22k resistor for CONFIG1 option 
+     (default not shorted)
+     - Test at boot time, then use as a debug output.
+
+
+ANALOGUE:
+
+PA7 - ISENSE
+    - USE ADC1 AIN3
+PB0 - VSENSE
+    - USE ADC0 AIN2
+
 
 INPUTS:
 
@@ -18,7 +29,7 @@ We can trigger an irq on the event OR
 just poll the registers in the main loop.
 
 
-PB2 - GNDSHUNT - use ADC. Senses current.
+PA7 - GNDSHUNT - use ADC. Senses current.
     connected to a 0.005 ohm sense resistor with a Res/Cap for low pass
     
 
@@ -30,7 +41,7 @@ Alternatively the pins can be driven directly by programmed IO in the
 main loop. That might be easier; leave TCA to run free and just use
 it as a time reference.
 
-PB0 - MOTOR_ENABLE_1 - Active high enables the gates on M1
+PB2 - MOTOR_ENABLE_1 - Active high enables the gates on M1
     Also connected to LED.
 PA4 - MOTORF_1 - drives side 1 of M1 high
 PA5 - MOTORR_1 - drives side 2 of M2 high
@@ -39,7 +50,7 @@ PA5 - MOTORR_1 - drives side 2 of M2 high
 
 PB1 - MOTOR_ENABLE_2 - Active high enables the gates on M2
 PA6 - MOTORF_2
-PA7 - MOTORR_2
+PA2 - MOTORR_2
 
 
 --- LOOPING
