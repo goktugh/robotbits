@@ -12,6 +12,7 @@
 #include "motors.h"
 #include "rxin.h"
 #include "isense.h"
+#include "configpin.h"
 
 static void init_clock()
 {
@@ -48,6 +49,7 @@ int main(void)
     init_clock();
     init_serial();
     diag_puts("\r\n\nBeetledouble ESC starting\r\n");
+    configpin_init();
     motors_init();
     rxin_init();
     isense_init();

@@ -3,7 +3,7 @@
 #
 OBJDIR=obj_$(MCU)
 
-OBJ_FILES=main.o diag.o motors.o rxin.o isense.o
+OBJ_FILES=main.o diag.o motors.o rxin.o isense.o configpin.o
 OBJECTS=$(addprefix $(OBJDIR)/,$(OBJ_FILES))
 HEADERS=diag.h motors.h rxin.h isense.h
 
