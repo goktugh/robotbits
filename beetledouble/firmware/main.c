@@ -12,6 +12,7 @@
 #include "motors.h"
 #include "rxin.h"
 #include "isense.h"
+#include "vsense.h"
 #include "configpin.h"
 
 static void init_clock()
@@ -50,14 +51,22 @@ int main(void)
     init_serial();
     diag_puts("\r\n\nBeetledouble ESC starting\r\n");
     configpin_init();
+    // We should initialise isense before the motors, because we do not
+    // want to detect any spurious current charging the bst caps.
+    // When calibrating the isense offset.
+    isense_init();
+
     motors_init();
     rxin_init();
-    isense_init();
     while(1) {
         bool timer_overflow = motors_loop();
         rxin_loop();
         if (timer_overflow)
+        {
 			rxin_timer_overflow();
+            vsense_timer_overflow();
+            isense_timer_overflow();
+        }
     }
 }
 

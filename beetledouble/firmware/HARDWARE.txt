@@ -65,3 +65,15 @@ Assuming 5mohm
 at 20 amps P = 400* 0.005 = 2 watts
 at 25 amps P = 625 * 0.005 = 3.125 watts - approx max continuous
 
+---
+
+Peripheral usage:
+TCB0, TCB1 - rxin measuring pulse widths
+TCA0 - motor pwm and stuff
+TCD0 
+
+ADC0 - used briefly at poweron for sensing config pin
+ADC0 - VSENSE - pin PB0 - voltage sensing (in hw revision 3)
+ADC1 - ISENSE - current sensing - pin PB7 (in hw revision 3)
+
+ADC0 - ISENSE - in hw revision 2 
