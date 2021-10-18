@@ -7,6 +7,7 @@
 #define F_CPU 20000000 /* 20MHz / prescale=1 */
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
 
 /*
  * NB: Rev3 hardware we will need to change to use ADC1 peripheral.
@@ -30,7 +31,9 @@
 volatile uint8_t overcurrent_time;
 
 static uint16_t adc_zero_offset;
- 
+
+#define SAMPLES_ACCUMULATED 32
+
 static void show_current()
 {
     uint16_t res = ADC0.RES;
@@ -40,9 +43,12 @@ static void show_current()
     // 
     uint16_t res_relative = res - adc_zero_offset;
     if (res < adc_zero_offset) res_relative = 0;
-    uint16_t deciamp = (res_relative * 7) / 64;    
-    diag_println("isense: %03d00 mA", deciamp);
+    uint16_t res1 = res_relative / SAMPLES_ACCUMULATED;
+    // 6 appox = 600mA
+    uint16_t deciamp = res1;    
+    diag_println("isense: %04x, %03d00 mA", res,deciamp);
 }
+
 
 /*
  * Initialise the threshold feature which will cut off 
@@ -52,7 +58,10 @@ static void init_threshold()
 {
     // Set up the threshold
     // TODO: Calculate correctly
-    uint16_t threshold = adc_zero_offset + 40;
+    uint16_t threshold_amps = 3;
+    // Units are approx 100mA
+    uint16_t threshold = adc_zero_offset + (SAMPLES_ACCUMULATED * threshold_amps * 10);
+    diag_println("isense threshold %04x (%d amps)", threshold, threshold_amps);
     ADC0.WINHT = threshold;
     ADC0.CTRLE = 0x2; // ABOVE threshold
     ADC0.INTCTRL = 1 << 1; // Enable WCMP interrupt
@@ -64,6 +73,41 @@ ISR(ADC0_WCOMP_vect)
     // Number of ticks to turn off motors
     overcurrent_time = 10;
     ADC0.INTFLAGS = 0x02; // reset WCMP flag
+}
+
+static int uint16_compare(const void *a, const void *b)
+{
+    uint16_t va = *((uint16_t *) a);
+    uint16_t vb = *((uint16_t *) b);
+    if (va < vb) return -1;
+    if (vb < va) return 1;
+    return 0;
+}
+
+#define OFFSET_SAMPLES 9
+static void init_offset()
+{
+    // Store the initial (offset) result
+
+    uint16_t samples[OFFSET_SAMPLES ];
+    adc_zero_offset = ADC0.RES; // Temporary value
+    for(uint8_t i=0; i<OFFSET_SAMPLES; i++) {
+        samples[i] = ADC0.RES;
+        _delay_ms(1);
+    }
+    // Sort the results into numerical order
+    qsort(samples, OFFSET_SAMPLES, sizeof(uint16_t),
+        uint16_compare);
+    for(uint8_t i=0; i<OFFSET_SAMPLES; i++) {
+        diag_println("sample %04x", samples[i]);
+    }
+    
+    // So we can use the median
+
+    adc_zero_offset = samples[4];
+
+    diag_println("isense_init: zero offset=%04x", adc_zero_offset);
+    
 }
 
 void isense_init() 
@@ -80,14 +124,13 @@ void isense_init()
         // REFSEL: use INTERNAL (VREF) as reference.
         (0 << 4) |    
         // Clock prescale
-        0x4; // divide 32 = 0.625 mhz
+        0x3; // divide 16 = 1.25 mhz
         
     // Number of samples to accumulate
-    ADC0.CTRLB = 0x3; // 0x3 = 8    samples
+    // Must be the same as SAMPLES_ACCUMULATED
+    ADC0.CTRLB = 0x5; // 0x5 = 32    samples
     // ADC timing = 13 cycles * CLK_ADC * number of samples
-    // 1.6 us * 13 * 8 = 166.4 microseconds
-    
-    
+    // 0.8 us * 13 * 32 = 332.8 microseconds
 
     // Set enable bit and auto 
     ADC0.CTRLA = ADC_ENABLE_bm | ADC_FREERUN_bm;
@@ -98,11 +141,8 @@ void isense_init()
     _delay_ms(50);  
     diag_println("isense_init");
 
-    // Store the initial (offset) result
-    uint16_t res = ADC0.RES;
-    adc_zero_offset = res;
-    show_current();
-    // init_threshold();
+    init_offset();
+    init_threshold();
 }
 
 static uint8_t ticks;
