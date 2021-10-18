@@ -16,3 +16,5 @@ void motors_init();
 
 // Returns true on timer overflow
 bool motors_loop();
+
+void motors_overcurrent_off();

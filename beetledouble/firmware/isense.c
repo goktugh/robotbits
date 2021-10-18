@@ -6,6 +6,7 @@
 
 #define F_CPU 20000000 /* 20MHz / prescale=1 */
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 /*
  * NB: Rev3 hardware we will need to change to use ADC1 peripheral.
@@ -26,6 +27,8 @@
  */
 
 
+volatile uint8_t overcurrent_time;
+
 static uint16_t adc_zero_offset;
  
 static void show_current()
@@ -36,8 +39,31 @@ static void show_current()
     // This gives us current in 0.1 amp
     // 
     uint16_t res_relative = res - adc_zero_offset;
+    if (res < adc_zero_offset) res_relative = 0;
     uint16_t deciamp = (res_relative * 7) / 64;    
     diag_println("isense: %03d00 mA", deciamp);
+}
+
+/*
+ * Initialise the threshold feature which will cut off 
+ * overcurrent
+ */
+static void init_threshold()
+{
+    // Set up the threshold
+    // TODO: Calculate correctly
+    uint16_t threshold = adc_zero_offset + 40;
+    ADC0.WINHT = threshold;
+    ADC0.CTRLE = 0x2; // ABOVE threshold
+    ADC0.INTCTRL = 1 << 1; // Enable WCMP interrupt
+}
+
+ISR(ADC0_WCOMP_vect)
+{
+    // Threshold exceed. Overcurrent.
+    // Number of ticks to turn off motors
+    overcurrent_time = 10;
+    ADC0.INTFLAGS = 0x02; // reset WCMP flag
 }
 
 void isense_init() 
@@ -57,7 +83,11 @@ void isense_init()
         0x4; // divide 32 = 0.625 mhz
         
     // Number of samples to accumulate
-    ADC0.CTRLB = 0x6; // 0x6 = 64    samples
+    ADC0.CTRLB = 0x3; // 0x3 = 8    samples
+    // ADC timing = 13 cycles * CLK_ADC * number of samples
+    // 1.6 us * 13 * 8 = 166.4 microseconds
+    
+    
 
     // Set enable bit and auto 
     ADC0.CTRLA = ADC_ENABLE_bm | ADC_FREERUN_bm;
@@ -72,12 +102,17 @@ void isense_init()
     uint16_t res = ADC0.RES;
     adc_zero_offset = res;
     show_current();
+    // init_threshold();
 }
 
 static uint8_t ticks;
 
 void isense_timer_overflow() 
 {
+    if (overcurrent_time >0) {
+        diag_puts("Overcurrent\r\n");
+        overcurrent_time -= 1;
+    }
     // Periodically pirnt current
     if (ticks < 20) {
         ticks += 1;

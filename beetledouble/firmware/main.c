@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #define F_CPU 20000000 /* 20MHz / prescale=1 */
 #include <util/delay.h>
@@ -58,6 +59,8 @@ int main(void)
 
     motors_init();
     rxin_init();
+    sei(); // interrupts on
+
     while(1) {
         bool timer_overflow = motors_loop();
         rxin_loop();

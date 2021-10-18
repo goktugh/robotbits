@@ -7,6 +7,7 @@
 
 #include "diag.h"
 #include "motors.h"
+#include "isense.h"
 
 motor_command_t motors_commands[MOTORS_COUNT];
 
@@ -205,9 +206,28 @@ bool motors_loop()
 	p2 = p1 + 1000; // Offset
 	if (p2 >= PWM_PERIOD) p2 -= PWM_PERIOD;
 	
-	set_motor_outputs(
-			0, p1);
-	set_motor_outputs(
-			1, p2);
-	return overflow;
+    // Don't turn motors on if overcurrent.
+    if (overcurrent_time == 0) 
+    {
+        set_motor_outputs(
+                0, p1);
+        set_motor_outputs(
+                1, p2);
+    }
+    // NB: Do another check of overcurrent_time to avoid race:
+    if (overcurrent_time > 0) {
+        motors_overcurrent_off();
+    }
+    
+    return overflow;
+}
+
+/*
+ * Called from within an interrupt on overcurrent condition 
+ */
+void motors_overcurrent_off()
+{
+	PORT_MOTOR_ENABLE_1.OUTCLR = (1<< PIN_MOTOR_ENABLE_1);
+	PORT_MOTOR_ENABLE_2.OUTCLR = (1<< PIN_MOTOR_ENABLE_2);
+	PORT_MOTOR.OUTCLR = BITMAP_ALL_MOTORS;
 }
