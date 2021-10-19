@@ -86,6 +86,22 @@ static void motors_init_timer()
 		1 ; // Enable bit
 }
 
+/*
+ * Note we only do this either at boot time or after
+ * recovery from overcurrent.
+ * 
+ * This would also brake both motors but in overcurrent condition they
+ * are probably stopped anyway.
+ */
+static void motors_all_low()
+{
+    // set all the half bridges to low
+	PORT_MOTOR.OUTCLR = BITMAP_ALL_MOTORS;
+    // Enable it all
+	PORT_MOTOR_ENABLE_1.OUTSET = (1<< PIN_MOTOR_ENABLE_1);
+	PORT_MOTOR_ENABLE_2.OUTSET = (1<< PIN_MOTOR_ENABLE_2);
+}
+
 void motors_init()
 {
 	motors_init_timer();
@@ -96,14 +112,10 @@ void motors_init()
 	
 	// Make the gate drive pins outputs.
 	PORT_MOTOR.DIRSET = BITMAP_ALL_MOTORS;
-	// Initially charge the bst caps:
-	PORT_MOTOR.OUTCLR = BITMAP_ALL_MOTORS;
-	PORT_MOTOR_ENABLE_1.OUTSET = (1<< PIN_MOTOR_ENABLE_1);
-	PORT_MOTOR_ENABLE_2.OUTSET = (1<< PIN_MOTOR_ENABLE_2);
-	
+    motors_all_low();
+    
 	_delay_ms(10);
-	PORT_MOTOR_ENABLE_1.OUTCLR = (1<< PIN_MOTOR_ENABLE_1);
-	PORT_MOTOR_ENABLE_2.OUTCLR = (1<< PIN_MOTOR_ENABLE_2);
+	motors_overcurrent_off();
 }
 
 static void handle_timer_overflow()
@@ -215,8 +227,16 @@ bool motors_loop()
                 1, p2);
     }
     // NB: Do another check of overcurrent_time to avoid race:
-    if (overcurrent_time > 0) {
-        motors_overcurrent_off();
+    uint8_t oc_time = overcurrent_time;
+    if (oc_time > 0) {
+        if (oc_time == 1) {
+            // Recharge time for the boost caps, because everything
+            // was off for a while, so they are probably low on charge.
+            motors_all_low();
+        } else {
+            // Everything off while things cool down...
+            motors_overcurrent_off();
+        }
     }
     
     return overflow;
