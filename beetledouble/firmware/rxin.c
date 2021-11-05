@@ -6,6 +6,17 @@
 
 #define CHANNEL_COUNT 2
 
+/*
+ * ROUTE:
+ * 
+ * PWMIN1 -> PB3 -> ASYNCCH1 -> TCB0
+ * PWMIN2 -> PA3 -> ASYNCCH0 -> TCB1
+ * 
+ * So we use timer 0 for ch1 timer 1 for ch2, as you'd expect.
+ * 
+ * The only things which are backwards are asynch channels.
+ */
+
 void rxin_init()
 {
     // Set the ports as inputs
@@ -131,8 +142,8 @@ void rxin_loop()
         }
     }
     
-    check_timer(&TCB1, 0);
-    check_timer(&TCB0, 1);
+    check_timer(&TCB0, 0);
+    check_timer(&TCB1, 1);
 }
 
 /*
