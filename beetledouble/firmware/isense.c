@@ -8,6 +8,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /*
  * NB: Rev3 hardware we will need to change to use ADC1 peripheral.
@@ -31,6 +32,7 @@
 volatile uint8_t overcurrent_time;
 
 static uint16_t adc_zero_offset;
+static bool isense_active;
 
 #define SAMPLES_ACCUMULATED 32
 
@@ -56,15 +58,17 @@ static void show_current()
  */
 static void init_threshold()
 {
-    // Set up the threshold
-    // TODO: Calculate correctly
-    uint16_t threshold_amps = 3;
-    // Units are approx 100mA
-    uint16_t threshold = adc_zero_offset + (SAMPLES_ACCUMULATED * threshold_amps * 10);
-    diag_println("isense threshold %04x (%d amps)", threshold, threshold_amps);
-    ADC0.WINHT = threshold;
-    ADC0.CTRLE = 0x2; // ABOVE threshold
-    ADC0.INTCTRL = 1 << 1; // Enable WCMP interrupt
+    if (isense_active) {
+        // Set up the threshold
+        // TODO: Calculate correctly
+        uint16_t threshold_amps = 3;
+        // Units are approx 100mA
+        uint16_t threshold = adc_zero_offset + (SAMPLES_ACCUMULATED * threshold_amps * 10);
+        diag_println("isense threshold %04x (%d amps)", threshold, threshold_amps);
+        ADC0.WINHT = threshold;
+        ADC0.CTRLE = 0x2; // ABOVE threshold
+        ADC0.INTCTRL = 1 << 1; // Enable WCMP interrupt
+    }
 }
 
 ISR(ADC0_WCOMP_vect)
@@ -108,6 +112,15 @@ static void init_offset()
 
     diag_println("isense_init: zero offset=%04x", adc_zero_offset);
     
+    // What is the expected value?
+    // Approximately 1/23 of the 5v rail or about 
+    // 217mV
+    // Full range is 550mV
+    // Expected value will be * SAMPLES_ACCUMULATED
+    uint16_t expected_value = ((217l * 1023) / 550) * SAMPLES_ACCUMULATED;
+    diag_println("isense_init: expected value about %04x", expected_value);
+    // Check adc_zero_offset is not rediculous.
+    isense_active = (adc_zero_offset < 0x5000);
 }
 
 void isense_init() 
@@ -143,21 +156,27 @@ void isense_init()
 
     init_offset();
     init_threshold();
+    if (! isense_active) {
+        diag_println("isense: disabled because sensor is giving bad values");
+    }
 }
 
 static uint8_t ticks;
 
 void isense_timer_overflow() 
 {
-    if (overcurrent_time >0) {
-        diag_puts("Overcurrent\r\n");
-        overcurrent_time -= 1;
-    }
-    // Periodically pirnt current
-    if (ticks < 20) {
-        ticks += 1;
-    } else {
-        show_current();
-        ticks = 0;
+    if (isense_active) 
+    {
+        if (overcurrent_time >0) {
+            diag_puts("Overcurrent\r\n");
+            overcurrent_time -= 1;
+        }
+        // Periodically pirnt current
+        if (ticks < 20) {
+            ticks += 1;
+        } else {
+            show_current();
+            ticks = 0;
+        }
     }
 }
