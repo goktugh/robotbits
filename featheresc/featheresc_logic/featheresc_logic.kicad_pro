@@ -45,16 +45,10 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 1.0
+          "min_clearance": 0.508
         }
       },
-      "diff_pair_dimensions": [
-        {
-          "gap": 0.0,
-          "via_gap": 0.0,
-          "width": 0.0
-        }
-      ],
+      "diff_pair_dimensions": [],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -85,8 +79,8 @@
         "padstack": "error",
         "pth_inside_courtyard": "ignore",
         "shorting_items": "error",
-        "silk_over_copper": "ignore",
-        "silk_overlap": "ignore",
+        "silk_over_copper": "warning",
+        "silk_overlap": "warning",
         "skew_out_of_range": "error",
         "through_hole_pad_without_hole": "error",
         "too_many_vias": "error",
@@ -118,17 +112,8 @@
         "solder_mask_min_width": 0.0,
         "use_height_for_length_calcs": true
       },
-      "track_widths": [
-        0.0,
-        3.0,
-        4.0
-      ],
-      "via_dimensions": [
-        {
-          "diameter": 0.0,
-          "drill": 0.0
-        }
-      ],
+      "track_widths": [],
+      "via_dimensions": [],
       "zones_allow_external_fillets": false,
       "zones_use_no_outline": true
     },
@@ -348,14 +333,14 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "featheresc_power.kicad_pro",
+    "filename": "featheresc_logic.kicad_pro",
     "version": 1
   },
   "net_settings": {
     "classes": [
       {
         "bus_width": 12.0,
-        "clearance": 0.35,
+        "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -365,9 +350,9 @@
         "name": "Default",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.3,
-        "via_diameter": 1.0,
-        "via_drill": 0.5,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
         "wire_width": 6.0
       }
     ],
@@ -382,7 +367,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "featheresc_power.step",
+      "step": "featheresc_logic.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -390,10 +375,8 @@
   "schematic": {
     "annotate_start_num": 0,
     "drawing": {
-      "default_bus_thickness": 12.0,
       "default_line_thickness": 6.0,
       "default_text_size": 50.0,
-      "default_wire_thickness": 6.0,
       "field_names": [],
       "intersheets_ref_own_page": false,
       "intersheets_ref_prefix": "",
@@ -429,16 +412,20 @@
   },
   "sheets": [
     [
-      "381a0287-33b9-47be-8a2b-c8808e003116",
+      "b6bb6028-c512-4979-9634-631ac58c4976",
       ""
     ],
     [
-      "33d6cf7d-cc68-46b0-a73a-fd7eaf27dd2f",
-      "drivers1"
+      "e26399b8-d425-41f2-bf62-4d3008d4d514",
+      "Motor Drive"
     ],
     [
-      "a0a9a081-e3e0-435f-bc76-790ff1e001ff",
-      "drivers2"
+      "d7d4c434-72cc-459d-9ec2-c8f3576f629f",
+      "gatedrivers1"
+    ],
+    [
+      "03489e42-7f70-4e2a-a204-1e1b64c3e35d",
+      "gatedrivers2"
     ]
   ],
   "text_variables": {}
