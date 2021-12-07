@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name "bdregulator")(type "KiCad")(uri "${KIPRJMOD}/bdregulator.kicad_sym")(options "")(descr ""))
-)
