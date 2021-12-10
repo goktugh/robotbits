@@ -114,7 +114,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 299a8176-54dc-4c7f-afe1-2d7fed9edf5d)
     )
-    (fp_text user "${REFERENCE}" (at 0 0) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0) (layer "F.Fab")
       (effects (font (size 0.4 0.4) (thickness 0.06)))
       (tstamp ac6e7b99-6341-476e-8fef-acde35568696)
     )
@@ -203,7 +203,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 4794e258-b1f7-43de-8d23-98ace9efd397)
     )
-    (fp_text user "${REFERENCE}" (at 0 0 90) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0 90) (layer "F.Fab")
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 350baf95-6f67-404e-8106-4252e71cfdaa)
     )
@@ -260,7 +260,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 96fd5bc2-f167-48ac-9b8e-261e24d3ee88)
     )
-    (fp_text user "${REFERENCE}" (at 0 0 90) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0 90) (layer "F.Fab")
       (effects (font (size 0.5 0.5) (thickness 0.075)))
       (tstamp e6c98495-5803-4ec9-96d2-61b75879c674)
     )
@@ -355,7 +355,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp a1d7240c-226f-448a-a8e8-5420a0c6250f)
     )
-    (fp_text user "${REFERENCE}" (at 0 0 45) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0 45) (layer "F.Fab")
       (effects (font (size 0.7 0.7) (thickness 0.1)))
       (tstamp 98e7f8f2-d94c-482d-8470-fcf77b75cb4b)
     )
@@ -500,7 +500,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp be0972fa-bd8b-4d3d-98d3-ce357ba844d2)
     )
-    (fp_text user "${REFERENCE}" (at 0 0 23) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0 23) (layer "F.Fab")
       (effects (font (size 0.4 0.4) (thickness 0.06)))
       (tstamp a2a7c95e-5b68-4bad-b5ee-5cffad699bf4)
     )
@@ -545,7 +545,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 3350f0d0-145f-44cf-8f22-8b1f8138f4f1)
     )
-    (fp_text user "${REFERENCE}" (at 0 0 90) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0 90) (layer "F.Fab")
       (effects (font (size 0.4 0.4) (thickness 0.06)))
       (tstamp cdb968e6-e3ff-4e4d-bb3c-58fbbe43f102)
     )
@@ -613,7 +613,7 @@
       (effects (font (size 1 1) (thickness 0.15)))
       (tstamp bd764129-db37-4eb1-b3e6-92246a00a8fa)
     )
-    (fp_text user "${REFERENCE}" (at 0 0 180) (layer "F.Fab") hide
+    (fp_text user "${REFERENCE}" (at 0 0 180) (layer "F.Fab")
       (effects (font (size 0.4 0.4) (thickness 0.06)))
       (tstamp 33b3d7a7-ab92-4ae7-b304-1ff65b0aa3a8)
     )

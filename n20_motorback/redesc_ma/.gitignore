@@ -2,3 +2,4 @@
 *-backups/
 *-cache
 plot/
+*.kicad_prl
