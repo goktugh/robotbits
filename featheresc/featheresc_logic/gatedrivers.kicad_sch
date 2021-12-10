@@ -273,12 +273,12 @@
     )
   )
 
-  (junction (at 68.58 146.685) (diameter 0.9144) (color 0 0 0 0))
   (junction (at 82.55 113.03) (diameter 0.9144) (color 0 0 0 0))
-  (junction (at 68.58 113.03) (diameter 0.9144) (color 0 0 0 0))
-  (junction (at 68.58 53.34) (diameter 0.9144) (color 0 0 0 0))
   (junction (at 83.82 53.34) (diameter 0.9144) (color 0 0 0 0))
+  (junction (at 68.58 53.34) (diameter 0.9144) (color 0 0 0 0))
+  (junction (at 68.58 146.685) (diameter 0.9144) (color 0 0 0 0))
   (junction (at 68.58 86.995) (diameter 0.9144) (color 0 0 0 0))
+  (junction (at 68.58 113.03) (diameter 0.9144) (color 0 0 0 0))
 
   (wire (pts (xy 68.58 142.24) (xy 68.58 146.685))
     (stroke (width 0) (type solid) (color 0 0 0 0))

@@ -469,6 +469,10 @@
     [
       "a48641a6-6ca8-4f12-938a-1e9d3a5e266d",
       "Sensing"
+    ],
+    [
+      "d12fa963-6d6a-4144-97fd-b5e112c10b91",
+      "Pi Pico"
     ]
   ],
   "text_variables": {}

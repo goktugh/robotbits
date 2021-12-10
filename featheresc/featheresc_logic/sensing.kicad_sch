@@ -137,9 +137,9 @@
     )
   )
 
-  (junction (at 124.46 84.455) (diameter 0) (color 0 0 0 0))
-  (junction (at 136.525 84.455) (diameter 0) (color 0 0 0 0))
   (junction (at 113.03 64.77) (diameter 0) (color 0 0 0 0))
+  (junction (at 136.525 84.455) (diameter 0) (color 0 0 0 0))
+  (junction (at 124.46 84.455) (diameter 0) (color 0 0 0 0))
 
   (wire (pts (xy 136.525 84.455) (xy 136.525 86.995))
     (stroke (width 0) (type default) (color 0 0 0 0))
