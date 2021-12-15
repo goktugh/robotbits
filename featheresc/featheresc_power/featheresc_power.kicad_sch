@@ -491,12 +491,12 @@
 
   (no_connect (at 142.24 133.35) (uuid 2a48d0c1-c824-4da3-b98a-63bdc71ad4c4))
   (no_connect (at 180.975 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
-  (no_connect (at 196.215 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
-  (no_connect (at 198.755 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
-  (no_connect (at 201.295 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
-  (no_connect (at 160.02 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
-  (no_connect (at 162.56 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
-  (no_connect (at 167.64 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee0))
+  (no_connect (at 196.215 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee1))
+  (no_connect (at 198.755 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee2))
+  (no_connect (at 201.295 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee3))
+  (no_connect (at 160.02 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee4))
+  (no_connect (at 162.56 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee5))
+  (no_connect (at 167.64 133.35) (uuid f59167db-872b-4b99-80b8-512ed5d5cee6))
   (no_connect (at 178.435 133.35) (uuid fad71813-8da9-488f-b118-ca8ab9370ae0))
 
   (wire (pts (xy 93.98 111.125) (xy 80.645 111.125))
