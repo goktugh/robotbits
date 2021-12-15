@@ -1977,7 +1977,7 @@
     (property "Value" "RC IN 1" (id 1) (at 194.31 154.3049 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "Connector_JST:JST_XA_S03B-XASK-1_1x03_P2.50mm_Horizontal" (id 2) (at 193.04 153.035 0)
+    (property "Footprint" "Connector_JST:JST_XH_S3B-XH-A_1x03_P2.50mm_Horizontal" (id 2) (at 193.04 153.035 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 193.04 153.035 0)
@@ -2604,7 +2604,7 @@
     (property "Value" "RC IN 2" (id 1) (at 246.38 154.3049 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "Connector_JST:JST_XA_S03B-XASK-1_1x03_P2.50mm_Horizontal" (id 2) (at 245.11 153.035 0)
+    (property "Footprint" "Connector_JST:JST_XH_S3B-XH-A_1x03_P2.50mm_Horizontal" (id 2) (at 245.11 153.035 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 245.11 153.035 0)
@@ -2821,9 +2821,6 @@
     (path "/e05318a9-5e8c-4e53-aba1-9a630dd2885b"
       (reference "#PWR04") (unit 1) (value "GND") (footprint "")
     )
-    (path "/d7d4c434-72cc-459d-9ec2-c8f3576f629f/52343ac2-4969-42df-af1e-ed7deb794aea"
-      (reference "#PWR05") (unit 1) (value "GND") (footprint "")
-    )
     (path "/96d38acb-e23b-424c-afed-fdd96c395092"
       (reference "#PWR06") (unit 1) (value "GND") (footprint "")
     )
@@ -2862,9 +2859,6 @@
     )
     (path "/5f517eb7-a798-4d0e-b446-9a05150df0c7"
       (reference "#PWR018") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/e21eb0e0-0c12-4a19-b0a2-2a3e790fd264/52343ac2-4969-42df-af1e-ed7deb794aea"
-      (reference "#PWR019") (unit 1) (value "GND") (footprint "")
     )
     (path "/acde64c0-adac-4ba4-8f88-518b3a754432"
       (reference "#PWR020") (unit 1) (value "GND") (footprint "")
@@ -2947,6 +2941,12 @@
     (path "/e21eb0e0-0c12-4a19-b0a2-2a3e790fd264/57349e08-abba-4d14-877b-12ee057b548b"
       (reference "D8") (unit 1) (value "Red") (footprint "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder")
     )
+    (path "/d7d4c434-72cc-459d-9ec2-c8f3576f629f/11cdec55-435f-4b7f-805a-bee9ab2b00ee"
+      (reference "D9") (unit 1) (value "Green") (footprint "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder")
+    )
+    (path "/e21eb0e0-0c12-4a19-b0a2-2a3e790fd264/11cdec55-435f-4b7f-805a-bee9ab2b00ee"
+      (reference "D10") (unit 1) (value "Green") (footprint "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder")
+    )
     (path "/232bbb65-7869-4831-a033-eb4672019cff"
       (reference "H1") (unit 1) (value "Interconnect M3") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
@@ -2954,10 +2954,10 @@
       (reference "H2") (unit 1) (value "Interconnect M3") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
     (path "/006e2d2d-ea55-4517-8464-6fa4323dbbb5"
-      (reference "J1") (unit 1) (value "RC IN 1") (footprint "Connector_JST:JST_XA_S03B-XASK-1_1x03_P2.50mm_Horizontal")
+      (reference "J1") (unit 1) (value "RC IN 1") (footprint "Connector_JST:JST_XH_S3B-XH-A_1x03_P2.50mm_Horizontal")
     )
     (path "/e6790c5d-2c5e-4728-8d92-8b5fc4b99492"
-      (reference "J2") (unit 1) (value "RC IN 2") (footprint "Connector_JST:JST_XA_S03B-XASK-1_1x03_P2.50mm_Horizontal")
+      (reference "J2") (unit 1) (value "RC IN 2") (footprint "Connector_JST:JST_XH_S3B-XH-A_1x03_P2.50mm_Horizontal")
     )
     (path "/8881e0dd-f100-4ed2-ac37-7908cdabe46b"
       (reference "J3") (unit 1) (value "soicbite prog connector") (footprint "featheresc_logic:SOIC_clipProgSmall")
