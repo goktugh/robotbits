@@ -51,7 +51,10 @@ int main(void)
     init_clock();
     init_serial();
     diag_puts("\r\n\nBeetledouble ESC starting\r\n");
+    // We should read the configpin early, before we use the ADCs
+    // for anything else.
     configpin_init();
+    vsense_init(); // vsense uses the same ADC as configpin.
     // We should initialise isense before the motors, because we do not
     // want to detect any spurious current charging the bst caps.
     // When calibrating the isense offset.
@@ -76,12 +79,38 @@ int main(void)
 /*
 
 TODO 
-1. Implement dead zone and centre braking (DONE)
-1. Implement failsafe / rx timeout which will set motor ot zero
-	zero power if no signal for a while (DONE)
-1. Implement over current protection using the ADC and shunt
-	- Overcurrent should cut out the motors (both) for a time
-	- Regardless of inputs, overcurrent should override.
+1. flexible rxin - needs to loop through different
+    receiver modes (pwm, sbus, ibus, config terminal) at startup
+    * When valid signal is received, then assume config.
+    * Only listen on PWMIN1 at startup.
+
+1. Config interface 
+*  If receiving some CR characters at expected baud rate,
+        Assume config mode.
+        Suspend normal esc operation and run only in config mode
+        * until reboot.
+        * 
+1. SBUS / IBUS
+* If those signals are detected, switch to mode.
+
+1. MIXING
+* When we are running normally, we should mix.
+* Mixing - config on by default, optionally disable, using configpin,
+    OR override config in eeprom.
+* If mixing is enabled - require BOTH signals to be active to drive.
+* If mixing is disabled, then signals should work independently
+
+1. EEPROM CONFIG
+* Low voltage cutoff
+* Current limit / overcurrent protection settings
+* Mixing overrides
+* Startup delay (in case 2x ESC in the same robot, so their beeps do not
+        happen at the same time)
+
+1. Startup beep / tune
+* Do a tune with a few notes on motor1 and motor2
+* Arpeggio or familiar tune?
+
 
 TESTING:
 1. Test dead zone / failsafe
@@ -90,6 +119,6 @@ TESTING:
 1. Check that the adc working by putting some current through
 	the shunt.
 1. Full test of overcurrent limit
-
+    Can it survive a dead short?
  
  */

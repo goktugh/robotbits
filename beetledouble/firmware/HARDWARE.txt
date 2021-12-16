@@ -7,6 +7,13 @@ PA1 - TXDEBUG
      - shorted low with a 22k resistor for CONFIG1 option 
      (default not shorted)
      - Test at boot time, then use as a debug output.
+     
+     NB: Can only use USART for PA1 if we set the PORTMUX CTRLB register
+        to alternative pins.
+        
+    This is no good as we cannot then use the USART receiver to read
+    signals on PWMIN1 - for config mode, or for SBUS etc,
+    
 
 
 ANALOGUE:

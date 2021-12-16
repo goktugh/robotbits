@@ -29,7 +29,7 @@ PA7 - MOTORR_2
 // Enable pins:
 
 #define PORT_MOTOR_ENABLE_1 PORTB
-#define PIN_MOTOR_ENABLE_1 0
+#define PIN_MOTOR_ENABLE_1 2
 
 #define PORT_MOTOR_ENABLE_2 PORTB
 #define PIN_MOTOR_ENABLE_2 1
@@ -38,11 +38,11 @@ PA7 - MOTORR_2
 
 #define PORT_MOTOR PORTA
 
-#define PIN_MOTOR1F 4
-#define PIN_MOTOR1R 5
+#define PIN_MOTOR1F 4   
+#define PIN_MOTOR1R 5   
 
 #define PIN_MOTOR2F 6
-#define PIN_MOTOR2R 7
+#define PIN_MOTOR2R 2
 
 #define BITMAP_ALL_MOTORS ( \
 		(1<< PIN_MOTOR1F) | \
@@ -122,6 +122,9 @@ static void handle_timer_overflow()
 {
 	// diag_puts("x\r\n");
 	overflow_count += 1;
+#if 0
+    diag_println("mc %02x %02x", motors_commands[0].direction, motors_commands[0].duty);
+#endif
 }
 
 // Previous tick data:

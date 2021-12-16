@@ -45,7 +45,7 @@ bool configpin_value;
 #define CONFIG_PIN 1
 
 // 10 bits, so max=1023
-#define HIGH_THRESHOLD 800
+#define HIGH_THRESHOLD 550
 
 void configpin_init()
 {
@@ -97,9 +97,9 @@ void configpin_init()
     diag_println("configpin: ADC result %04x", res);
     bool is_high = (res >  HIGH_THRESHOLD);
     if (is_high) {
-        diag_println("configpin: high");
+        diag_println("configpin: high (open)");
     } else {
-        diag_println("configpin: low");
+        diag_println("configpin: low (closed)");
     }
     configpin_value = is_high;
 }

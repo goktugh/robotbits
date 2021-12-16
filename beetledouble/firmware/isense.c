@@ -11,9 +11,11 @@
 #include <stdbool.h>
 
 /*
- * NB: Rev3 hardware we will need to change to use ADC1 peripheral.
+ * Rev3 hardware we will need to change to use ADC1 peripheral.
  * 
- * 
+ * ADC: ADC1
+ * PIN: PB7
+ * Channel: AIN3
  * 
  * Current sensor has 2x 10mOhm resistor in parallel = 5 mOhm.
  * 
@@ -22,10 +24,7 @@
  * at 20 amps that means 0.1V which is plenty.
  * 
  * ADC - use 0.55V voltage reference for maximum sensitity.
- * 
- * Rev2 hardware: Pin PA2
- *  ADC0 AIN2
- * 
+* 
  */
 
 
@@ -38,7 +37,7 @@ static bool isense_active;
 
 static void show_current()
 {
-    uint16_t res = ADC0.RES;
+    uint16_t res = ADC1.RES;
     // shunt voltage = res / 1024 * 0.55V
     // Current will be shunt voltage / 5mV
     // This gives us current in 0.1 amp
@@ -65,18 +64,18 @@ static void init_threshold()
         // Units are approx 100mA
         uint16_t threshold = adc_zero_offset + (SAMPLES_ACCUMULATED * threshold_amps * 10);
         diag_println("isense threshold %04x (%d amps)", threshold, threshold_amps);
-        ADC0.WINHT = threshold;
-        ADC0.CTRLE = 0x2; // ABOVE threshold
-        ADC0.INTCTRL = 1 << 1; // Enable WCMP interrupt
+        ADC1.WINHT = threshold;
+        ADC1.CTRLE = 0x2; // ABOVE threshold
+        ADC1.INTCTRL = 1 << 1; // Enable WCMP interrupt
     }
 }
 
-ISR(ADC0_WCOMP_vect)
+ISR(ADC1_WCOMP_vect)
 {
     // Threshold exceed. Overcurrent.
     // Number of ticks to turn off motors
     overcurrent_time = 10;
-    ADC0.INTFLAGS = 0x02; // reset WCMP flag
+    ADC1.INTFLAGS = 0x02; // reset WCMP flag
 }
 
 static int uint16_compare(const void *a, const void *b)
@@ -94,9 +93,9 @@ static void init_offset()
     // Store the initial (offset) result
 
     uint16_t samples[OFFSET_SAMPLES ];
-    adc_zero_offset = ADC0.RES; // Temporary value
+    adc_zero_offset = ADC1.RES; // Temporary value
     for(uint8_t i=0; i<OFFSET_SAMPLES; i++) {
-        samples[i] = ADC0.RES;
+        samples[i] = ADC1.RES;
         _delay_ms(1);
     }
     // Sort the results into numerical order
@@ -129,11 +128,12 @@ void isense_init()
     PORTA.DIRCLR = 1<<2;
     PORTA.PIN2CTRL = PORT_ISC_INPUT_DISABLE_gc;
     // Set up voltage reference
-    VREF.CTRLA = 0x0 << 4; // 0.55 volts
-    ADC0.MUXPOS = 0x2; // AIN2
+    // (VREF CTRLC bits 4-6 -> ADC1)
+    VREF.CTRLC = 0x0 << 4; // 0.55 volts
+    ADC1.MUXPOS = 0x3; // AIN3
 
     // Clock needs to be below 1.5mhz
-    ADC0.CTRLC = 
+    ADC1.CTRLC = 
         // REFSEL: use INTERNAL (VREF) as reference.
         (0 << 4) |    
         // Clock prescale
@@ -141,15 +141,15 @@ void isense_init()
         
     // Number of samples to accumulate
     // Must be the same as SAMPLES_ACCUMULATED
-    ADC0.CTRLB = 0x5; // 0x5 = 32    samples
+    ADC1.CTRLB = 0x5; // 0x5 = 32    samples
     // ADC timing = 13 cycles * CLK_ADC * number of samples
     // 0.8 us * 13 * 32 = 332.8 microseconds
 
     // Set enable bit and auto 
-    ADC0.CTRLA = ADC_ENABLE_bm | ADC_FREERUN_bm;
+    ADC1.CTRLA = ADC_ENABLE_bm | ADC_FREERUN_bm;
     _delay_ms(10);  
     // Start first conversion
-    ADC0.COMMAND = 0x1; // Start conversion
+    ADC1.COMMAND = 0x1; // Start conversion
     // Wait for it to get going...
     _delay_ms(50);  
     diag_println("isense_init");

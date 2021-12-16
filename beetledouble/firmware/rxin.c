@@ -98,10 +98,10 @@ void rxin_loop()
             // This is in units of 100ns,
             // we need to divide by 10 to get microseconds,
             /* This debug is handy but messes up motor drive */
-            /*
+#if 0
             uint16_t pulsewidth_us = pulsewidth / 10;
             diag_println("p %c %04x", index + '0', pulsewidth_us);
-            */
+#endif
             // Let's find a more reasonable range,
             int16_t pulsewidth_signed = pulsewidth;
             pulsewidth_signed -= 15000; 
