@@ -167,15 +167,17 @@ void isense_timer_overflow()
 {
     if (isense_active) 
     {
+        bool show=false;
         if (overcurrent_time >0) {
             diag_puts("Overcurrent\r\n");
             overcurrent_time -= 1;
+            show = true;
         }
-        // Periodically pirnt current
-        if (ticks < 20) {
+        // Periodically print current
+        if (ticks < 5) {
             ticks += 1;
         } else {
-            show_current();
+            if (show) show_current();
             ticks = 0;
         }
     }

@@ -8,6 +8,7 @@
 #include "diag.h"
 #include "motors.h"
 #include "isense.h"
+#include "vsense.h"
 
 motor_command_t motors_commands[MOTORS_COUNT];
 
@@ -221,8 +222,8 @@ bool motors_loop()
 	p2 = p1 + 1000; // Offset
 	if (p2 >= PWM_PERIOD) p2 -= PWM_PERIOD;
 	
-    // Don't turn motors on if overcurrent.
-    if (overcurrent_time == 0) 
+    // Turn motors on, if voltage and current ok. 
+    if ((overcurrent_time == 0) && vsense_ok)
     {
         set_motor_outputs(
                 0, p1);

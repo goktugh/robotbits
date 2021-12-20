@@ -5,6 +5,7 @@
 #include <avr/io.h>
 #define F_CPU 20000000 /* 20MHz / prescale=1 */
 #include <util/delay.h>
+#include <stddef.h>
 
 /*
  * Hardware revision 3
@@ -36,7 +37,14 @@
  * 
  */ 
  
+#define VOLTAGE_MIN 9600
+#define VOLTAGE_MAX 25500
+ 
+bool vsense_ok;
+static uint16_t last_voltage;
+
 static void print_voltage();
+static uint16_t calc_voltage();
  
 void vsense_init() 
 {
@@ -62,10 +70,11 @@ void vsense_init()
     // Take some conversions...
     // delay a little to let the ADC settle.
     _delay_ms(10);
+    last_voltage = calc_voltage();
     print_voltage();
 }
 
-static void print_voltage()
+static uint16_t calc_voltage()
 {
     uint16_t res = ADC0.RES;
     // Full range would give 2.5 volts
@@ -74,10 +83,53 @@ static void print_voltage()
     uint16_t sense_mv = (res * 5) /2;
     // Now we need to multiply by 23 to get the actual voltage.
     uint16_t mv = (sense_mv * 23);
-    diag_println("Bat. voltage = %4d", mv);
+    return mv;
 }
+
+static void print_voltage()
+{
+    diag_println("Bat. voltage = %4d", last_voltage);
+}
+
+
+#define BAD_VOLTAGE_TICKS 160
+
+// Initially set bad_voltage_count to the maximum badness,
+// then we will not turn on immediately if undervolt.
+
+static uint8_t bad_voltage_count=BAD_VOLTAGE_TICKS; // Number of ticks we see bad voltage
+
+static uint8_t info_count; // to limit how often we write debug msgs.
 
 void vsense_timer_overflow() 
 {
+    // Called approximately every 26 milliseconds.
     
+    last_voltage = calc_voltage();
+    
+    bool ok = (
+        (last_voltage >= VOLTAGE_MIN) &&
+        (last_voltage <= VOLTAGE_MAX)
+        );
+    
+    
+    if (ok) {
+        bad_voltage_count = 0;
+    } else {
+        if (bad_voltage_count < BAD_VOLTAGE_TICKS) 
+            bad_voltage_count += 1;
+    }
+    
+    // Set vsense_ok if voltage has not been bad for very long.
+    //
+    vsense_ok = (bad_voltage_count < BAD_VOLTAGE_TICKS);
+    if (! vsense_ok) {
+        if (info_count == 0) {
+            print_voltage();
+            diag_println("vsense: voltage out of range.");
+            info_count = 40;
+        } else {
+            info_count --;
+        }
+    }
 }
