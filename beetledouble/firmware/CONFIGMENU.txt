@@ -1,0 +1,17 @@
+Config meun
+
+
+
+============================================================
+Tarakan ESC config mode
+============================================================
+command     current value      info
+------------------------------------------------------------
+A                  2 Mixing (0=off 1=on, 2=depends on JP1)
+B                 60 Mixing amount %
+C                  1 Braking on
+D                 96 Voltage cutoff 3S x0.1V
+E                128 Voltage cutoff 4S x0.1V
+F                 25 Overcurrent limit (instantaneous) Amps
+G                  1 Startup sound on
+============================================================

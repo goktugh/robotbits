@@ -15,6 +15,7 @@
 #include "isense.h"
 #include "vsense.h"
 #include "configpin.h"
+#include "configmode.h"
 
 static void init_clock()
 {
@@ -28,20 +29,12 @@ static void init_clock()
 static void init_serial()
 {
     // We use bitbanging for txdebug pin,
-    // Use the USART for the receiver interface to detect bytes
-    // from the PWMIN1 pin.
-    uint32_t want_baud_hz = 115200; // Baud rate
-    uint32_t clk_per_hz = F_CPU; // CLK_PER after prescaler in hz
-    uint16_t baud_param = (64 * clk_per_hz) / (16 * want_baud_hz);
-    USART0.BAUD = baud_param;
-    USART0.CTRLB = 
-        USART_RXEN_bm; // Start receiver
 }
 
 int main(void)
 {
     init_clock();
-    init_serial();
+    configmode_init();
     diag_puts("\r\n\nBeetledouble ESC starting\r\n");
     // We should read the configpin early, before we use the ADCs
     // for anything else.
@@ -64,6 +57,7 @@ int main(void)
 			rxin_timer_overflow();
             vsense_timer_overflow();
             isense_timer_overflow();
+            configmode_timer_overflow();
         }
     }
 }
