@@ -27,7 +27,15 @@ static void init_clock()
 
 static void init_serial()
 {
-    // Not required. We use bitbanging now.
+    // We use bitbanging for txdebug pin,
+    // Use the USART for the receiver interface to detect bytes
+    // from the PWMIN1 pin.
+    uint32_t want_baud_hz = 115200; // Baud rate
+    uint32_t clk_per_hz = F_CPU; // CLK_PER after prescaler in hz
+    uint16_t baud_param = (64 * clk_per_hz) / (16 * want_baud_hz);
+    USART0.BAUD = baud_param;
+    USART0.CTRLB = 
+        USART_RXEN_bm; // Start receiver
 }
 
 int main(void)

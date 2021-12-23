@@ -7,14 +7,7 @@ PA1 - TXDEBUG
      - shorted low with a 22k resistor for CONFIG1 option 
      (default not shorted)
      - Test at boot time, then use as a debug output.
-     
-     NB: Can only use USART for PA1 if we set the PORTMUX CTRLB register
-        to alternative pins.
-        
-    This is no good as we cannot then use the USART receiver to read
-    signals on PWMIN1 - for config mode, or for SBUS etc,
-    
-
+     - Bitbang debug output on this pin.
 
 ANALOGUE:
 
@@ -27,6 +20,14 @@ PB0 - VSENSE
 INPUTS:
 
 PB3 - PWMIN1
+
+PB3 - use for RxD pin on USART0
+    - To detect bytes input for config mode
+    - (Possibly) - to detect sbus signal
+    
+    If we are operating in PWM (normal) mode we can disable USART0
+    and just read the pin with the timer capture or reading directly.
+
 PA3 - PWMIN2
 
 Can use TCB0 and TCB1 to measure the width of the pulses. The events
