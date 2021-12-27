@@ -17,10 +17,11 @@ const config_var_t all_config_vars[] = {
     {"Mixing (0=off 1=on, 2=depends on JP1)", 2, 0, 2, &(config_current.mixing_on) },
     {"Mixing amount %", 60, 25, 100, &(config_current.mixing_amount)},
     {"Braking on", 1, 0, 1, &(config_current.braking_on)},
-    {"Voltage cutoff 3S x0.1V", 96, 0, 120, &(config_current.voltage_cutoff_3s)},
-    {"Voltage cutoff 4S x0.1V", 128, 0, 160, &(config_current.voltage_cutoff_4s)},
+    {"Low Voltage cutoff 3S x0.1V", 96, 0, 120, &(config_current.voltage_cutoff_3s)},
+    {"Low Voltage cutoff 4S x0.1V", 128, 0, 160, &(config_current.voltage_cutoff_4s)},
     {"Overcurrent limit (instantaneous) Amps", 25, 0, 35, &(config_current.overcurrent_limit)},
     {"Startup sound on",  1, 0, 1, &(config_current.startup_sound_on)},
+    {"Startup sound delay (* 0.1 seconds)",  0, 0, 50, &(config_current.startup_sound_delay)},
     {NULL, 0, 0, 0, NULL}
 };
 

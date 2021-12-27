@@ -22,7 +22,10 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "configvars.h"
+#include "configpin.h"
+#include "vsense.h"
 
 // This flag - are we listening on the config port?
 // We set this to FALSE as soon as we receive a good pwm signal,
@@ -91,13 +94,24 @@ static void configmode_main()
     }
 }
 
+static void show_extra_info()
+{
+    if (configpin_value) {
+        comm_println("JP1 state: open; mixing enabled if A=2"); 
+    } else {
+        comm_println("JP1 state: closed; mixing disabled if A=2");         
+    }
+    comm_println("Battery voltage: %d mV", vsense_last_voltage);
+}
+
 static void show_config_vars(bool defaults)
 {
     comm_separator('=');
     if (defaults) {
         comm_println(SYSTEM_NAME " config - default settings");
     } else {
-        comm_println(SYSTEM_NAME " config - current settings");        
+        comm_println(SYSTEM_NAME " config - current settings");       
+        show_extra_info(); 
     }
     comm_separator('=');
     comm_println("%8s %8s %s", "cmd", "value", "info");
@@ -140,16 +154,15 @@ static void show_unknown_command(char c)
 static void show_help()
 {
     static const char *info[] = {
-        "Other commands:",
-        "? = help",
-        "W = show current values",
-        "X = show defaults",
+        "Enter a configuration variable and value, e.g. A0 or these commands:",
+        "? = this help, W = show current values",
+        "X = show default values without changing current values",
         "Y = reset all parameters to defaults",
-        "Z = restart ESC",
+        "Z = restart ESC (leave config mode)",
         NULL
     };
     for (uint8_t i=0; info[i]; i++) {
-        comm_println("I: %s", info[i]);
+        comm_println(": %s", info[i]);
     }    
 }
 
@@ -180,6 +193,8 @@ static void handle_other_commands(char cmd)
 static void handle_command(char cmd, int arg)
 {
     uint8_t cmd_index = cmd - 'A'; // May underflow
+    // Convert command to upper case for ease of use.
+    cmd = toupper(cmd);
     if ((cmd == '?') || ((cmd >='W') && (cmd <= 'Z')) ) {
         handle_other_commands(cmd);
         return;

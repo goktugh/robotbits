@@ -41,7 +41,7 @@
 #define VOLTAGE_MAX 25500
  
 bool vsense_ok;
-static uint16_t last_voltage;
+uint16_t vsense_last_voltage;
 
 static void print_voltage();
 static uint16_t calc_voltage();
@@ -70,7 +70,7 @@ void vsense_init()
     // Take some conversions...
     // delay a little to let the ADC settle.
     _delay_ms(10);
-    last_voltage = calc_voltage();
+    vsense_last_voltage = calc_voltage();
     print_voltage();
 }
 
@@ -88,7 +88,7 @@ static uint16_t calc_voltage()
 
 static void print_voltage()
 {
-    diag_println("Bat. voltage = %4d", last_voltage);
+    diag_println("Bat. voltage = %4d", vsense_last_voltage);
 }
 
 
@@ -105,11 +105,11 @@ void vsense_timer_overflow()
 {
     // Called approximately every 26 milliseconds.
     
-    last_voltage = calc_voltage();
+    vsense_last_voltage = calc_voltage();
     
     bool ok = (
-        (last_voltage >= VOLTAGE_MIN) &&
-        (last_voltage <= VOLTAGE_MAX)
+        (vsense_last_voltage >= VOLTAGE_MIN) &&
+        (vsense_last_voltage <= VOLTAGE_MAX)
         );
     
     

@@ -20,6 +20,7 @@ typedef struct {
     uint8_t voltage_cutoff_4s;
     uint8_t overcurrent_limit;
     uint8_t startup_sound_on;
+    uint8_t startup_sound_delay;
 } config_values_t;
 
 // Current config - held in ram.
