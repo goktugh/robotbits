@@ -22,6 +22,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdio.h>
+#include "configvars.h"
 
 // This flag - are we listening on the config port?
 // We set this to FALSE as soon as we receive a good pwm signal,
@@ -36,25 +37,6 @@ static uint8_t input_pos;
 
 #define COMM_PORT PORTB
 #define COMM_PIN 3
-
-typedef struct {
-    const char *name;
-    uint8_t default_value;
-    uint8_t min_value;
-    uint8_t max_value;
-} config_var_t;
-
-const config_var_t all_config_vars[] = {    
-    // Name, default, min, max
-    {"Mixing (0=off 1=on, 2=depends on JP1)", 2, 0, 2},
-    {"Mixing amount %", 60, 25, 100},
-    {"Braking on", 1, 0, 1},
-    {"Voltage cutoff 3S x0.1V", 96, 0, 120},
-    {"Voltage cutoff 4S x0.1V", 128, 0, 160},
-    {"Overcurrent limit (instantaneous) Amps", 25, 0, 35},
-    {"Startup sound on",  1, 0, 1},
-    {NULL, 0, 0, 0}
-};
 
 void configmode_init()
 {
@@ -72,7 +54,7 @@ void configmode_init()
 static void configmode_main();
 static void comm_puts(const char *str);
 static void mainloop();
-static void show_config_vars();
+static void show_config_vars(bool defaults);
 static void comm_println(const char * fmt, ...);
 static void comm_separator(char c);
 static void flush_rx();
@@ -93,23 +75,30 @@ void configmode_timer_overflow()
     }
 }
 
+#define SYSTEM_NAME "Tarakan ESC"
+
 static void configmode_main()
 {
     // In case the motors were about to do something, turn them off.
     motors_overcurrent_off();
     diag_puts("\r\nConfig mode activated (further messages on rx comm port)\r\n");
-    comm_puts("\r\nTarakan ESC config mode\r\n");
-    show_config_vars();
+    comm_puts("\r\n" SYSTEM_NAME " config mode\r\n");
+    comm_println("Enter a parameter followed by a value e.g. A0 or ? for more help");
+    show_config_vars(false);
     flush_rx();
     while (1) {
         mainloop();
     }
 }
 
-static void show_config_vars()
+static void show_config_vars(bool defaults)
 {
     comm_separator('=');
-    comm_println("Tarakan ESC config - current settings");
+    if (defaults) {
+        comm_println(SYSTEM_NAME " config - default settings");
+    } else {
+        comm_println(SYSTEM_NAME " config - current settings");        
+    }
     comm_separator('=');
     comm_println("%8s %8s %s", "cmd", "value", "info");
     comm_separator('-');
@@ -117,8 +106,14 @@ static void show_config_vars()
     while (all_config_vars[a].name != NULL)
     {
         char ch = 'A' + a;
+        uint8_t val;
+        if (defaults) {
+            val = all_config_vars[a].default_value;
+        } else {
+            val = *(all_config_vars[a].var_ptr);
+        }
         comm_println("%8c %8d %s", ch, 
-            all_config_vars[a].default_value,  
+            val,  
             all_config_vars[a].name
             );
         a += 1;
@@ -132,10 +127,108 @@ static void flush_rx()
     USART0.CTRLB = USART_RXEN_bm; // Start receiver   
 }
 
+static void show_error(const char *s)
+{
+    comm_println("E: %s", s);
+}
+
+static void show_unknown_command(char c)
+{
+    comm_println("E: Unknown command %c", c);
+}
+
+static void show_help()
+{
+    static const char *info[] = {
+        "Other commands:",
+        "? = help",
+        "W = show current values",
+        "X = show defaults",
+        "Y = reset all parameters to defaults",
+        "Z = restart ESC",
+        NULL
+    };
+    for (uint8_t i=0; info[i]; i++) {
+        comm_println("I: %s", info[i]);
+    }    
+}
+
+static void handle_other_commands(char cmd)
+{
+    switch (cmd) {
+        case '?':
+            show_help();
+            break;
+        case 'W':
+            show_config_vars(false);
+            break;
+        case 'X':
+            show_config_vars(true);
+            break;
+        case 'Y':
+            comm_println("I: resetting all parameters to defaults");
+            configvars_load_defaults();
+            configvars_save();
+            break;
+        case 'Z':
+            comm_println("I: resetting device");
+            trigger_reset();
+            break;
+    }
+}
+
+static void handle_command(char cmd, int arg)
+{
+    uint8_t cmd_index = cmd - 'A'; // May underflow
+    if ((cmd == '?') || ((cmd >='W') && (cmd <= 'Z')) ) {
+        handle_other_commands(cmd);
+        return;
+    }
+    if ((cmd < 'A') || (cmd_index >= configvars_count())) {
+        show_unknown_command(cmd);
+        return;
+    }
+    // Check if the value is in range.
+    bool inrange = ((arg >= 0) && arg <= 255);
+    uint8_t minval = all_config_vars[cmd_index].min_value;
+    uint8_t maxval = all_config_vars[cmd_index].max_value;
+    if (inrange) {
+        uint8_t arg_8 = arg;
+        inrange = ((arg_8 >= minval) && (arg_8 <= maxval));
+    }
+    if (! inrange) 
+    {
+        comm_println("I: Parameter %c must be between %d and %d inclusive",
+            cmd, minval, maxval);
+        show_error("Parameter out of range");
+        return;
+    }
+    
+    // Set the parameter current value
+    *(all_config_vars[cmd_index].var_ptr) = (uint8_t) arg;
+    // Save to eeprom
+    configvars_save();
+
+    comm_println("OK: %c set to value %d", cmd, arg);
+}
+
 static void handle_input_line()
 {
+    char cmd = input_buf[0];
     input_buf[INPUT_BUF_LEN - 1] = '\0';
-    comm_println("Got input: [%s]", input_buf);
+    int len = strlen(input_buf);
+    if (len > 0) { // Ignore empty command
+        comm_println("I: Command received: [%s]", input_buf);
+        // Parse command argument
+        char *endp = &(input_buf[1]);
+        int arg = strtol(endp, &endp, 10);
+        if (*endp != '\0') // Indicates error
+        {
+            show_error("Syntax error");
+        } else {
+            handle_command(cmd, arg);
+        }
+    }
     
     // Clear old buf
     memset(input_buf,0,INPUT_BUF_LEN);

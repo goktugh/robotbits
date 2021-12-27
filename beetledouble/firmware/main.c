@@ -16,6 +16,7 @@
 #include "vsense.h"
 #include "configpin.h"
 #include "configmode.h"
+#include "configvars.h"
 
 static void init_clock()
 {
@@ -26,11 +27,6 @@ static void init_clock()
     _delay_ms(10);
 }
 
-static void init_serial()
-{
-    // We use bitbanging for txdebug pin,
-}
-
 int main(void)
 {
     init_clock();
@@ -39,6 +35,9 @@ int main(void)
     // We should read the configpin early, before we use the ADCs
     // for anything else.
     configpin_init();
+    // Load config variables from eeprom
+    configvars_load();
+    
     vsense_init(); // vsense uses the same ADC as configpin.
     // We should initialise isense before the motors, because we do not
     // want to detect any spurious current charging the bst caps.

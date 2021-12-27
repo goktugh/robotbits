@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include <string.h>
 #include <stdarg.h>
@@ -71,3 +72,13 @@ void epic_fail(const char *msg)
     for ( ;; );
     
 }
+
+void trigger_reset()
+{
+    // Pull the reset line.
+    cli();
+    while (1) {
+        _PROTECTED_WRITE(RSTCTRL.SWRR, 1);
+    }
+}
+
