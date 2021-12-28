@@ -268,6 +268,11 @@ static void mainloop()
             if (input_pos >= INPUT_BUF_LEN)
                 input_pos = INPUT_BUF_LEN - 1;
         }
+    } else {
+        if (USART0.STATUS & USART_BDF_bm) {
+            // break detected
+            trigger_reset();
+        }
     }    
 }
 

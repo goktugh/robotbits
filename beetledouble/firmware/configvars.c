@@ -37,7 +37,7 @@ const config_var_t all_config_vars[] = {
 
 void configvars_load_defaults()
 {
-    uint8_t i;
+    uint8_t i=0;
     while (all_config_vars[i].var_ptr != NULL)
     {
         *(all_config_vars[i].var_ptr) =
