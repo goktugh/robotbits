@@ -192,9 +192,9 @@ static void handle_other_commands(char cmd)
 
 static void handle_command(char cmd, int arg)
 {
-    uint8_t cmd_index = cmd - 'A'; // May underflow
     // Convert command to upper case for ease of use.
     cmd = toupper(cmd);
+    uint8_t cmd_index = cmd - 'A'; // May underflow
     if ((cmd == '?') || ((cmd >='W') && (cmd <= 'Z')) ) {
         handle_other_commands(cmd);
         return;

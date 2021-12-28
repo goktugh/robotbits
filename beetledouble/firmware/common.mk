@@ -29,7 +29,7 @@ link: $(OBJECTS) $(HEADERS)
 	avr-objcopy -j .text -j .data -j .rodata -O ihex $(ELF) $(HEX)
 	avr-objcopy -j .text -j .data -j .rodata -O binary $(ELF) $(OBJDIR)/main.bin
 
-CFLAGS += -mmcu=$(MCU) -Os -Wall  $(LTOFLAGS)
+CFLAGS += -mmcu=$(MCU) -Os -Wall -Wextra  $(LTOFLAGS)
 $(OBJDIR)/%.o: %.c $(MAKEFILES)
 	@mkdir -p $(OBJDIR)
 	avr-gcc -c $(CFLAGS) -o $@ $<

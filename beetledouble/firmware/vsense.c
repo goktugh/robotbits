@@ -1,11 +1,13 @@
 
 #include "vsense.h"
 #include "diag.h"
+#include "configvars.h"
 
 #include <avr/io.h>
 #define F_CPU 20000000 /* 20MHz / prescale=1 */
 #include <util/delay.h>
 #include <stddef.h>
+
 
 /*
  * Hardware revision 3
@@ -37,11 +39,12 @@
  * 
  */ 
  
-#define VOLTAGE_MIN 9600
 #define VOLTAGE_MAX 25500
  
 bool vsense_ok;
 uint16_t vsense_last_voltage;
+
+static uint16_t voltage_cutoff; // Initialised from config
 
 static void print_voltage();
 static uint16_t calc_voltage();
@@ -72,6 +75,10 @@ void vsense_init()
     _delay_ms(10);
     vsense_last_voltage = calc_voltage();
     print_voltage();
+    // Initialise minimum voltage - millivolts
+    // Need to change this based on 3s/4s (or above) pack.
+    voltage_cutoff = config_current.voltage_cutoff_3s
+        * 100;
 }
 
 static uint16_t calc_voltage()
@@ -108,7 +115,7 @@ void vsense_timer_overflow()
     vsense_last_voltage = calc_voltage();
     
     bool ok = (
-        (vsense_last_voltage >= VOLTAGE_MIN) &&
+        (vsense_last_voltage >= voltage_cutoff) &&
         (vsense_last_voltage <= VOLTAGE_MAX)
         );
     
