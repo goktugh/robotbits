@@ -64,19 +64,20 @@ int main(void)
 /*
 
 TODO 
-1. flexible rxin - needs to loop through different
-    receiver modes (pwm, sbus, ibus, config terminal) at startup
-    * When valid signal is received, then assume config.
-    * Only listen on PWMIN1 at startup.
+1. flexible rxin - NOT in this version.
 
-1. Config interface 
+1. Config interface [ DONE ]
 *  If receiving some CR characters at expected baud rate,
         Assume config mode.
         Suspend normal esc operation and run only in config mode
         * until reboot.
         * 
-1. SBUS / IBUS
-* If those signals are detected, switch to mode.
+1. SBUS / IBUS - not in this version.
+
+1. Low voltage cutoff
+*  Needs to detect 4S (or higher) pack at startup
+    And pick the 4S voltage cutoff. Should only do this at startup
+    or quite early.
 
 1. MIXING
 * When we are running normally, we should mix.
@@ -85,7 +86,7 @@ TODO
 * If mixing is enabled - require BOTH signals to be active to drive.
 * If mixing is disabled, then signals should work independently
 
-1. EEPROM CONFIG
+1. EEPROM CONFIG [ Largely done ]
 * Low voltage cutoff
 * Current limit / overcurrent protection settings
 * Mixing overrides
@@ -93,8 +94,8 @@ TODO
         happen at the same time)
 
 1. Startup beep / tune
-* Do a tune with a few notes on motor1 and motor2
-* Arpeggio or familiar tune?
+* Minimum: 1 note on each motor, different (e.g. A,D to sound pleasant)
+* Sound them sequentially for easier ID.
 
 
 TESTING:
