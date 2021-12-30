@@ -9,6 +9,7 @@
 #include "motors.h"
 #include "isense.h"
 #include "vsense.h"
+#include "configvars.h"
 
 motor_command_t motors_commands[MOTORS_COUNT];
 
@@ -118,15 +119,20 @@ void motors_early_init()
     motors_overcurrent_off();
 }
 
+static void startup_beep();
+
 void motors_init()
 {
-    motors_init_timer();
     // Repeat the motors early init routine.
     motors_early_init();
 
     // Charge the boost caps
     motors_all_low();
     _delay_ms(10);
+    startup_beep();
+    // Need to init timer after startup beep so that the timer is 
+    // initialised properly, startup_beep uses it.
+    motors_init_timer();
     motors_overcurrent_off();
 }
 
@@ -265,4 +271,85 @@ void motors_overcurrent_off()
 	PORT_MOTOR_ENABLE_1.OUTCLR = (1<< PIN_MOTOR_ENABLE_1);
 	PORT_MOTOR_ENABLE_2.OUTCLR = (1<< PIN_MOTOR_ENABLE_2);
 	PORT_MOTOR.OUTCLR = BITMAP_ALL_MOTORS;
+}
+
+
+/*
+ * STARTUP TONES
+ * 
+ * We need to indicate to the user that both motors are working.
+ * 
+ * We do this by making a short, different tone on the two motors.
+ * 
+ * I choose A4 and D5 because it sounds vaguely nice (perfect 4th).
+ * 
+ */
+ 
+#define FREQUENCY_A4 440
+// Approximately 440 * (2 ** (5/12) ) - 5 semitones higher
+#define FREQUENCY_D5 587
+
+#define TCA_FREQ 1250000
+
+static void make_tone(uint8_t index, uint16_t period)
+{
+    // As we alternatively pulse, use half the period
+	TCA0.SINGLE.PER = period/2;	
+    TCA0.SINGLE.CNT = 0;
+
+	uint8_t pin_forward;
+	uint8_t pin_reverse;
+	
+	if (index==0) {
+		pin_forward = PIN_MOTOR1F;
+		pin_reverse = PIN_MOTOR1R;
+	} else {
+		pin_forward = PIN_MOTOR2F;
+		pin_reverse = PIN_MOTOR2R;
+	}
+
+    // Alternately pulse forwards and backwards with very short
+    // pulses.
+    for (uint16_t i=0; i<200; i++) {
+        if (i&1) {
+            // Enable forward
+            PORT_MOTOR.OUTSET = 1 << pin_forward;
+        } else {
+            // Enable reverse
+            PORT_MOTOR.OUTSET = 1 << pin_reverse;
+        }
+        // Wait a short time
+        _delay_us(250);
+        motors_all_low();
+        
+        // Now wait for TCA to overflow.
+        uint16_t c0=0;
+        while (1) {
+            uint16_t c1 = TCA0.SINGLE.CNT;
+            if (c1 < c0) {
+                break;
+            }
+            c0 = c1;
+        }
+    }
+}
+
+static void startup_beep()
+{
+    if (! config_current.startup_sound_on) {
+        // No startup sound.
+        return;
+    }
+    // Delay for startup sound (* 100ms)
+    for (uint8_t i=0; i< config_current.startup_sound_delay; ++i) {
+        _delay_ms(100);
+    }
+    // We use the timer here.
+    // TCA will now run with a period of 0.8 us or 1.25 mhz
+	TCA0.SINGLE.CTRLA = (0x04 << 1) |
+		1 ; // Enable bit
+    motors_all_low();
+    make_tone(0, (TCA_FREQ / FREQUENCY_A4) );
+    make_tone(1, (TCA_FREQ / FREQUENCY_D5) );
+    motors_all_low();
 }
