@@ -1,6 +1,7 @@
 
 #include "isense.h"
 #include "diag.h"
+#include "configvars.h"
 
 #include <avr/io.h>
 
@@ -59,13 +60,17 @@ static void init_threshold()
 {
     if (isense_active) {
         // Set up the threshold
-        // TODO: Calculate correctly
-        uint16_t threshold_amps = 3;
+        uint16_t threshold_amps = config_current.overcurrent_limit;
         // Units are approx 100mA
         uint16_t threshold = adc_zero_offset + (SAMPLES_ACCUMULATED * threshold_amps * 10);
         diag_println("isense threshold %04x (%d amps)", threshold, threshold_amps);
         ADC1.WINHT = threshold;
         ADC1.CTRLE = 0x2; // ABOVE threshold
+        _delay_ms(10);  
+        // It is possible that the WCMP flag is already set from initialisation,
+        // above. Clear the flag before we enable interrupts, so we do not
+        // immediately trigger a spurious overcurrent.
+        ADC1.INTFLAGS = 0x02; // reset WCMP flag
         ADC1.INTCTRL = 1 << 1; // Enable WCMP interrupt
     }
 }

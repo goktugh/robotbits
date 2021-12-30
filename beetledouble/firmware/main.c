@@ -30,6 +30,7 @@ static void init_clock()
 int main(void)
 {
     init_clock();
+    motors_early_init();
     configmode_init();
     diag_puts("\r\n\nBeetledouble ESC starting\r\n");
     // We should read the configpin early, before we use the ADCs

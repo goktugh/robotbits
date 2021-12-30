@@ -72,7 +72,7 @@ static bool timer_has_overflowed[CHANNEL_COUNT];
 // Number of timer loops since the last pulse on each channel.
 static uint8_t ticks_since_last_pulse[CHANNEL_COUNT];
 
-#define GOOD_PULSE_MIN 5
+#define GOOD_PULSE_MIN 10
 static uint8_t good_pulse_count[CHANNEL_COUNT];
 
 void rxin_loop()
@@ -86,7 +86,10 @@ void rxin_loop()
             if (timer_has_overflowed[index] || (pulsewidth < COUNT_MIN) ) {
                 // Invalid pulse.
                 timer_has_overflowed[index] = 0;
-                // Ignore.
+                // Ignore the pulse;
+                // Reset the good pulse count, so we are less affected by
+                // electrical noise.
+                good_pulse_count[index] = 0;
                 return;
             }
             // Do not turn the motors on until we receive GOOD_PULSE_MIN pulses.

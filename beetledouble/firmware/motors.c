@@ -103,20 +103,31 @@ static void motors_all_low()
 	PORT_MOTOR_ENABLE_2.OUTSET = (1<< PIN_MOTOR_ENABLE_2);
 }
 
-void motors_init()
+void motors_early_init()
 {
-	motors_init_timer();
-	
+    // SO that the outputs are not floating, or
+    // If we had a bootloader or updi or something which left the pins
+    // in a weird state,
+    // Turn everything off as soon as possible. 
 	// Make enable pins outputs.
 	PORT_MOTOR_ENABLE_1.DIRSET = (1<< PIN_MOTOR_ENABLE_1); 
 	PORT_MOTOR_ENABLE_2.DIRSET = (1<< PIN_MOTOR_ENABLE_2);
 	
 	// Make the gate drive pins outputs.
 	PORT_MOTOR.DIRSET = BITMAP_ALL_MOTORS;
+    motors_overcurrent_off();
+}
+
+void motors_init()
+{
+    motors_init_timer();
+    // Repeat the motors early init routine.
+    motors_early_init();
+
+    // Charge the boost caps
     motors_all_low();
-    
-	_delay_ms(10);
-	motors_overcurrent_off();
+    _delay_ms(10);
+    motors_overcurrent_off();
 }
 
 static void handle_timer_overflow()

@@ -12,6 +12,7 @@ typedef struct {
 
 extern motor_command_t motors_commands[MOTORS_COUNT];
 
+void motors_early_init();
 void motors_init();
 
 // Returns true on timer overflow
