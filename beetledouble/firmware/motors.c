@@ -311,12 +311,19 @@ static void make_tone(uint8_t index, uint16_t period)
     // Alternately pulse forwards and backwards with very short
     // pulses.
     for (uint16_t i=0; i<200; i++) {
-        if (i&1) {
-            // Enable forward
-            PORT_MOTOR.OUTSET = 1 << pin_forward;
-        } else {
-            // Enable reverse
-            PORT_MOTOR.OUTSET = 1 << pin_reverse;
+        
+        // If we detect overcurrent during the startup beep,
+        // stop making any more sound.
+        // e.g. if there is a short circuit at power-on
+        // NB: interrupts must be enabled so overcurrent_time gets set
+        if (overcurrent_time == 0) {
+            if (i&1) {
+                // Enable forward
+                PORT_MOTOR.OUTSET = 1 << pin_forward;
+            } else {
+                // Enable reverse
+                PORT_MOTOR.OUTSET = 1 << pin_reverse;
+            }
         }
         // Wait a short time
         _delay_us(250);

@@ -45,9 +45,9 @@ int main(void)
     // When calibrating the isense offset.
     isense_init();
 
+    sei(); // interrupts on
     motors_init();
     rxin_init();
-    sei(); // interrupts on
 
     while(1) {
         bool timer_overflow = motors_loop();
@@ -94,7 +94,7 @@ TODO
 * Startup delay (in case 2x ESC in the same robot, so their beeps do not
         happen at the same time)
 
-1. Startup beep / tune
+1. Startup beep / tune [DONE]
 * Minimum: 1 note on each motor, different (e.g. A,D to sound pleasant)
 * Sound them sequentially for easier ID.
 
