@@ -40,11 +40,17 @@
  */ 
  
 #define VOLTAGE_MAX 25500
+// Voltage where we decide the pack must be 4S or higher,
+// and use the higher cutoff voltage.
+#define VOLTAGE_4S 13500
  
 bool vsense_ok;
 uint16_t vsense_last_voltage;
 
 static uint16_t voltage_cutoff; // Initialised from config
+
+static uint8_t cells_count;
+static uint8_t tickcount;
 
 static void print_voltage();
 static uint16_t calc_voltage();
@@ -72,13 +78,16 @@ void vsense_init()
     ADC0.COMMAND = 0x1; // Start conversion
     // Take some conversions...
     // delay a little to let the ADC settle.
-    _delay_ms(10);
+    _delay_ms(5);
     vsense_last_voltage = calc_voltage();
     print_voltage();
     // Initialise minimum voltage - millivolts
     // Need to change this based on 3s/4s (or above) pack.
     voltage_cutoff = config_current.voltage_cutoff_3s
         * 100;
+    _delay_ms(5);
+    // Run an initial timer tick to check the voltage status
+    vsense_timer_overflow();
 }
 
 static uint16_t calc_voltage()
@@ -137,6 +146,23 @@ void vsense_timer_overflow()
             info_count = 40;
         } else {
             info_count --;
+        }
+    }
+    
+    // Check the pack voltage (not immediately, but soon after start)
+    if (cells_count == 0) {
+        if (tickcount < 4 ) {
+            tickcount ++;
+        } else {
+            // Detect pack voltage and decide if it is 4S or more.
+            if (vsense_last_voltage >= VOLTAGE_4S) {
+                cells_count = 4;
+                voltage_cutoff = config_current.voltage_cutoff_4s * 100;
+            } else { // Or only 3S
+                cells_count = 3;
+            }
+            diag_println("vsense: cells_count=%d cutoff=%d",
+                cells_count, voltage_cutoff);
         }
     }
 }

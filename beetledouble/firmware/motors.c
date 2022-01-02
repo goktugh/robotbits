@@ -347,6 +347,11 @@ static void startup_beep()
         // No startup sound.
         return;
     }
+    // If voltage is not yet high enough, do not play startup sound.
+    // We might still be able to work if the voltage recovers.
+    if (! vsense_ok) {
+        return;
+    }
     // Delay for startup sound (* 100ms)
     for (uint8_t i=0; i< config_current.startup_sound_delay; ++i) {
         _delay_ms(100);
