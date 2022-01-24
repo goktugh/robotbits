@@ -148,6 +148,11 @@ static void handle_timer_overflow()
 // Previous tick data:
 static uint16_t last_pwm_offset[2];
 
+// This counts up
+static uint8_t recharge_overflow_count; 
+// Recharge capacitors when pwm_offset wraps every N times
+#define RECHARGE_EVERY_OVERFLOWS 4
+
 static void set_motor_outputs(uint8_t index,
 	uint16_t pwm_offset)
 {
@@ -156,8 +161,15 @@ static void set_motor_outputs(uint8_t index,
 	bool drivef=0, driver=0;
 	bool recharge = 0;
 	if (pwm_offset < last_pwm_offset[index]) {
-		// Recharge capacitors when pwm_offset wraps
-		recharge = 1;
+        if (index ==0) {
+            recharge_overflow_count += 1;
+            if (recharge_overflow_count >= RECHARGE_EVERY_OVERFLOWS) {
+                recharge_overflow_count = 0;
+            }
+        }
+        if (recharge_overflow_count == 0) {
+            recharge = 1;
+        }
 	}
 	// Calculate pwm
 	// Generate signal.
