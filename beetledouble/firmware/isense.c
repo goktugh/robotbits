@@ -25,7 +25,9 @@
  * at 20 amps that means 0.1V which is plenty.
  * 
  * ADC - use 0.55V voltage reference for maximum sensitity.
-* 
+ * 
+ * 
+ * at 0.55V / 5mV = 110 amps (gives full range of 1024) or 9.3 units per amp
  */
 
 
@@ -35,6 +37,11 @@ static uint16_t adc_zero_offset;
 static bool isense_active;
 
 #define SAMPLES_ACCUMULATED 32
+
+// The amount of additional threshold we have for overcurrent
+// which allows for a noisy signal / spikes etc, 
+// In units of approx 100mA
+#define OVERCURRENT_THRESHOLD_MARGIN 15
 
 static void show_current()
 {
@@ -62,7 +69,9 @@ static void init_threshold()
         // Set up the threshold
         uint16_t threshold_amps = config_current.overcurrent_limit;
         // Units are approx 100mA
-        uint16_t threshold = adc_zero_offset + (SAMPLES_ACCUMULATED * threshold_amps * 10);
+        uint16_t threshold = 
+            adc_zero_offset + 
+            (SAMPLES_ACCUMULATED * ((threshold_amps * 10) + OVERCURRENT_THRESHOLD_MARGIN));
         diag_println("isense threshold %04x (%d amps)", threshold, threshold_amps);
         ADC1.WINHT = threshold;
         ADC1.CTRLE = 0x2; // ABOVE threshold

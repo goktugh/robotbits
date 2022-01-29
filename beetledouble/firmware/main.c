@@ -17,6 +17,7 @@
 #include "configpin.h"
 #include "configmode.h"
 #include "configvars.h"
+#include "mixing.h"
 
 static void init_clock()
 {
@@ -38,6 +39,9 @@ int main(void)
     configpin_init();
     // Load config variables from eeprom
     configvars_load();
+    // Initialise mixing after configpin and configvars, so it can
+    // decide to enable or disable.
+    mixing_init();
     
     vsense_init(); // vsense uses the same ADC as configpin.
     // We should initialise isense before the motors, because we do not
