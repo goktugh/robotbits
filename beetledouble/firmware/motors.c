@@ -272,6 +272,11 @@ bool motors_loop()
         }
     }
     
+    if (! vsense_ok) {
+        // Battery voltage out of range. Turn everything off.
+        motors_overcurrent_off();
+    }
+    
     return overflow;
 }
 
