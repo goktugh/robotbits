@@ -18,7 +18,6 @@ static int16_t steering_last_value;
 static void set_channel_speed(uint8_t channel, int16_t speed)
 {
     // speed in the range approx -5000 to 5000
-
     uint16_t pulsewidth_abs = abs(speed);
     // scale to units of 16 ticks or about 1.6us 
     uint16_t pulsewidth_scaled = pulsewidth_abs / 16;
@@ -26,22 +25,31 @@ static void set_channel_speed(uint8_t channel, int16_t speed)
     // Calculate brake zone on the same scale
     uint16_t brake_zone_scaled = ((DEAD_ZONE_US * 10) / 16);
     int16_t drive_amount = pulsewidth_scaled - brake_zone_scaled;
-    uint8_t brake = (drive_amount < 0);
+    uint8_t brake = (drive_amount < 0) && (config_current.braking_on);
     // clamp at max speed
     if (drive_amount > 255) drive_amount = 255;
+    if (drive_amount < 0) drive_amount = 0; // Do not try to drive negatively even if braking off
     motors_commands[channel].brake = brake;
     if (brake) {
         motors_commands[channel].duty = 0;
         motors_commands[channel].direction = 0;
     } else {
         motors_commands[channel].duty = (uint8_t) drive_amount;
-        motors_commands[channel].direction = (speed > 0);
+        motors_commands[channel].direction = (speed >= 0);
     }
 }
 
 static void do_mix(int16_t drive_speed)
 {
-    int16_t steer_speed = steering_last_value; // TODO: Scale by mixing amount
+    int16_t steer_speed = steering_last_value;
+    // steer_speed should be in the range -5000 to 5000
+    // clamp in case it is outside the range.
+    if (steer_speed > 5000) steer_speed = 5000;
+    if (steer_speed < -5000) steer_speed = -5000;
+    // Scale by mixing amount
+    // Avoid integer overflow; we 
+    // (steer_speed * mixing_amount) might overflow (> 32768)
+    steer_speed = ((steer_speed/8) * config_current.mixing_amount) / 2;
     int16_t left_speed, right_speed;
     left_speed = drive_speed + steer_speed;
     right_speed = drive_speed - steer_speed;
