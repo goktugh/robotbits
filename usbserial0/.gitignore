@@ -1,0 +1,4 @@
+plot/
+*-backups
+*.bak
+*-cache
