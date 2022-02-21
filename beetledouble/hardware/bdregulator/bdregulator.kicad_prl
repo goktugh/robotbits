@@ -18,7 +18,7 @@
       "footprints": true,
       "graphics": true,
       "keepouts": true,
-      "lockedItems": false,
+      "lockedItems": true,
       "otherItems": true,
       "pads": true,
       "text": true,
@@ -42,6 +42,7 @@
       14,
       15,
       16,
+      18,
       19,
       20,
       21,
@@ -60,11 +61,11 @@
       35,
       36
     ],
-    "visible_layers": "00290b0_80000007",
+    "visible_layers": "7ffffff_80000001",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "beetledouble.kicad_prl",
+    "filename": "bdregulator.kicad_prl",
     "version": 3
   },
   "project": {

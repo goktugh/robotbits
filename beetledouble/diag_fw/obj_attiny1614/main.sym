@@ -1,0 +1,85 @@
+
+obj_attiny1614/main.elf:     file format elf32-avr
+
+SYMBOL TABLE:
+00803800 l    d  .data	00000000 .data
+00000000 l    d  .text	00000000 .text
+00008108 l    d  .rodata	00000000 .rodata
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .note.gnu.avr.deviceinfo	00000000 .note.gnu.avr.deviceinfo
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    df *ABS*	00000000 
+0000003e l       *ABS*	00000000 __SP_H__
+0000003d l       *ABS*	00000000 __SP_L__
+0000003f l       *ABS*	00000000 __SREG__
+00000034 l       *ABS*	00000000 __CCP__
+00000000 l       *ABS*	00000000 __tmp_reg__
+00000001 l       *ABS*	00000000 __zero_reg__
+00000094 l     F .text	00000018 diag_puts
+00000000 l    df *ABS*	00000000 _exit.o
+00000106 l       .text	00000000 __stop_program
+00000090  w      .text	00000000 __vector_22
+00000090  w      .text	00000000 __vector_28
+00000090  w      .text	00000000 __vector_1
+0000ffa0 g       *ABS*	00000000 __DATA_REGION_LENGTH__
+0000007c g       .text	00000000 __trampolines_start
+00000108 g       .text	00000000 _etext
+00000090  w      .text	00000000 __vector_24
+00000090  w      .text	00000000 __vector_12
+00000090 g       .text	00000000 __bad_interrupt
+00000135 g       *ABS*	00000000 __data_load_end
+00000090  w      .text	00000000 __vector_6
+0000007c g       .text	00000000 __trampolines_end
+00000090  w      .text	00000000 __vector_3
+00000090  w      .text	00000000 __vector_23
+00000135 g       *ABS*	00000000 __data_load_start
+0000007c g       .text	00000000 __dtors_end
+00000090  w      .text	00000000 __vector_30
+00000400 g       *ABS*	00000000 __LOCK_REGION_LENGTH__
+00000090  w      .text	00000000 __vector_25
+00008000 g       *ABS*	00000000 __RODATA_PM_OFFSET__
+00000090  w      .text	00000000 __vector_11
+0000007c  w      .text	00000000 __init
+00000090  w      .text	00000000 __vector_13
+00000090  w      .text	00000000 __vector_17
+00000090  w      .text	00000000 __vector_19
+00000090  w      .text	00000000 __vector_7
+00810000 g       .rodata	00000000 __eeprom_end
+00000000 g       .text	00000000 __vectors
+00000090  w      .text	00000000 __vector_27
+00000000  w      .text	00000000 __vector_default
+00000090  w      .text	00000000 __vector_5
+00000400 g       *ABS*	00000000 __SIGNATURE_REGION_LENGTH__
+0000007c g       .text	00000000 __ctors_start
+000000ac g     F .text	00000058 main
+00000090  w      .text	00000000 __vector_4
+00000000  w      *ABS*	00000000 __heap_end
+00000090  w      .text	00000000 __vector_9
+00000090  w      .text	00000000 __vector_2
+00000400 g       *ABS*	00000000 __USER_SIGNATURE_REGION_LENGTH__
+00000090  w      .text	00000000 __vector_21
+00000090  w      .text	00000000 __vector_15
+00000090  w      .text	00000000 __vector_29
+0000007c g       .text	00000000 __dtors_start
+0000007c g       .text	00000000 __ctors_end
+00003fff  w      *ABS*	00000000 __stack
+00803800 g       .data	00000000 _edata
+00803800 g       .rodata	00000000 _end
+00000090  w      .text	00000000 __vector_8
+00000090  w      .text	00000000 __vector_26
+00000104  w      .text	00000000 .hidden exit
+00010000 g       *ABS*	00000000 __EEPROM_REGION_LENGTH__
+00000104 g       .text	00000000 .hidden _exit
+00000090  w      .text	00000000 __vector_14
+00000090  w      .text	00000000 __vector_10
+00000090  w      .text	00000000 __vector_16
+00000090  w      .text	00000000 __vector_18
+0000000a g       *ABS*	00000000 __FUSE_REGION_LENGTH__
+00100000 g       *ABS*	00000000 __TEXT_REGION_LENGTH__
+00000090  w      .text	00000000 __vector_20
+
+
