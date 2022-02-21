@@ -1,0 +1,26 @@
+### Module positions - created on Tue 07 Dec 2021 10:02:59 UTC ###
+### Printed by Pcbnew version 6.0.0-rc1-unknown-c40e921cb3~144~ubuntu18.04.1
+## Unit = mm, Angle = deg.
+## Side : bottom
+# Ref     Val        Package                PosX       PosY       Rot  Side
+J4        prog_pins  pogopins_5          32.6000    -1.5000   90.0000  bottom
+J4        prog_pins  pogopins_5         -27.4000    26.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          62.6000    40.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          32.6000    26.5000   90.0000  bottom
+J4        prog_pins  pogopins_5           2.6000    54.5000   90.0000  bottom
+J4        prog_pins  pogopins_5         -27.4000    40.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          62.6000    54.5000   90.0000  bottom
+J4        prog_pins  pogopins_5         -27.4000    -1.5000   90.0000  bottom
+J4        prog_pins  pogopins_5           2.6000    40.5000   90.0000  bottom
+J4        prog_pins  pogopins_5         -27.4000    12.5000   90.0000  bottom
+J4        prog_pins  pogopins_5           2.6000    26.5000   90.0000  bottom
+J4        prog_pins  pogopins_5           2.6000    12.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          62.6000    26.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          32.6000    54.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          62.6000    -1.5000   90.0000  bottom
+J4        prog_pins  pogopins_5           2.6000    -1.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          32.6000    40.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          32.6000    12.5000   90.0000  bottom
+J4        prog_pins  pogopins_5          62.6000    12.5000   90.0000  bottom
+J4        prog_pins  pogopins_5         -27.4000    54.5000   90.0000  bottom
+## End
